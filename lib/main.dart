@@ -19,10 +19,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: lightColorScheme
       ),
-      home: GetBuilder<AuthController>(
-        init: AuthController(),
-        builder: (authController) => authController.isLoggedIn == true ? LoginPage() : LoginPage(),
-      ),
+      home: authController.isLoggedIn.value == true ? LoginPage() : LoginPage(),
     );
   }
 }
