@@ -8,4 +8,5 @@ class Authentication{
     final user = await auth.signInWithEmailAndPassword(email: email,password: password);
     return user.user!;
   }
+
 }

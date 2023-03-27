@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   get: ^4.6.5
+  sqflite: ^2.2.6
   flutter:
     sdk: flutter
 
