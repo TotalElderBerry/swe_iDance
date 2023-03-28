@@ -1,6 +1,14 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+const API = "https://api.swe.ml/api";
+
+class DB {
+  addStudent() {
+    
+  }
+}
+
 class DBHelper {
   static final DBHelper _db = DBHelper._internal();
   static Database? db;

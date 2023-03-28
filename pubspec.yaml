@@ -30,6 +30,7 @@ environment:
 dependencies:
   get: ^4.6.5
   sqflite: ^2.2.6
+  http: ^0.13.5
   flutter:
     sdk: flutter
 
@@ -38,6 +39,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.2.10
+  firebase_core: ^2.8.0
   cloud_firestore: ^4.4.4
 
 dev_dependencies:

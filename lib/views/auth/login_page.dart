@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:i_dance/controllers/auth/auth_controller.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -38,7 +40,9 @@ class LoginPage extends StatelessWidget {
                     Text("Forgot Password")
                   ],
                 ),
-                ElevatedButton(onPressed: null, child: Text("Login"))
+                ElevatedButton(onPressed: (){
+                  Get.find<AuthController>().login("test@gmail.com","test");
+                }, child: Text("Login"))
           ],
         ),
       )
