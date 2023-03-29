@@ -1,10 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/theme/theme.dart';
 import 'package:i_dance/views/auth/login_page.dart';
-
-void main() {
+import 'package:i_dance/views/home.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

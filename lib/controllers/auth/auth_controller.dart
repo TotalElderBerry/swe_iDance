@@ -1,25 +1,28 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/state_manager.dart';
+import 'package:i_dance/constants/api.dart';
 import 'package:i_dance/models/user.dart';
 import 'package:i_dance/sources/auth/firebase_auth.dart';
-import 'package:i_dance/sources/firestore_db/user_db.dart';
+import 'package:http/http.dart' as http;
 
 class AuthController extends GetxController{
   final Authentication authService = Authentication();
-  final UserDB userDB = UserDB();
   Rx<UserModel?> currentUser = Rx<UserModel?>(null);
-  var isLoggedIn = false.obs;
-
-  
+  RxBool isLoggedIn = false.obs;
+  RxString name = "".obs;
   Future<void> login(String email, String password)async{
+    print(isLoggedIn.value);
     try{
-      var user = await authService.signInWithCredentials(email,password);
-      isLoggedIn = true.obs;
-      currentUser.value = await userDB.getUserbyId(user.uid);
+      User user = await authService.signInWithCredentials(email,password);
+      isLoggedIn.value = true;
       update();
     }catch(e){
       print(e);
     }
   }
+
 
 
 }
