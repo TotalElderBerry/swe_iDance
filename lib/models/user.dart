@@ -13,4 +13,4 @@ class UserModel{
     var snapData = snap.data();
     return UserModel(snapData?['id'], snapData?['firstName'], snapData?['lastName']);
   }
-}
+} 

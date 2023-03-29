@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -8,51 +8,28 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(32),
-        child: Column(
-          children: [
-            Column(
-              children: [
-                Text("Login"),
-              ],
+      body: Column(
+
+        children:  [
+          
+          Image.network("https://dragonball.guru/wp-content/uploads/2021/01/goku-dragon-ball-guru-824x490.jpg"),
+         Text("Welcome Back!"),
+         TextField(
+            decoration: InputDecoration(
+              hintText: "Email",
+              labelText: "FIrst EMail"
             ),
-            Column(
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Username"
-                  ),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Password"
-                  ),
-                ),
-              ],
+          ),
+          TextField(
+            decoration: InputDecoration(
+              hintText: "Password",
             ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text("Forgot Password")
-                  ],
-                ),
-                ElevatedButton(onPressed: null, child: Text("Login"))
-          ],
-        ),
-      )
-    );
-  }
-}
-
-class AppBar extends StatelessWidget {
-  const AppBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-
+          ),
+          Divider(),
+         ElevatedButton(onPressed: null, child: Text("Login")),
+          TextButton(onPressed: (){}, child: Text("Register Now")),
+        ],
+      ),
     );
   }
 }

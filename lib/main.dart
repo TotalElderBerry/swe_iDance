@@ -14,12 +14,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthController authController = Get.put(AuthController());
-    return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: lightColorScheme
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: MaterialApp(
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: lightColorScheme
+        ),
+        home: authController.isLoggedIn.value == true ? LoginPage() : LoginPage(),
       ),
-      home: authController.isLoggedIn.value == true ? LoginPage() : LoginPage(),
     );
   }
 }
