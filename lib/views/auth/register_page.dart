@@ -15,7 +15,6 @@ class RegisterPage extends StatelessWidget {
           Text("Sign Up"),
           TextField(
             decoration: InputDecoration(
-              row: 1,
               hintText: "Enter your first name",
               labelText: "First Name"
             ),

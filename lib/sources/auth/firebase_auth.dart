@@ -9,6 +9,10 @@ class Authentication{
     return user.user!;
   }
   
+  Future<User> createUserWithEmailandPassword(String email, String password) async {
+    final user = await auth.createUserWithEmailAndPassword(email: email, password: password);
+    return user.user!;
+  }  
   
 
 }
