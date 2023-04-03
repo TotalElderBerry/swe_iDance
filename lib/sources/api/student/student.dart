@@ -11,6 +11,13 @@ class StudentAPI {
     final response = await http.post(Uri.parse('${ApiContstants.baseUrl} + ${route}'),
     body: jsonEncode(
       <String, String> {
+        "id": newUser.id,
+        "firstName": newUser.firstName,
+        "lastName": newUser.lastName,
+        "gender": newUser.gender,
+        "contactNumber": newUser.gender,
+        "emailAddress": newUser.emailAddress,
+        "dateOfBirth": newUser.dateOfBirth.toString(),
         "user_id": newUser.userId.toString(),
         "level": newUser.level,
         "isInstructor": newUser.isInstructor.toString(),
@@ -19,7 +26,16 @@ class StudentAPI {
     );
   }
 
-  static void getStudentbyId(String id) async {
-    
+  static Future<StudentModel> getStudentbyId(String id) async {
+    final route = "student/${id}";
+    final response = await http.get(
+        Uri.parse('${ApiContstants.baseUrl} + ${route}'),
+      );
+
+    if(response.statusCode == 200){
+      return StudentModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to get');
+    }
   }
 }
