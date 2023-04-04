@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/state_manager.dart';
@@ -15,16 +16,21 @@ class AuthController extends GetxController{
   Rx<StudentModel?> currentUser = Rx<StudentModel?>(null);
   RxBool isLoggedIn = false.obs;
   RxString name = "".obs;
-  Future<void> login(String email, String password)async{
+  Future<bool> login(String email, String password)async{
     print(isLoggedIn.value);
     try{
       User user = await authService.signInWithCredentials(email,password);
+      print("i am  called");
       isLoggedIn.value = true;
-      currentUser.value = await StudentAPI.getStudentbyId(user.uid);
+      print(user);
+      name.value = user.uid;
+      // currentUser.value = await StudentAPI.getStudentbyId(user.uid);
       update();
+      return true;
     }catch(e){
       print(e);
     }
+    return false;
   }
 
   // change the code implementing inheritance
@@ -37,6 +43,13 @@ class AuthController extends GetxController{
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> logout() async {
+    isLoggedIn.value = false;
+    name.value = '';
+    currentUser.value = null;
+    authService.logout();
   }
 
 }

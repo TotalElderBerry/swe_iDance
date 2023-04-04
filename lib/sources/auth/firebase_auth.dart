@@ -14,5 +14,8 @@ class Authentication{
     return user.user!;
   }  
   
+  void logout() async {
+    await auth.signOut();
+  }
 
 }
