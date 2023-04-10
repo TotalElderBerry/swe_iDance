@@ -12,20 +12,20 @@ class StudentAPI {
     const route = "/student/add";
     final response = await http.post(Uri.parse('${ApiConstants.baseUrl} + ${route}'),
     body: jsonEncode(
-      <String, String> {
-        "id": newUser.id,
-        "firstName": newUser.firstName,
-        "lastName": newUser.lastName,
-        "gender": newUser.gender,
-        "contactNumber": newUser.gender,
-        "emailAddress": newUser.emailAddress,
-        "dateOfBirth": newUser.dateOfBirth.toString(),
-        "user_id": newUser.userId.toString(),
-        "level": newUser.level,
-        "isInstructor": newUser.isInstructor.toString(),
-        "profilePicture": (newUser.profilePicture == null)?'':newUser.profilePicture.toString(),
-      }
-    )
+        <String, String> {
+          "id": newUser.id,
+          "firstName": newUser.firstName,
+          "lastName": newUser.lastName,
+          "gender": newUser.gender,
+          "contactNumber": newUser.gender,
+          "emailAddress": newUser.emailAddress,
+          "dateOfBirth": newUser.dateOfBirth.toString(),
+          "user_id": newUser.userId.toString(),
+          "level": newUser.level,
+          "isInstructor": newUser.isInstructor.toString(),
+          "profilePicture": (newUser.profilePicture == null)?'':newUser.profilePicture.toString(),
+        }
+      )
     );
   }
 
@@ -48,7 +48,7 @@ class StudentAPI {
   // to complete
   static Future<InstructorModel> switchToInstructor(String token) async {
     final route = '/instructor/profile/me';
-    final response = await http.get(Uri.parse('${ApiConstants.baseUrl} + ${route}'),headers: {"Authorization": token});
+    final response = await http.get(Uri.parse('${ApiConstants.baseUrl} + ${route}'),headers: {"Authorization": 'Bearer $token'});
 
     if(response.statusCode == 200){
       return InstructorModel.fromJson(jsonDecode(response.body));
