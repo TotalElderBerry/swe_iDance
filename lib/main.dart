@@ -2,13 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/theme/theme.dart';
 import 'package:i_dance/views/auth/login_page.dart';
+import 'package:i_dance/views/auth/register_page.dart';
+import 'package:i_dance/views/auth/register_page2.dart';
 import 'package:i_dance/views/home.dart';
+import 'package:i_dance/views/student/student_home.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await GetStorage.init();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -38,6 +44,3 @@ class MyApp extends StatelessWidget {
               }
             ),
       ),
-    );
-  }
-}

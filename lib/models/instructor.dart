@@ -27,5 +27,7 @@ class InstructorModel extends UserModel{
     dateOfBirth: dateOfBirth,
   );
 
-
+  factory InstructorModel.fromJson(Map<String, dynamic> json){
+    return InstructorModel(json['student_id'], json['user_id'], firstName: json['first_name'], lastName: json['last_name'], gender: json['gender'], contactNumber: json['contact_number'], emailAddress: json['email_address'], dateOfBirth: json['data_of_birth'], rating: json['rating'], description: json['description']);
+  }
 }
