@@ -13,4 +13,8 @@ class LocalStorageSource{
     return storage.read(key);
   }
 
+  static void deleteStorage(String key){
+    storage.remove(key);
+  }
+
 }
