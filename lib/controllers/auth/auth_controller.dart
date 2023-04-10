@@ -22,6 +22,7 @@ class AuthController extends GetxController{
   
   RxBool isLoggedIn = false.obs;
   RxString name = "".obs;
+
   Future<bool> login(String email, String password)async{
     print(isLoggedIn.value);
     try{
@@ -34,7 +35,7 @@ class AuthController extends GetxController{
       try {
         currentInstructor.value = await StudentInstructorAuth.getProileInstructor();
       } catch (e) {
-        
+        return false;
       }
       update();
       return true;
@@ -53,6 +54,10 @@ class AuthController extends GetxController{
     } catch (e) {
       print(e);
     }
+  }
+
+  String getLoggedUserId(){
+    return currentUser.value!.userId;
   }
 
   Future<void> logout() async {

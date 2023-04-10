@@ -13,7 +13,7 @@ class StudentInstructorAuth{
   static Future<StudentModel> getProfileStudentbyId(String id) async {
     final route = "/student/me/${id}";
     final response = await http.get(
-        Uri.parse('${ApiConstants.baseUrl} + ${route}'),
+        Uri.parse('${ApiConstants.baseUrl} + $route'),
       );
 
     if(response.statusCode == 200){

@@ -9,7 +9,7 @@ import 'package:i_dance/sources/localstorage/localstorage.dart';
 
 class StudentAPI {
   static void addStudent(StudentModel newUser) async {
-    const route = "student/add";
+    const route = "/student/add";
     final response = await http.post(Uri.parse('${ApiConstants.baseUrl} + ${route}'),
     body: jsonEncode(
       <String, String> {
@@ -23,6 +23,7 @@ class StudentAPI {
         "user_id": newUser.userId.toString(),
         "level": newUser.level,
         "isInstructor": newUser.isInstructor.toString(),
+        "profilePicture": (newUser.profilePicture == null)?'':newUser.profilePicture.toString(),
       }
     )
     );
@@ -31,7 +32,7 @@ class StudentAPI {
   
 
   static Future<StudentModel> getStudentbyId(String id) async {
-    final route = "student/${id}";
+    final route = "/student/${id}";
     final response = await http.get(
         Uri.parse('${ApiConstants.baseUrl} + ${route}'),
       );
