@@ -4,10 +4,13 @@ import 'package:get/get.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/theme/theme.dart';
 import 'package:i_dance/views/auth/login_page.dart';
+import 'package:i_dance/views/auth/register_page.dart';
+import 'package:i_dance/views/auth/register_page2.dart';
 import 'package:i_dance/views/home.dart';
+import 'package:i_dance/views/student/student_home.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: lightColorScheme
         ),
-        home: authController.isLoggedIn.value == true ? LoginPage() : LoginPage(),
+        home:RegisterPage2(),
       ),
     );
   }
