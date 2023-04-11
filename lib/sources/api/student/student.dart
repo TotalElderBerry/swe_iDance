@@ -8,9 +8,11 @@ import 'package:http/http.dart' as http;
 import 'package:i_dance/sources/localstorage/localstorage.dart';
 
 class StudentAPI {
-  static void addStudent(StudentModel newUser) async {
+  static Future addStudent(StudentModel newUser) async {
     const route = "/student/add";
-    final response = await http.post(Uri.parse('${ApiConstants.baseUrl} + ${route}'),
+    print(newUser.firstName);
+
+    final response = await http.post(Uri.parse('http://10.0.2.2:8000/api/student/add'),
     body: jsonEncode(
         <String, String> {
           "id": newUser.id,
@@ -24,8 +26,12 @@ class StudentAPI {
           "level": newUser.level,
           "isInstructor": newUser.isInstructor.toString(),
           "profilePicture": (newUser.profilePicture == null)?'':newUser.profilePicture.toString(),
-        }
-      )
+        },
+        
+      ),
+      headers: {
+        "Content-Type": "application/json"
+      },
     );
   }
 
@@ -34,7 +40,10 @@ class StudentAPI {
   static Future<StudentModel> getStudentbyId(String id) async {
     final route = "/student/${id}";
     final response = await http.get(
-        Uri.parse('${ApiConstants.baseUrl} + ${route}'),
+        Uri.parse('http://10.0.2.2:8000/api + ${route}'),
+          headers: {
+            "Content-Type": "application/json"
+          },
       );
 
     if(response.statusCode == 200){
@@ -48,7 +57,7 @@ class StudentAPI {
   // to complete
   static Future<InstructorModel> switchToInstructor(String token) async {
     final route = '/instructor/profile/me';
-    final response = await http.get(Uri.parse('${ApiConstants.baseUrl} + ${route}'),headers: {"Authorization": 'Bearer $token'});
+    final response = await http.get(Uri.parse('http://10.0.2.2:8000/api + ${route}'),headers: {"Authorization": 'Bearer $token', "Content-Type": "application/json"});
 
     if(response.statusCode == 200){
       return InstructorModel.fromJson(jsonDecode(response.body));

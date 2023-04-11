@@ -13,12 +13,16 @@ class StudentInstructorAuth{
   static Future<StudentModel> getProfileStudentbyId(String id) async {
     final route = "/student/me/${id}";
     final response = await http.get(
-        Uri.parse('${ApiConstants.baseUrl} + $route'),
+        Uri.parse('http://10.0.2.2:8000/api + $route'),
+         headers: {
+            "Content-Type": "application/json"
+          },
       );
 
     if(response.statusCode == 200){
 
       Map<String, dynamic> json = jsonDecode(response.body);
+      print(json['token']);
       LocalStorageSource.writeToStorage('instructor_token',(json['token'])?json['token']:null);
       return StudentModel.fromJson(jsonDecode(response.body));
     } else {
@@ -30,6 +34,9 @@ class StudentInstructorAuth{
     final route = '/profile/me';
     final response = await http.get(
       Uri.parse('${ApiConstants.baseUrl} + ${route}'),
+       headers: {
+            "Content-Type": "application/json"
+          },
     );
 
     if(response.statusCode == 200) {

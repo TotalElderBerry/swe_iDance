@@ -7,7 +7,7 @@ import 'package:i_dance/sources/localstorage/localstorage.dart';
 class StudentController extends GetxController{
 
   void getStudentbyId(){
-
+    
   }
 
   void getStudentDanceClass(){

@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:i_dance/models/student.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
+import '../../controllers/auth/auth_controller.dart';
+
 class RegisterPage2 extends StatefulWidget {
-  const RegisterPage2({Key? key}) : super(key: key);
+  final firstName;
+  final lastName;
+  final contactNumber;
+  final birthdate;
+  final email;
+  final password;
+  const RegisterPage2(this.firstName, this.lastName, this.contactNumber, this.birthdate, this.email, this.password,{Key? key}) : super(key: key);
 
   @override
   _RegisterPage2 createState() => _RegisterPage2();
@@ -163,7 +173,12 @@ class _RegisterPage2 extends State<RegisterPage2> {
           ),
           SizedBox(height: 16),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              print("register");
+              StudentModel student = StudentModel("0","0",firstName: widget.firstName, lastName: widget.lastName, gender: "C", contactNumber: widget.contactNumber, emailAddress: widget.email, dateOfBirth: DateTime.utc(2001,06,14), level: _selectedSkillLevel, isInstructor: 0);
+
+              Get.find<AuthController>().register(student, widget.password);
+            },
             child: Text('Register'),
           ),
         ],

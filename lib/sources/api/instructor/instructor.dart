@@ -14,7 +14,8 @@ class InstructorAPI {
         "rating": newInstructor.rating.toString(),
         "dance_description": newInstructor.description,
       }
-    )
+    ),
+    
     );
   }
 

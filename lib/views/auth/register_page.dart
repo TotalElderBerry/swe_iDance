@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:i_dance/models/student.dart';
+import 'package:i_dance/views/auth/register_page2.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -10,7 +13,11 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-
+  final lastNameController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final contactNumberController = TextEditingController();
+  final birthDateController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -34,6 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: [
                   Flexible(
                     child: TextFormField(
+                      controller: firstNameController,
                       decoration: InputDecoration(
                         hintText: "Enter your first name",
                         labelText: "First Name",
@@ -50,6 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(width: 16),
                   Flexible(
                     child: TextFormField(
+                      controller: lastNameController,
                       decoration: InputDecoration(
                         hintText: "Enter your last name",
                         labelText: "Last Name",
@@ -70,6 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      controller: contactNumberController,
                       decoration: InputDecoration(
                         hintText: "Enter contact number",
                         labelText: "Contact Number",
@@ -86,6 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(width: 16),
                   Expanded(
                     child: TextFormField(
+                      controller: birthDateController,
                       decoration: InputDecoration(
                         hintText: "Enter Birthdate",
                         labelText: "Birthdate",
@@ -123,6 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(height: 20),
               TextFormField(
                 obscureText: true,
+                controller: passwordController,
                 decoration: InputDecoration(
                   hintText: "Enter your password",
                   labelText: "Password",
@@ -161,6 +173,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       SnackBar(content: Text("Processing Data")),
                     );
                   }
+                  Get.to(RegisterPage2(firstNameController.text,lastNameController.text,contactNumberController.text,birthDateController.text,_emailController.text,passwordController.text));
+                  
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue, // Set the background color of the button

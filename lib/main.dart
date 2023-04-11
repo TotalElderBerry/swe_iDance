@@ -10,6 +10,8 @@ import 'package:i_dance/views/auth/register_page.dart';
 import 'package:i_dance/views/auth/register_page2.dart';
 import 'package:i_dance/views/home.dart';
 import 'package:i_dance/views/student/student_home.dart';
+
+import 'controllers/student/student.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthController authController = Get.put(AuthController());
+    final StudentController studentController = Get.put(StudentController());
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: GetMaterialApp(
@@ -36,7 +39,7 @@ class MyApp extends StatelessWidget {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (BuildContext context, snapshot) {
                 if (snapshot.hasData) {
-                  return HomePage();
+                  return StudentHomePage();
                 } else {
                   return LoginPage();
                 }
