@@ -175,7 +175,7 @@ class _RegisterPage2 extends State<RegisterPage2> {
           ElevatedButton(
             onPressed: () {
               print("register");
-              StudentModel student = StudentModel("0","0",firstName: widget.firstName, lastName: widget.lastName, gender: "C", contactNumber: widget.contactNumber, emailAddress: widget.email, dateOfBirth: DateTime.utc(2001,06,14), level: _selectedSkillLevel, isInstructor: 0);
+              StudentModel student = StudentModel(1,"0",firstName: widget.firstName, lastName: widget.lastName, gender: "C", contactNumber: widget.contactNumber, emailAddress: widget.email, dateOfBirth: DateTime.utc(2001,06,14), level: _selectedSkillLevel, isInstructor: 0);
 
               Get.find<AuthController>().register(student, widget.password);
             },

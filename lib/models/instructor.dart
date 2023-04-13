@@ -2,7 +2,7 @@ import 'package:i_dance/models/user.dart';
 
 class InstructorModel extends UserModel{
   String userId;
-  String instructorId;
+  int instructorId;
   int rating;
   String description;
 
@@ -28,8 +28,9 @@ class InstructorModel extends UserModel{
   );
 
   factory InstructorModel.fromJson(Map<String, dynamic> json){
-    InstructorModel newInstructor = InstructorModel(json['student_id'], json['user_id'], firstName: json['first_name'], lastName: json['last_name'], gender: json['gender'], contactNumber: json['contact_number'], emailAddress: json['email_address'], dateOfBirth: json['data_of_birth'], rating: json['rating'], description: json['description']);
-    newInstructor.profilePicture = (json['profile_picture'] != null)?json['profile_picture']:null;
+      DateTime d = DateTime.parse(json['data_of_birth']);
+    InstructorModel newInstructor = InstructorModel(json['user_id'], json['instructor_id'], firstName: json['first_name'], lastName: json['last_name'], gender: json['gender'], contactNumber: json['contact_number'], emailAddress: json['email_address'], dateOfBirth: d, rating: json['rating'], description: json['description']);
+    newInstructor.profilePicture = (json['profile_picture'] != "")?json['profile_picture']:"";
     
     return newInstructor;
   }

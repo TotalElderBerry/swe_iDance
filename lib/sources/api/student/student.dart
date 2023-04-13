@@ -55,13 +55,19 @@ class StudentAPI {
 
 
   // to complete
+
+  //error naa dri
   static Future<InstructorModel> switchToInstructor(String token) async {
     final route = '/instructor/profile/me';
-    final response = await http.get(Uri.parse('http://10.0.2.2:8000/api + ${route}'),headers: {"Authorization": 'Bearer $token', "Content-Type": "application/json"});
-
+    final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/instructor/profile/me'),headers: {
+      'Authorization': 'Bearer $token', 
+      "Content-Type": "application/json"
+    });
+    print(response.statusCode);
     if(response.statusCode == 200){
-      return InstructorModel.fromJson(jsonDecode(response.body));
+      return InstructorModel.fromJson(jsonDecode(response.body)[0]);
+    }else{
+      throw Exception('Unauthorised ');
     }
-    throw Exception('Cannot get into Instructor Page');
   }
 }

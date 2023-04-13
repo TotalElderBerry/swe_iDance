@@ -18,4 +18,14 @@ class Authentication{
     await auth.signOut();
   }
 
+  User? getUser(){
+    print("firebase auth");
+    print(FirebaseAuth.instance.currentUser);
+    if (FirebaseAuth.instance.currentUser != null) {
+      return FirebaseAuth.instance.currentUser;
+    }else{
+      return null;
+    } 
+  }
+
 }

@@ -56,8 +56,22 @@ class AuthController extends GetxController{
     }
   }
 
-  String getLoggedUserId(){
-    return currentUser.value!.userId;
+  String getLoggedUserId()  {
+    return authService.getUser()!.uid;
+  }
+
+  Future<StudentModel> getLoggedStudent() async {
+    try {
+      currentUser.value = await StudentInstructorAuth.getProfileStudentbyId(authService.getUser()!.uid);
+      print("auth");
+      print(authService.getUser()!.uid);
+      isLoggedIn.value = true;
+    } catch (e) {
+      print("fuck eror");
+      print(e);      
+    }
+    
+    return currentUser.value!;
   }
 
   Future<void> logout() async {

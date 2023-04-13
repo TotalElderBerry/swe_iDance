@@ -22,14 +22,20 @@ class StudentController extends GetxController{
 
   }
 
-  Future<InstructorModel> switchToInstructor() async {
+  Future<InstructorModel?> switchToInstructor() async {
     String token = LocalStorageSource.readFromStorage('instructor_token');
-
+    print("token");
+    print(token);
+    if(token == '') return null;
     try {
+      print(token);
+      // print( StudentAPI.switchToInstructor(token));
       return await StudentAPI.switchToInstructor(token);
     } catch (e) {
+      print("hi");
       throw Exception(e);
     }
+    // print( LocalStorageSource.readFromStorage('instructor_token'));
 
   }
 
