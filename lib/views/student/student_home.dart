@@ -5,6 +5,7 @@ import 'package:i_dance/controllers/student/student.dart';
 import 'package:i_dance/models/instructor.dart';
 import 'package:i_dance/views/instructor/instructor_home.dart';
 
+
 class StudentHomePage extends StatefulWidget {
   const StudentHomePage({Key? key}) : super(key: key);
 
@@ -38,7 +39,10 @@ class _StudentHomePageState extends State<StudentHomePage> {
                     print(e);                  
                   }
 
-                }, child: Text("Switch to Instructor")),
+                }, child: const Text("Switch to Instructor")),
+                ElevatedButton(onPressed: (){
+                  Get.find<AuthController>().logout();
+                }, child: const Text("Logout Me")),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -48,10 +52,9 @@ class _StudentHomePageState extends State<StudentHomePage> {
                         onPressed: () {},
                         icon: Icon(Icons.menu),
                       ),
-                      const CircleAvatar(
+                       CircleAvatar(
                         radius: 20,
-                        backgroundImage: NetworkImage(
-                            'https://www.w3schools.com/w3images/avatar2.png'),
+                        backgroundImage: NetworkImage(Get.find<AuthController>().authService.getUser()!.photoURL!),
                       ),
                     ],
                   ),

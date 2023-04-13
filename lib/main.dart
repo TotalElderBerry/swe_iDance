@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
+import 'package:i_dance/controllers/image/imagecontroller.dart';
 import 'package:i_dance/theme/theme.dart';
 import 'package:i_dance/views/auth/login_page.dart';
 import 'package:i_dance/views/auth/register_page.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthController authController = Get.put(AuthController());
     final StudentController studentController = Get.put(StudentController());
+    final ImagePickerController imagePickerController = Get.put(ImagePickerController());
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: GetMaterialApp(
@@ -39,9 +41,11 @@ class MyApp extends StatelessWidget {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (BuildContext context, snapshot) {
                 if (snapshot.hasData) {
-                  return StudentHomePage();
+                  print("The current user");
+                  print(FirebaseAuth.instance.currentUser);
+                  return const StudentHomePage();
                 } else {
-                  return LoginPage();
+                  return const LoginPage();
                 }
               }
             ),

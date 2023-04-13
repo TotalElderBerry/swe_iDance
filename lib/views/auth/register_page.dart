@@ -169,9 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Processing Data")),
-                    );
+                    
                   }
                   Get.to(RegisterPage2(firstNameController.text,lastNameController.text,contactNumberController.text,birthDateController.text,_emailController.text,passwordController.text));
                   
