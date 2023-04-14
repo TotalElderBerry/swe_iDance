@@ -21,7 +21,6 @@ import '../../sources/auth/instructor_auth.dart';
 
 class AuthController extends GetxController{
   final Authentication authService = Authentication();
-  final ImageCloudStorage imageStorage = ImageCloudStorage();
   Rx<StudentModel?> currentUser = Rx<StudentModel?>(null);
   Rx<InstructorModel?> currentInstructor = Rx<InstructorModel?>(null);
   
@@ -51,18 +50,20 @@ class AuthController extends GetxController{
   }
 
 
-  Future<void> register(StudentModel registeredUser, String password) async {
+  Future<bool> register(StudentModel registeredUser, String password) async {
     try {
       User user = await authService.createUserWithEmailandPassword(registeredUser.emailAddress, password);
       registeredUser.id = user.uid;
       StudentAPI.addStudent(registeredUser);
       isLoggedIn.value = true;
-      String? path = await imageStorage.uploadProfilePicture(user.uid,File(Get.find<ImagePickerController>().imgPath.value));
+      String? path = await ImageCloudStorage().uploadProfilePicture(user.uid,File(Get.find<ImagePickerController>().imgPath.value));
       user.updatePhotoURL(path);
       getLoggedStudent();
+      return true;
     } catch (e) {
       print(e);
     }
+    return false;
   }
 
   String getLoggedUserId()  {

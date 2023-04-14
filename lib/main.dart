@@ -40,13 +40,16 @@ class MyApp extends StatelessWidget {
              StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (BuildContext context, snapshot) {
-                if (snapshot.hasData) {
-                  print("The current user");
-                  print(FirebaseAuth.instance.currentUser);
-                  return const StudentHomePage();
-                } else {
+                return Obx((){
+                  if (snapshot.hasData || Get.find<AuthController>().isLoggedIn.value) {
+                    print("The current user");
+                    print(FirebaseAuth.instance.currentUser);
+                    return const StudentHomePage();
+                  }
                   return const LoginPage();
-                }
+                  
+
+                });
               }
             ),
       ),
