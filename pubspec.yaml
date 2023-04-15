@@ -31,6 +31,7 @@ dependencies:
   get: ^4.6.5
   sqflite: ^2.2.6
   http: ^0.13.5
+  get_storage: ^2.1.1
   flutter:
     sdk: flutter
 
@@ -40,7 +41,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.2.10
   firebase_core: ^2.8.0
-  cloud_firestore: ^4.4.4
+  firebase_storage: ^11.1.0
 
 dev_dependencies:
   flutter_test:

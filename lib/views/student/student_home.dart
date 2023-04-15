@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class StudentHomePage extends StatefulWidget {
@@ -9,6 +8,9 @@ class StudentHomePage extends StatefulWidget {
 }
 
 class _StudentHomePageState extends State<StudentHomePage> {
+  List<String> items = ['Hello World', 'Flutter', 'Dart', 'Android', 'iOS', 'React Native', 'Xamarin', 'Ionic', 'PhoneGap', 'Apache Cordova', 'Unity', 'GameMaker', 'Godot', 'Unreal Engine'];
+  List<String> filteredItems = [];
+
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -54,6 +56,32 @@ class _StudentHomePageState extends State<StudentHomePage> {
     );
   }
 
+  void filterItems(String query) {
+    if (query.isNotEmpty) {
+      List<String> tempList = [];
+      items.forEach((item) {
+        if (item.toLowerCase().contains(query.toLowerCase())) {
+          tempList.add(item);
+        }
+      });
+      setState(() {
+        filteredItems.clear();
+        filteredItems.addAll(tempList);
+      });
+      return;
+    }
+    setState(() {
+      filteredItems.clear();
+      filteredItems.addAll(items);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    filteredItems.addAll(items);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,11 +120,12 @@ class _StudentHomePageState extends State<StudentHomePage> {
                       decoration: InputDecoration(
                         hintText: 'Explore',
                         border: OutlineInputBorder(),
-                        suffixIcon: IconButton(
+                        prefixIcon: IconButton(
                           onPressed: () {},
                           icon: Icon(Icons.search),
                         ),
                       ),
+                      onChanged: filterItems,
                     ),
                   ),
                   SizedBox(width: 16),
@@ -114,74 +143,77 @@ class _StudentHomePageState extends State<StudentHomePage> {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade400),
                   ),
-                  child: TextButton(
-                    onPressed: () {
-                      // Do something when the button is pressed
-                    },
-                    child: Text(
-                      'Newest',
-                      textAlign: TextAlign.center,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Courses',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '12',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(width: 16),
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey),
+                    border: Border.all(color: Colors.grey.shade400),
                   ),
-                  child: TextButton(
-                    onPressed: () {
-                      // Do something when the button is pressed
-                    },
-                    child: Text(
-                      'Kpop',
-                      textAlign: TextAlign.center,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Students',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '12',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(width: 16),
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade400),
                   ),
-                  child: TextButton(
-                    onPressed: () {
-                      // Do something when the button is pressed
-                    },
-                    child: Text(
-                      'Tiktok',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      // Do something when the button is pressed
-                    },
-                    child: Text(
-                      'Hiphop',
-                      textAlign: TextAlign.center,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Reviews',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '12',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -189,123 +221,16 @@ class _StudentHomePageState extends State<StudentHomePage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 1,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/250?image=9',
-                        height: 150,
-                        width: 200,
-                      ),
-                      SizedBox(height: 8),
-                      Center(
-                        child: Text(
-                          'Hello',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Center(
-                        child: Text(
-                          'World',
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Icon(Icons.date_range),
-                          SizedBox(width: 8),
-                          Text('April 11, 2023'),
-
-                          Icon(Icons.access_time),
-                          SizedBox(width: 8),
-                          Text('10:30 AM'),
-                        ],
-                      ),
-                    ],
-                  ),
+              itemCount: filteredItems.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(filteredItems[index]),
                 );
               },
             ),
           ),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 8,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Image.network(
-                                    'https://picsum.photos/250?image=9',
-                                    height: 150,
-                                    width: 200,
-                                  ),
-
-                                  SizedBox(height: 8),
-                                  Center(
-                                    child: Text(
-                                      'Hello',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      )
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Center(
-                                   child: Text(
-                                     'World',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                             )   
-                                            ),
-                                          ),
-                                          SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.date_range),
-                                              SizedBox(width: 8),
-                                              Text('April 11, 2023'),
-
-                                              Icon(Icons.access_time),
-                                              SizedBox(width: 8),
-                                              Text('10:30 AM'),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-               ],
-             ),
-           );
+        ],
+      ),
+    );
   }
 }
-                  
