@@ -1,16 +1,16 @@
 import 'dart:html';
 
 class DanceClassModel{
-  String dance_class_id;
-  String danceClassName;
-  List<String> danceGenre;
+  int danceClassId;
+  int instructorId;
+  String danceName;
   String danceSong;
-  DateTime date;
-  String address;
-  Location addressCoordinates;
+  String danceDifficulty;
   int price;
-  String instructor;
-  List<String> students;
+  String description;
+  int paymentDetailsId;
+  bool isAcceptingPayment;
 
-  DanceClassModel(this.dance_class_id,this.danceClassName,this.danceGenre,this.danceSong,this.date,this.address,this.addressCoordinates,this.price,this.instructor,this.students);
+  DanceClassModel(this.danceClassId,{required this.instructorId, required this.danceName, required this.danceSong, required this.danceDifficulty, required this.price, required this.description, required this.paymentDetailsId, required this.isAcceptingPayment});
+
 }

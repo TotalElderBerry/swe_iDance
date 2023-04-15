@@ -11,18 +11,30 @@ import '../localstorage/localstorage.dart';
 
 class StudentInstructorAuth{
   static Future<StudentModel> getProfileStudentbyId(String id) async {
-    final route = "/student/me/${id}";
-    final response = await http.get(
-        Uri.parse('${ApiConstants.baseUrl} + $route'),
-      );
+    print("hahah $id");
+    try {
+      final response = await http.get(
+          Uri.parse('http://192.168.254.155:8000/api/student/me/${id}'),
+          headers: {
+              "Content-Type": "application/json"
+            },
+        );
 
-    if(response.statusCode == 200){
-
-      Map<String, dynamic> json = jsonDecode(response.body);
-      LocalStorageSource.writeToStorage('instructor_token',(json['token'])?json['token']:null);
-      return StudentModel.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to get');
+      print("response");
+      print(response);
+      print(response.statusCode);
+      if(response.statusCode == 200){
+        print("200");
+        Map<String, dynamic> json = jsonDecode(response.body)[0];
+        LocalStorageSource.writeToStorage('instructor_token',(json['token'] != null)?json['token']:'');
+        print("response 200");
+        print(StudentModel.fromJson(jsonDecode(response.body)[0]));
+        return StudentModel.fromJson(jsonDecode(response.body)[0]);
+      } else {
+        throw Exception('Failed to get');
+      }
+    } catch (e) {
+      throw Exception(e);
     }
   }
 
@@ -30,6 +42,9 @@ class StudentInstructorAuth{
     final route = '/profile/me';
     final response = await http.get(
       Uri.parse('${ApiConstants.baseUrl} + ${route}'),
+       headers: {
+            "Content-Type": "application/json"
+          },
     );
 
     if(response.statusCode == 200) {

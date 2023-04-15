@@ -16,14 +16,15 @@ class HomePage extends StatelessWidget {
     print('The current user main: ${_auth.currentUser.value}');
 
     return Scaffold(
-      body: Column(children: [Text('Welcome student ${_auth.name.value} fuck u'),
-        ElevatedButton(onPressed: (){
-          AuthController controller = Get.find();
-          controller.logout();
-          print("logout");
-          Get.to(LoginPage());
-        }, child: Text("Logout"))
-      ]),
+      body: Container(
+        child: Center(
+          child: Column(
+            children: [
+              
+            ],
+          ),
+        ),
+      )
     );
   }
 }

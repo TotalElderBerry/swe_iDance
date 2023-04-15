@@ -18,13 +18,14 @@ class ImageCloudStorage{
     return await storage.child('users/$id/profile_picture.jpg').getDownloadURL();
   }
   
-  static Future<String?> uploadProfilePicture(String id, File profPic) async {
+  Future<String?> uploadProfilePicture(String id, File profPic) async {
     try {
       final imageRef = storage.child('users/$id/profile_picture.jpg');
       await imageRef.putFile(profPic);
+      print(imageRef.getDownloadURL());
       return imageRef.getDownloadURL();
     } catch (e) {
-      
+      print(e);
     }
     return null;
   }
