@@ -5,8 +5,6 @@ class StudentModel extends UserModel{
   int studentId;
   String level;
   int isInstructor;
- 
-  // change the code implementing inheritance
 
   StudentModel( this.studentId, this.userId, {
     required String firstName,
