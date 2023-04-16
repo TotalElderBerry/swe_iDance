@@ -10,6 +10,7 @@ import 'package:i_dance/views/auth/login_page.dart';
 import 'package:i_dance/views/auth/register_page.dart';
 import 'package:i_dance/views/auth/register_page2.dart';
 import 'package:i_dance/views/home.dart';
+import 'package:i_dance/views/instructor/instructor_home.dart';
 import 'package:i_dance/views/student/student_home.dart';
 
 import 'controllers/student/student.dart';
@@ -28,31 +29,18 @@ class MyApp extends StatelessWidget {
     final AuthController authController = Get.put(AuthController());
     final StudentController studentController = Get.put(StudentController());
     final ImagePickerController imagePickerController = Get.put(ImagePickerController());
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: GetMaterialApp(
+    return GetMaterialApp(
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: lightColorScheme
+          colorScheme: lightColorScheme,
+          textTheme: TextTheme(
+            bodySmall: TextStyle(color: Colors.blue),
+            titleLarge: TextStyle(fontWeight: FontWeight.bold),
+            labelMedium: TextStyle(fontWeight: FontWeight.bold)
+          )
         ),
         // home: authController.isLoggedIn.value == true ? HomePage() : LoginPage(),
-        home: 
-             StreamBuilder(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (BuildContext context, snapshot) {
-                return Obx((){
-                  if (snapshot.hasData || Get.find<AuthController>().isLoggedIn.value) {
-                    print("The current user");
-                    print(FirebaseAuth.instance.currentUser);
-                    return const StudentHomePage();
-                  }
-                  return const StudentHomePage();
-                  
-
-                });
-              }
-            ),
-      ),
+        home: InstructorHome()
     );
   }
 }
