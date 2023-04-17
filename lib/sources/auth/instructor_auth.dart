@@ -12,9 +12,10 @@ import '../localstorage/localstorage.dart';
 class StudentInstructorAuth{
   static Future<StudentModel> getProfileStudentbyId(String id) async {
     print("hahah $id");
+    final route = '/student/me/$id';
     try {
       final response = await http.get(
-          Uri.parse('http://192.168.254.155:8000/api/student/me/${id}'),
+         Uri.parse(ApiConstants.baseUrl+route),
           headers: {
               "Content-Type": "application/json"
             },
@@ -41,7 +42,7 @@ class StudentInstructorAuth{
   static Future<InstructorModel> getProileInstructor() async {
     final route = '/profile/me';
     final response = await http.get(
-      Uri.parse('${ApiConstants.baseUrl} + ${route}'),
+      Uri.parse(ApiConstants.baseUrl+route),
        headers: {
             "Content-Type": "application/json"
           },
