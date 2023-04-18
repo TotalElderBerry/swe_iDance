@@ -8,7 +8,7 @@ class DanceClassCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ((MediaQuery.of(context).size.width / 2)-20),
+      width: ((MediaQuery.of(context).size.width / 2)-30),
       child: Card(
         color: Theme.of(context).colorScheme.onSecondary,
         elevation: 2,
@@ -46,7 +46,7 @@ class DanceClassCard extends StatelessWidget {
                               Row(
                                 children: [
                                   IconButton(onPressed: (){}, icon: Icon(Icons.favorite_outline,size: 12,),padding: EdgeInsets.all(8),color: Colors.red,constraints: BoxConstraints(),),
-                                  Text("88", style: Theme.of(context).textTheme.labelSmall,),
+                                  // Text("88", style: Theme.of(context).textTheme.labelSmall,),
                               
                                 ],
                               )

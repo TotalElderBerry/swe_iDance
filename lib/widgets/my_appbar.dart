@@ -7,6 +7,7 @@ import '../controllers/auth/auth_controller.dart';
 import '../controllers/student/student.dart';
 import '../models/instructor.dart';
 import '../views/instructor/instructor_home.dart';
+import '../views/student/student_profile.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
   BuildContext parentContext;
@@ -93,10 +94,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
             _showBottomSheet(context);
         }, icon: const Icon(Icons.menu)),
         actions: [
-          CircleAvatar(
-                        radius: 20,
-                        backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL == null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),
-                      ),
+          GestureDetector(
+            onTap: () {
+              Get.to(StudentProfilePage());
+            },
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL == null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),
+            ),
+          ),
         ],
       );
 

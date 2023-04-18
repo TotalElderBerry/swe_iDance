@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
+import 'package:i_dance/views/student/pay_page.dart';
 
 class JoinDanceClassPage extends StatelessWidget {
   const JoinDanceClassPage({super.key});
@@ -36,7 +37,7 @@ class JoinDanceClassPage extends StatelessWidget {
               final res = jsonDecode(response.body);
               final redirectLink = Uri.parse(res['redirectUrl']);
               print(res['redirectUrl']);
-              await launchUrl(Uri.parse('facebook.com'),mode: LaunchMode.externalApplication,);
+              Get.to(PaymentPage(url: res['redirectUrl'],));
             }
 
           },
