@@ -131,13 +131,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
                   ),
                   Row(
                     children: [
-                      GestureDetector(
-                        onTap: (){
-                          print("fyck");
-                          Get.to(DanceClassDetails());
-                        },
-                        child: DanceClassCard(),
-                      )
+                      DanceClassCard()
                     ],
                   ),
                   Expanded(
