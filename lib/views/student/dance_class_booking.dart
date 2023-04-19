@@ -24,7 +24,12 @@ class JoinDanceClassPage extends StatelessWidget {
               body: jsonEncode(
                 <String,dynamic> {
                   "totalAmount": {"value": "100", "currency": 'PHP'},
-                  "requestReferenceNumber": '5fc10b93-bdbd-4f31-b31d-4575a3785009'
+                  "requestReferenceNumber": '5fc10b93-bdbd-4f31-b31d-4575a3785009',
+                  "redirectUrl": {
+                    "success": 'https://www.merchantsite.com/success?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
+                    "failure": 'https://www.mechantsite.com/failure?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
+                    "cancel": 'https://www.merchantsite.com/cancel?id=5fc10b93-bdbd-4f31-b31d-4575a3785009'
+                  }
                 }
               ),
               headers: {

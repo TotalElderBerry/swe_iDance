@@ -115,16 +115,13 @@ class _StudentHomePageState extends State<StudentHomePage> {
                             child: TextField(
                               decoration: InputDecoration(
                                 isDense: true,
+                                prefixIcon: Icon(Icons.search),
                                 hintText: 'Search...',
                                 border: OutlineInputBorder(),
-                                suffixIcon: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.search),
-                                ),
                               ),
                             ),
                           ),
-                         
+                         IconButton(onPressed: (){}, icon: Icon(Icons.filter_2_rounded))
                         ],
                       ),
                     ),

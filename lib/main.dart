@@ -11,6 +11,7 @@ import 'package:i_dance/views/auth/register_page.dart';
 import 'package:i_dance/views/auth/register_page2.dart';
 import 'package:i_dance/views/home.dart';
 import 'package:i_dance/views/instructor/instructor_home.dart';
+import 'package:i_dance/views/student/payment_success.dart';
 import 'package:i_dance/views/student/student_home.dart';
 
 import 'controllers/student/student.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
     final StudentController studentController = Get.put(StudentController());
     final ImagePickerController imagePickerController = Get.put(ImagePickerController());
     return GetMaterialApp(
+      routes: {
+        '/second': (context) => PaymentDetailsPage()
+      },
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: lightColorScheme,
