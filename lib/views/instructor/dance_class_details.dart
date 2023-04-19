@@ -12,12 +12,12 @@ class DanceClassDetails extends StatelessWidget {
       body: Column(
         children: [
            ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(12)),
-                              child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
-                              fit: BoxFit.contain,
-                              height: 150,
-                              ),
-                          ),
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+                child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
+                fit: BoxFit.contain,
+                height: 150,
+                ),
+            ),
         ],
       ),
     );
