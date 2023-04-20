@@ -29,4 +29,16 @@ class ImageCloudStorage{
     }
     return null;
   }
+
+  Future<String?> uploadDanceClassPicture(int instructor_id, int dance_class_id, File danceClassPic) async {
+    try {
+      final imageRef = storage.child('users/{$instructor_id}/dance-class/$dance_class_id/main_picture.jpg');
+      await imageRef.putFile(danceClassPic);
+      print(imageRef.getDownloadURL());
+      return imageRef.getDownloadURL();
+    } catch (e) {
+      print(e);
+    }
+  }
 }
+

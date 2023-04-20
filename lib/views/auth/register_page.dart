@@ -5,6 +5,10 @@ import 'package:i_dance/views/auth/register_page2.dart';
 
 import '../../theme/theme.dart';
 
+class DateController extends GetxController{
+  Rx<DateTime?> dateSelected = null.obs;
+}
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 

@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 
 class InstructorAPI {
   static void addInstructor(InstructorModel newInstructor) async {
-    const route = 'instructor/add';
-    final response = http.post(Uri.parse('${ApiConstants.baseUrl} + ${route}'),
+    const route = '/instructor/add';
+    final response = http.post(Uri.parse(ApiConstants.baseUrl+route),
     body: jsonEncode(
       <String, String>{
         "user_id": newInstructor.userId,
