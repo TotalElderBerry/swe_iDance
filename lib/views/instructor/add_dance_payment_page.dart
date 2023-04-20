@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:i_dance/models/live_dance_class.dart';
+import 'package:i_dance/views/instructor/review_created_dance_class.dart';
 
 import '../../widgets/my_appbar.dart';
 
 class AddPaymentPage extends StatelessWidget {
-  TextEditingController dateController = TextEditingController();
-   AddPaymentPage({super.key});
+
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController referenceNumberController = TextEditingController();
+  String date,danceName,time,price,maxStudents;
+  AddPaymentPage({super.key, required this.date,required this.danceName, required this.time, required this.price,required this.maxStudents});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context),
+      appBar: AppBar(),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
@@ -32,12 +38,14 @@ class AddPaymentPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20,),
-              const TextField(
+              TextField(
+                controller: fullNameController,
                 decoration: InputDecoration(
                   labelText: "Full Name"
                 ),
               ),
-              const TextField(
+              TextField(
+                controller: referenceNumberController,
                 decoration: InputDecoration(
                   labelText: "Reference Number"
                 ),
@@ -46,6 +54,16 @@ class AddPaymentPage extends StatelessWidget {
               Container(
                 width: (MediaQuery.of(context).size.width),
                 child: ElevatedButton(onPressed: (){
+                  // LiveDanceClassModel danceClass = LiveDanceClassModel(
+                  //   instructorId: "",
+                  //   danceName: "",
+                  //   danceSong: "",
+                  //   danceDifficulty: "",
+                  //   price: "",
+                  //   description: "",
+                  //   isAcceptingPayment: "",
+                  // )
+                  Get.to(ReviewDanceClassPage());
                 },child: Text("Next")),
               )
             ],

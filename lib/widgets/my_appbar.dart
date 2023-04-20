@@ -100,7 +100,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
             },
             child: CircleAvatar(
               radius: 20,
-              backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL == null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),
+              // backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL != null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),
+              backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
             ),
           ),
         ],

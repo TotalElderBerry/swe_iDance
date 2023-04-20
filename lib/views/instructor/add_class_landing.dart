@@ -24,7 +24,7 @@ class _AddClassLandingPageState extends State<AddClassLandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context),
+      appBar:AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Column(

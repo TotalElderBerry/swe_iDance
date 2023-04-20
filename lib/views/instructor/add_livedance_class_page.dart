@@ -11,12 +11,17 @@ import '../../widgets/my_appbar.dart';
 
 class AddLiveDanceClassPage extends StatelessWidget {
   TextEditingController dateController = TextEditingController();
-   AddLiveDanceClassPage({super.key});
+  TextEditingController danceNameController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController maxStudentsController = TextEditingController();
+
+  AddLiveDanceClassPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context),
+      appBar:AppBar(),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
@@ -33,11 +38,11 @@ class AddLiveDanceClassPage extends StatelessWidget {
                   color: Colors.grey[100],
                   child: 
                   Obx((){
-                    if(Get.find<ImagePickerController>().imgPath.value == ''){
+                    if(Get.find<ImagePickerController>().imgPathDanceClass.value == ''){
                       return SizedBox(
                           child: IconButton(
                           onPressed: (){
-                            Get.find<ImagePickerController>().pickImage();
+                            Get.find<ImagePickerController>().pickImageForClass();
                           },
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
@@ -47,10 +52,10 @@ class AddLiveDanceClassPage extends StatelessWidget {
                         );
                     }else{
                       return GestureDetector(
-                        onTap: () => Get.find<ImagePickerController>().pickImage(),
-                        onLongPress: () => Get.find<ImagePickerController>().imgPath.value = '',
+                        onTap: () => Get.find<ImagePickerController>().pickImageForClass(),
+                        onLongPress: () => Get.find<ImagePickerController>().imgPathDanceClass.value = '',
                         child: SizedBox(
-                            child: Image.file(File(Get.find<ImagePickerController>().imgPath.value),fit: BoxFit.cover,),
+                            child: Image.file(File(Get.find<ImagePickerController>().imgPathDanceClass.value),fit: BoxFit.cover,),
                             width: (MediaQuery.of(context).size.width),
                             height: 150,
                           ),
@@ -84,6 +89,10 @@ class AddLiveDanceClassPage extends StatelessWidget {
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2025),
                                 );
+
+                                if(picked != null){
+                                  dateController.text = picked.toString().split(" ")[0];
+                                }
                               },
                               icon: Icon(Icons.calendar_month),
                             )
@@ -100,7 +109,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
                       const SizedBox(width: 10,),
                       Expanded(
                         child: TextFormField(
-                          controller: dateController,
+                          controller: timeController,
                           decoration: InputDecoration(
                             labelText: "Time",
                             border: OutlineInputBorder(),
@@ -111,6 +120,11 @@ class AddLiveDanceClassPage extends StatelessWidget {
                                   context: context,
                                   initialTime: TimeOfDay.now(),
                                 );
+
+                                print(picked!.format(context));
+                                if(picked != null){
+                                  timeController.text = picked.format(context).toString();
+                                }
                               },
                               icon: Icon(Icons.access_time),
                             )
@@ -131,7 +145,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
                 children: [
                   Expanded(
                         child: TextFormField(
-                        
+                          controller: priceController,
                           decoration: InputDecoration(
                             labelText: "Price",
                             border: OutlineInputBorder(),
@@ -143,7 +157,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
                       const SizedBox(width: 10,),
                       Expanded(
                         child: TextFormField(
-                          controller: dateController,
+                          controller: maxStudentsController,
                           decoration: InputDecoration(
                             labelText: "Max Students",
                             border: OutlineInputBorder(),
@@ -159,7 +173,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
               Container(
                 width: (MediaQuery.of(context).size.width),
                 child: ElevatedButton(onPressed: (){
-                  Get.to(AddPaymentPage());
+                  Get.to(AddPaymentPage(date: dateController.text, danceName: danceNameController.text, time: timeController.text,price: priceController.text,maxStudents: maxStudentsController.text,));
                 },child: Text("Next")),
               )
             ],

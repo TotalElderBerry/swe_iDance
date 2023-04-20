@@ -10,7 +10,7 @@ class AddRecordedDanceClassPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context),
+      appBar: AppBar(),
       body: Text("Create Recorded Dance Class"),
     );
   }
