@@ -3,8 +3,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/models/live_dance_class.dart';
+import 'package:i_dance/models/payment.dart';
 import 'package:i_dance/views/instructor/review_created_dance_class.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../widgets/my_appbar.dart';
 
 class AddPaymentPage extends StatelessWidget {
@@ -54,16 +56,26 @@ class AddPaymentPage extends StatelessWidget {
               Container(
                 width: (MediaQuery.of(context).size.width),
                 child: ElevatedButton(onPressed: (){
-                  // LiveDanceClassModel danceClass = LiveDanceClassModel(
-                  //   instructorId: "",
-                  //   danceName: "",
-                  //   danceSong: "",
-                  //   danceDifficulty: "",
-                  //   price: "",
-                  //   description: "",
-                  //   isAcceptingPayment: "",
-                  // )
-                  Get.to(ReviewDanceClassPage());
+                  if(Get.find<AuthController>().currentInstructor.value != null){
+
+                    LiveDanceClassModel danceClass = LiveDanceClassModel(
+                      -1,
+                      danceClassId: -1,
+                      danceName: danceName,
+                      danceSong: "",
+                      danceDifficulty: "",
+                      price: int.parse(price),
+                      description: "",
+                      date: date,
+                      location: "",
+                      studentLimit: int.parse(maxStudents),
+                      instructor: Get.find<AuthController>().currentInstructor.value!,
+                      payment: Payment(-1,modeOfPayment: "paypal",
+                      accountName: fullNameController.text,
+                      accountNumber: referenceNumberController.text)
+                    );
+                  Get.to(ReviewDanceClassPage(danceClass: danceClass));
+                  }
                 },child: Text("Next")),
               )
             ],

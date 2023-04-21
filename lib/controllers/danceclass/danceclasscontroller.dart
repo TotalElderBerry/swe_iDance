@@ -1,9 +1,44 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
+import 'package:i_dance/controllers/image/imagecontroller.dart';
+import 'package:i_dance/sources/api/dance-class/dance-class.dart';
+
+import '../../models/live_dance_class.dart';
+import '../../sources/firebasestorage/firebase_storage.dart';
 
 class DanceClassController extends GetxController{
   List classes = ["Name1", "Name2"];
+  RxList<LiveDanceClassModel> upcomingDanceClasses = <LiveDanceClassModel>[].obs;
 
   void filterList(String query){
 
+  }
+
+  void addLiveDanceClass(LiveDanceClassModel liveDanceClass)async{
+    final id = await DanceClassAPI.addDanceClass(liveDanceClass);
+    ImageCloudStorage.uploadDanceClassPicture(liveDanceClass.instructor.instructorId, id, File(Get.find<ImagePickerController>().imgPathDanceClass.value));
+  }
+
+  Future<bool> populateUpcomingClasses() async {
+    bool hasFetched = false;
+    print("in populate classes");
+    upcomingDanceClasses.clear();
+    try {
+      final classes = await DanceClassAPI.getLiveDanceClasses();
+      final upcoming = classes['upcoming_classes'];
+    
+
+      for(var upcomingClass in upcoming){
+        print("loop");
+        LiveDanceClassModel upClass = LiveDanceClassModel.fromJson(upcomingClass);
+        upcomingDanceClasses.add(upClass);
+      }
+      hasFetched = true;
+    } catch (e) {
+      print("haha err");
+      print(e);
+    }
+    return hasFetched;
   }
 }

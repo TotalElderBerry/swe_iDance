@@ -29,7 +29,7 @@ class InstructorModel extends UserModel{
 
   factory InstructorModel.fromJson(Map<String, dynamic> json){
       DateTime d = DateTime.parse(json['data_of_birth']);
-    InstructorModel newInstructor = InstructorModel(json['user_id'], json['instructor_id'], firstName: json['first_name'], lastName: json['last_name'], gender: json['gender'], contactNumber: json['contact_number'], emailAddress: json['email_address'], dateOfBirth: d, rating: json['rating'], description: json['description']);
+    InstructorModel newInstructor = InstructorModel(json['user_id'], int.parse(json['instructor_id']), firstName: json['first_name'], lastName: json['last_name'], gender: json['gender'], contactNumber: json['contact_number'], emailAddress: json['email_address'], dateOfBirth: d, rating: int.parse(json['rating']), description: json['description']);
     newInstructor.profilePicture = (json['profile_picture'] != "")?json['profile_picture']:"";
     
     return newInstructor;

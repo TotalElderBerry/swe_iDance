@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/danceclass/danceclasscontroller.dart';
+import '../../models/live_dance_class.dart';
 
 class ReviewDanceClassPage extends StatelessWidget {
-  const ReviewDanceClassPage({super.key});
+  LiveDanceClassModel danceClass;
+  ReviewDanceClassPage({super.key, required this.danceClass});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +20,7 @@ class ReviewDanceClassPage extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: () {
+            Get.find<DanceClassController>().addLiveDanceClass(danceClass);
           },
           child: const Center(
             child: Text('Create Dance Class'),

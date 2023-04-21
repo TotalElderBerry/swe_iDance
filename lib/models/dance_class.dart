@@ -1,16 +1,18 @@
-import 'dart:html';
+import 'package:i_dance/models/payment.dart';
+
+import 'instructor.dart';
 
 class DanceClassModel{
   int danceClassId;
-  int instructorId;
+  InstructorModel instructor;
   String danceName;
   String danceSong;
   String danceDifficulty;
   int price;
   String description;
-  int paymentDetailsId;
+  Payment payment;
   bool isAcceptingPayment;
 
-  DanceClassModel(this.danceClassId, this.paymentDetailsId, {required this.instructorId, required this.danceName, required this.danceSong, required this.danceDifficulty, required this.price, required this.description,  required this.isAcceptingPayment});
+  DanceClassModel({required this.danceClassId, required this.payment, required this.danceName, required this.danceSong, required this.danceDifficulty, required this.price, required this.description,  required this.isAcceptingPayment, required this.instructor});
 
 }

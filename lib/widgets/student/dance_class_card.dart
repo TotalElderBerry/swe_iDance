@@ -5,14 +5,17 @@ import 'package:get/get.dart';
 import 'package:i_dance/views/student/dance_class_details.dart';
 import 'package:i_dance/views/student/instructor_details_page.dart';
 
+import '../../models/live_dance_class.dart';
+
 class DanceClassCard extends StatelessWidget {
-  const DanceClassCard({super.key});
+  LiveDanceClassModel liveClass;
+  DanceClassCard({super.key, required this.liveClass});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(DanceClassDetails());
+        Get.to(DanceClassDetails(liveClass: liveClass,));
       },
       child: Container(
         width: (MediaQuery.of(context).size.width)-32,
@@ -40,7 +43,7 @@ class DanceClassCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
 
                                children: [
-                                 Text("Run - BTS", style: Theme.of(context).textTheme.titleMedium,),
+                                 Text(liveClass.danceName, style: Theme.of(context).textTheme.titleMedium,),
                                 const SizedBox(height: 5,),
 
                                   Row(
@@ -50,7 +53,7 @@ class DanceClassCard extends StatelessWidget {
                                           backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
                                         ),
                                         SizedBox(width: 5,),
-                                      Text("Roger Intong", style: Theme.of(context).textTheme.labelSmall,),
+                                      Text("${liveClass.instructor.firstName} ${liveClass.instructor.lastName}", style: Theme.of(context).textTheme.labelSmall,),
                                   
                                     ],
                                   ),
@@ -65,7 +68,7 @@ class DanceClassCard extends StatelessWidget {
                                     children: [
                                       Icon(size: 10, Icons.calendar_month),
                                       const SizedBox(width: 5,),
-                                      Text("March 12,2023", style: Theme.of(context).textTheme.labelSmall,),
+                                      Text(liveClass.date, style: Theme.of(context).textTheme.labelSmall,),
                                     ],
                                   ),
                                   SizedBox(width: 10,),
@@ -74,7 +77,7 @@ class DanceClassCard extends StatelessWidget {
                                     children: [
                                       Icon(size: 10, Icons.location_on),
                                       const SizedBox(width: 5,),
-                                      Text("UC Main Campus", style: Theme.of(context).textTheme.labelSmall,),
+                                      Text(liveClass.location, style: Theme.of(context).textTheme.labelSmall,),
                                     ],
                                   )
 

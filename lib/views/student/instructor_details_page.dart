@@ -97,8 +97,8 @@ class InstructorDetailsPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        DanceClassCard(),
-                        DanceClassCard(),
+                        // DanceClassCard(),
+                        // DanceClassCard(),
                       ],
                     ),
                   ],

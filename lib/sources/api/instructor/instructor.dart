@@ -15,7 +15,6 @@ class InstructorAPI {
         "dance_description": newInstructor.description,
       }
     ),
-    
     );
   }
 
@@ -23,4 +22,5 @@ class InstructorAPI {
     final route = "instructor/${id}";
 
   }
+  
 }

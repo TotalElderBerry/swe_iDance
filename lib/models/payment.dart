@@ -1,10 +1,29 @@
 import 'package:flutter/widgets.dart';
 
 class Payment{
-  String payment_id;
-  double amount;
-  DateTime date;
-  String proofOfPayment; // to be changed into Image File
+  int paymentDetailsId;
+  String modeOfPayment;
+  String accountName;
+  String accountNumber;
 
-  Payment(this.payment_id,this.amount,this.date,this.proofOfPayment);
+  Payment(
+      this.paymentDetailsId,
+      {
+      required this.modeOfPayment,
+      required this.accountName,
+      required this.accountNumber});
+
+  factory Payment.fromJson(Map<String, dynamic> json) {
+    print(json['mode_of_payment']);
+    return Payment(int.parse(json['payment_details_id']), modeOfPayment: json['mode_of_payment'], accountName: json['account_name'], accountNumber: json['account_number']);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['payment_details_id'] = this.paymentDetailsId;
+    data['mode_of_payment'] = this.modeOfPayment;
+    data['account_name'] = this.accountName;
+    data['account_number'] = this.accountNumber;
+    return data;
+  }
 }

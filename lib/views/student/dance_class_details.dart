@@ -4,10 +4,13 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/views/student/dance_class_booking.dart';
 
+import '../../models/live_dance_class.dart';
 import '../instructor/add_dance_payment_page.dart';
 
 class DanceClassDetails extends StatelessWidget {
-  const DanceClassDetails({super.key});
+  LiveDanceClassModel liveClass;
+
+  DanceClassDetails({super.key, required this.liveClass});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +50,7 @@ class DanceClassDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Run - BTS", style: Theme.of(context).textTheme.headlineLarge,),
+                        Text(liveClass.danceName, style: Theme.of(context).textTheme.headlineLarge,),
                     
                         IconButton(onPressed: (){}, icon: Icon(Icons.favorite, color: Colors.red,))
                       ],
@@ -56,7 +59,7 @@ class DanceClassDetails extends StatelessWidget {
                       Row(
                           children: [
                             Icon(size: 24, Icons.location_on,color: Theme.of(context).primaryColor,),
-                            Text(" UC Main Campus", style: Theme.of(context).textTheme.labelSmall,),
+                            Text(" ${liveClass.location}", style: Theme.of(context).textTheme.labelSmall,),
                           ],
                       ),
               
@@ -72,7 +75,7 @@ class DanceClassDetails extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(size: 24, Icons.calendar_month,color: Theme.of(context).primaryColor,),
-                                    Text("March 12,2023", style: Theme.of(context).textTheme.labelSmall,),
+                                    Text(liveClass.date, style: Theme.of(context).textTheme.labelSmall,),
                                   ],
                                 ),
                                 const SizedBox(width:15,),
@@ -88,7 +91,7 @@ class DanceClassDetails extends StatelessWidget {
                                   Row(
                                     children: [
                                       Icon(size: 24, Icons.money,color: Theme.of(context).primaryColor,),
-                                      Text("400 Pesos", style: Theme.of(context).textTheme.labelSmall,),
+                                      Text(liveClass.price.toString(), style: Theme.of(context).textTheme.labelSmall,),
                                     ],
                                   ),
                         
@@ -107,7 +110,7 @@ class DanceClassDetails extends StatelessWidget {
                               backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
                             ),
                             SizedBox(width: 10,),
-                          Text("Roger Intong", style: Theme.of(context).textTheme.labelMedium,),
+                          Text("${liveClass.instructor.firstName} ${liveClass.instructor.lastName}", style: Theme.of(context).textTheme.labelMedium,),
                       
                         ],
                       ),

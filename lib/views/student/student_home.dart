@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
+import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
 import 'package:i_dance/controllers/student/student.dart';
 import 'package:i_dance/models/instructor.dart';
 import 'package:i_dance/views/instructor/instructor_home.dart';
@@ -100,7 +101,6 @@ class _StudentHomePageState extends State<StudentHomePage> {
         child: FutureBuilder(
           future: Get.find<AuthController>().getLoggedStudent(),
           builder: (context, snapshot) {
-            print(snapshot.data);
             if(!snapshot.hasData){  
               return Column(
                 children: [
@@ -126,23 +126,37 @@ class _StudentHomePageState extends State<StudentHomePage> {
                       ),
                     ),
                   ),
-                  Row(
-                    children: [
-                      DanceClassCard()
-                    ],
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
+                  FutureBuilder(
+                    future: Get.find<DanceClassController>().populateUpcomingClasses(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        print(Get.find<DanceClassController>().upcomingDanceClasses);
+                        return 
                         Expanded(
-                          child: Column(
-                            
+                          child: ListView.builder(
+                            itemCount: Get.find<DanceClassController>().upcomingDanceClasses.length,
+                            itemBuilder: (context, idx){
+                             return DanceClassCard(liveClass: Get.find<DanceClassController>().upcomingDanceClasses.elementAt(idx));
+                            }
                           ),
-                        ),
-                       
-                      ],
-                    ),
+                        );
+                      }
+                    return Text("loading");
+                    }
                   ),
+                 
+                  // Expanded(
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: Column(
+                            
+                  //         ),
+                  //       ),
+                       
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               );
             }
