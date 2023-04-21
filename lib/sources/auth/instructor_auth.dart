@@ -29,7 +29,6 @@ class StudentInstructorAuth{
         Map<String, dynamic> json = jsonDecode(response.body)[0];
         LocalStorageSource.writeToStorage('instructor_token',(json['token'] != null)?json['token']:'');
         print("response 200");
-        print(StudentModel.fromJson(jsonDecode(response.body)[0]));
         return StudentModel.fromJson(jsonDecode(response.body)[0]);
       } else {
         throw Exception('Failed to get');

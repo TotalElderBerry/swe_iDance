@@ -101,7 +101,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
         child: FutureBuilder(
           future: Get.find<AuthController>().getLoggedStudent(),
           builder: (context, snapshot) {
-            if(!snapshot.hasData){  
+            if(snapshot.hasData){  
               return Column(
                 children: [
                   

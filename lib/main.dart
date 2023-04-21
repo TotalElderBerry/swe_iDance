@@ -15,6 +15,7 @@ import 'package:i_dance/views/student/payment_success.dart';
 import 'package:i_dance/views/student/student_home.dart';
 
 import 'controllers/danceclass/danceclasscontroller.dart';
+import 'controllers/instructor/instructor.dart';
 import 'controllers/student/student.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
     final StudentController studentController = Get.put(StudentController());
     final DanceClassController danceClassController = Get.put(DanceClassController());
     final ImagePickerController imagePickerController = Get.put(ImagePickerController());
+    final InstructorController instructorController = Get.put(InstructorController());
     return GetMaterialApp(
       routes: {
         '/second': (context) => PaymentDetailsPage()

@@ -5,22 +5,44 @@ import 'package:i_dance/models/instructor.dart';
 import 'package:http/http.dart' as http;
 
 class InstructorAPI {
-  static void addInstructor(InstructorModel newInstructor) async {
+  static Future<String> addInstructor(InstructorModel newInstructor) async {
     const route = '/instructor/add';
-    final response = http.post(Uri.parse(ApiConstants.baseUrl+route),
+    final response = await http.post(Uri.parse('http://192.168.1.10:8000/api/instructor/add'),
     body: jsonEncode(
       <String, String>{
         "user_id": newInstructor.userId,
         "rating": newInstructor.rating.toString(),
-        "dance_description": newInstructor.description,
+        "description": newInstructor.description,
+        "dance_specialty": "hiphip",
       }
     ),
+    headers: {
+            "Content-Type": "application/json"
+          },
     );
+
+    if(response.statusCode == 200){
+      String token = jsonDecode(response.body)['token'];
+      return token;
+    }else{
+      return '';
+    }
   }
 
-  static void getInstructor(String id){
+  static Future<InstructorModel> getInstructor(String id) async{
     final route = "instructor/${id}";
+    final response = await http.get(Uri.parse('http://192.168.1.10:8000/api/instructor/$id'),
+    headers: {
+            "Content-Type": "application/json"
+          },
+    );
 
+    if(response.statusCode == 200){
+      InstructorModel instructor = InstructorModel.fromJson(jsonDecode(response.body));
+      return instructor;
+    }else{
+      throw Exception("error sa insructor");
+    }
   }
   
 }

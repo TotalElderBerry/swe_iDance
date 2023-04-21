@@ -7,10 +7,12 @@ import '../controllers/auth/auth_controller.dart';
 import '../controllers/student/student.dart';
 import '../models/instructor.dart';
 import '../views/instructor/instructor_home.dart';
+import '../views/instructor/instructor_signin.dart';
 import '../views/student/student_profile.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
   BuildContext parentContext;
+
   MyAppBar(this.parentContext,{super.key});
 
    void _showBottomSheet(BuildContext context) {
@@ -48,7 +50,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
                 label: Text('Edit Profile'),
               ),
               Divider(),
-              TextButton.icon(
+              Obx((){
+              return TextButton.icon(
                 onPressed: () async {
                   //  try {
                   //   InstructorModel? instructorModel = await Get.find<StudentController>().switchToInstructor();
@@ -63,12 +66,19 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
                   // } catch (e) {
                   //   print(e);                  
                   // }
-                      Get.to(InstructorHome());
+                  if(Get.find<AuthController>().currentInstructor.value == null){
+                    Get.to(InstructorSignIn());
+                  }else{
+
+                    Get.to(InstructorHome());
+                  }
 
                 },
                 icon: Icon(Icons.school),
-                label: Text('Switch to Student'),
-              ),
+                label: Text( (Get.find<AuthController>().currentInstructor.value == null) ? 'Become an Instructor':'Switch to Instructor'),
+              );
+              
+              }),
               Divider(),
               TextButton.icon(
                 onPressed: () {

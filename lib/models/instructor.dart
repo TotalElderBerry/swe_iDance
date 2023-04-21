@@ -35,3 +35,16 @@ class InstructorModel extends UserModel{
     return newInstructor;
   }
 }
+
+    // "user_id": "xx22id",
+    // "first_name": "Brian",
+    // "last_name": "Lisondra",
+    // "gender": "M",
+    // "contact_number": "09154516111",
+    // "email_address": "test@gmail.com",
+    // "data_of_birth": "06/14/2001",
+    // "profile_picture": null,
+    // "instructor_id": 40,
+    // "rating": 5,
+    // "description": "tiktok",
+    // "dance_specialty": "hiphip"

@@ -18,6 +18,7 @@ import 'package:i_dance/sources/firebasestorage/firebase_storage.dart';
 import 'package:i_dance/sources/localstorage/localstorage.dart';
 
 import '../../sources/auth/instructor_auth.dart';
+import '../student/student.dart';
 
 class AuthController extends GetxController{
   final Authentication authService = Authentication();
@@ -37,7 +38,7 @@ class AuthController extends GetxController{
       name.value = user.uid;
       currentUser.value = await StudentInstructorAuth.getProfileStudentbyId(user.uid);
       try {
-        currentInstructor.value = await StudentInstructorAuth.getProileInstructor();
+        currentInstructor.value = await Get.find<StudentController>().switchToInstructor();
       } catch (e) {
         return false;
       }
@@ -73,6 +74,8 @@ class AuthController extends GetxController{
   Future<StudentModel> getLoggedStudent() async {
     try {
       currentUser.value = await StudentInstructorAuth.getProfileStudentbyId(authService.getUser()!.uid);
+      currentInstructor.value = await Get.find<StudentController>().switchToInstructor();
+      print(currentInstructor.value);
       isLoggedIn.value = true;
       print(currentUser.value);
     } catch (e) {
