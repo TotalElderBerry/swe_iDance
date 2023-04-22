@@ -6,6 +6,7 @@ import 'package:i_dance/views/student/dance_class_booking.dart';
 
 import '../../models/live_dance_class.dart';
 import '../instructor/add_dance_payment_page.dart';
+import 'instructor_details_page.dart';
 
 class DanceClassDetails extends StatelessWidget {
   LiveDanceClassModel liveClass;
@@ -31,7 +32,7 @@ class DanceClassDetails extends StatelessWidget {
       ),
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: const EdgeInsets.only(right: 32.0, left: 32, ),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -103,17 +104,22 @@ class DanceClassDetails extends StatelessWidget {
                       Divider(),
                       SizedBox(height: 5,),
         
-                       Row(
-                        children: [
-                          CircleAvatar(
-                              radius: 16,
-                              backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
-                            ),
-                            SizedBox(width: 10,),
-                          Text("${liveClass.instructor.firstName} ${liveClass.instructor.lastName}", style: Theme.of(context).textTheme.labelMedium,),
-                      
-                        ],
-                      ),
+                       GestureDetector(
+                         onTap: (){
+                          Get.to(InstructorDetailsPage(instructor: liveClass.instructor,));
+                         },
+                         child: Row(
+                          children: [
+                            CircleAvatar(
+                                radius: 16,
+                                backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
+                              ),
+                              SizedBox(width: 10,),
+                            Text("${liveClass.instructor.firstName} ${liveClass.instructor.lastName}", style: Theme.of(context).textTheme.labelMedium,),
+                                             
+                          ],
+                                             ),
+                       ),
         
                       SizedBox(height: 20,),
         

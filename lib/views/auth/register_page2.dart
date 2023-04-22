@@ -135,7 +135,7 @@ class _RegisterPage2 extends State<RegisterPage2> {
               bool isSuccess= await Get.find<AuthController>().register(student, widget.password);
               if(isSuccess){
                 Get.find<AuthController>().isLoggedIn.value = true;
-                Get.to(StudentHomePage());
+                Get.offAll(StudentHomePage());
               }
             },
             child: const  Text('Register'),

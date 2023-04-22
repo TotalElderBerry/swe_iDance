@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/views/student/student_home.dart';
 
 import '../controllers/auth/auth_controller.dart';
-import '../controllers/student/student.dart';
-import '../models/instructor.dart';
 import '../views/instructor/instructor_home.dart';
-import '../views/instructor/instructor_signin.dart';
 import '../views/student/student_profile.dart';
 
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
+class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
   BuildContext parentContext;
 
-  MyAppBar(this.parentContext,{super.key});
+  InstructorAppBar(this.parentContext,{super.key});
 
-   void _showBottomSheet(BuildContext context) {
+   void showInstructorBottomSheet(BuildContext ctx) {
     showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
+      context: ctx,
+      builder: (BuildContext ctx) {
         return Container(
           height: 250,
           decoration: BoxDecoration(
@@ -38,7 +34,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
             children: [
               TextButton.icon(
                 onPressed: () {
-                  Get.to(InstructorHome());
+                  Get.offAll(InstructorHome());
                 },
                 icon: Icon(Icons.home),
                 label: Text('Home'),
@@ -50,34 +46,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
                 label: Text('Edit Profile'),
               ),
               Divider(),
-              Obx((){
-              return TextButton.icon(
-                onPressed: () async {
-                  //  try {
-                  //   InstructorModel? instructorModel = await Get.find<StudentController>().switchToInstructor();
-                  //   print("instructor is");
-                  //   print(instructorModel);
-                  //   if(instructorModel == null){
-                  //     print("unauthorized");
-                  //   }else{
-                  //     print("authorized");
-                  //     Get.to(InstructorHome());
-                  //   }
-                  // } catch (e) {
-                  //   print(e);                  
-                  // }
-                  if(Get.find<AuthController>().currentInstructor.value == null){
-                    Get.to(InstructorSignIn());
-                  }else{
-                    Get.offAll(InstructorHome());
-                  }
-
+             TextButton.icon(
+                onPressed: () {
+                  Get.offAll(StudentHomePage());
                 },
                 icon: Icon(Icons.school),
-                label: Text( (Get.find<AuthController>().currentInstructor.value == null) ? 'Become an Instructor':'Switch to Instructor'),
-              );
+                label: Text('Switch to Student'),
+              ),
               
-              }),
               Divider(),
               TextButton.icon(
                 onPressed: () {
@@ -94,13 +70,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     return AppBar(
         scrolledUnderElevation: 0,
         elevation: 0,
         leadingWidth: 76.0,
         leading: IconButton(onPressed: () {
-            _showBottomSheet(context);
+            showInstructorBottomSheet(ctx);
         }, icon: const Icon(Icons.menu)),
         actions: [
           GestureDetector(
@@ -108,7 +84,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
               Get.to(StudentProfilePage());
             },
             child: Padding(
-              padding: const EdgeInsets.only(right: 10.0),
+              padding: const EdgeInsets.only(right: 10),
               child: CircleAvatar(
                 radius: 20,
                 // backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL != null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),

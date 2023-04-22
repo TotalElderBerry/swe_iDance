@@ -48,7 +48,7 @@ class InstructorSignIn extends StatelessWidget {
                 InstructorModel newInstructor = InstructorModel(current!.userId, -1, firstName: current.firstName, lastName: current.lastName, gender: current.gender, contactNumber: current.contactNumber, emailAddress: current.emailAddress, dateOfBirth: current.dateOfBirth, rating: 0, description: descriptionController.text);
                 try {
                     bool isSuccess = await Get.find<InstructorController>().addInstructor(newInstructor);
-                    if(isSuccess == true) Get.to(InstructorHome());
+                    if(isSuccess == true) Get.offAll(InstructorHome());
                 } catch (e) {
                   
                 }

@@ -5,9 +5,13 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/views/instructor/add_dance_payment_page.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../controllers/image/imagecontroller.dart';
+import '../../widgets/map.dart';
 import '../../widgets/my_appbar.dart';
+
+//10.3156992 , 123.88543660000005
 
 class AddLiveDanceClassPage extends StatelessWidget {
   TextEditingController dateController = TextEditingController();
@@ -24,7 +28,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
       appBar:AppBar(),
       body: Container(
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.only(right: 32.0, left: 32, ),
           child: Column(
             children: [
                Text('Provide Basic Details',style: Theme.of(context).textTheme.headlineMedium),
@@ -140,6 +144,47 @@ class AddLiveDanceClassPage extends StatelessWidget {
                       ),
                 ],
               ),
+              Expanded(
+                        child: TextFormField(
+                          controller: timeController,
+                          decoration: InputDecoration(
+                            labelText: "Location",
+                            border: OutlineInputBorder(),
+                            isDense: true,
+                            suffixIcon: IconButton(
+                              onPressed: () async {
+                                showDialog(context: context, builder: (BuildContext context){
+                                  return Dialog(
+                                      child: Container(
+                                        constraints: BoxConstraints(maxHeight: 350),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              TextField(),
+                                              const SizedBox(height: 10,),
+                                              Expanded(
+                                                child: MapWidget()
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                  );
+                                });
+                              },
+                              icon: Icon(Icons.location_city),
+                            )
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter your time";
+                            }
+                            return null;
+                          },
+                          
+                        ),
+                      ),
               const SizedBox(height: 10,),
                Row(
                 children: [
@@ -150,7 +195,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
                             labelText: "Price",
                             border: OutlineInputBorder(),
                             isDense: true,
-                            suffixIcon:  Icon(Icons.money),
+                            icon:  Icon(Icons.money),
                           ),
                         ),
                       ),
@@ -162,7 +207,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
                             labelText: "Max Students",
                             border: OutlineInputBorder(),
                             isDense: true,
-                            suffixIcon: Icon(Icons.people_alt),
+                            icon: Icon(Icons.people_alt),
                             
                           ),
                         ),

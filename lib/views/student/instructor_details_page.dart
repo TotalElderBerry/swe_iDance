@@ -3,10 +3,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../models/instructor.dart';
 import '../../widgets/student/dance_class_card.dart';
 
 class InstructorDetailsPage extends StatelessWidget {
-  const InstructorDetailsPage({super.key});
+  InstructorModel instructor;
+  InstructorDetailsPage({super.key, required this.instructor});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class InstructorDetailsPage extends StatelessWidget {
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.only(right: 32.0, left: 32, ),
           child: Column(
             children: [
               Column(
@@ -44,7 +46,7 @@ class InstructorDetailsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  Text("Sarah Geronimo", style: Theme.of(context).textTheme.titleLarge,),
+                  Text('${instructor.firstName} ${instructor.lastName}', style: Theme.of(context).textTheme.titleLarge,),
                   RatingBar.builder(
                     itemSize: 20.0,
                     initialRating: 3,

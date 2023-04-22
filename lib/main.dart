@@ -35,9 +35,7 @@ class MyApp extends StatelessWidget {
     final ImagePickerController imagePickerController = Get.put(ImagePickerController());
     final InstructorController instructorController = Get.put(InstructorController());
     return GetMaterialApp(
-      routes: {
-        '/second': (context) => PaymentDetailsPage()
-      },
+      debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: lightColorScheme,
