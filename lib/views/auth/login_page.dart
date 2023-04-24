@@ -46,6 +46,7 @@ class LoginPage extends StatelessWidget {
             print('The current user: ${authController.currentUser.value}');
 
           }
+          print(userController.text);
           bool isSuccess = await authController.login(userController.text, passwordController.text);
           print(isSuccess);
           if(isSuccess) Get.to(HomePage());

@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/views/student/dance_class_details.dart';
 import 'package:i_dance/views/student/instructor_details_page.dart';
+import 'package:i_dance/views/student/recorded_dance_class_booking.dart';
 
 class DanceClassCard extends StatelessWidget {
   const DanceClassCard({super.key});
@@ -12,7 +13,8 @@ class DanceClassCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(DanceClassDetails());
+        // Get.to(DanceClassDetails());
+        Get.to(RecordedDanceClassBooking());
       },
       child: Container(
         width: (MediaQuery.of(context).size.width)-32,
@@ -40,6 +42,15 @@ class DanceClassCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
 
                                children: [
+                                Transform(
+                                  transform: new Matrix4.identity()..scale(0.6),
+                                  child: Chip(
+                                    backgroundColor: Theme.of(context).primaryColor,
+                                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    avatar: Icon(Icons.live_help, color: Colors.white,size: 12 ,),
+                                    label: const Text('Live Class',style: TextStyle(color: Colors.white, fontSize: 14)),
+                                  ),
+                                ),
                                  Text("Run - BTS", style: Theme.of(context).textTheme.titleMedium,),
                                 const SizedBox(height: 5,),
 

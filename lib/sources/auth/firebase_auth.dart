@@ -5,8 +5,12 @@ class Authentication{
   static var auth = FirebaseAuth.instance;
 
   Future<User> signInWithCredentials(String email, String password)async{
-    final user = await auth.signInWithEmailAndPassword(email: email,password: password);
-    return user.user!;
+    try {
+      final user = await auth.signInWithEmailAndPassword(email: email,password: password);
+      return user.user!;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
   
   Future<User> createUserWithEmailandPassword(String email, String password) async {
