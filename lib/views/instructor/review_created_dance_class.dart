@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/views/instructor/instructor_home.dart';
 
 import '../../controllers/danceclass/danceclasscontroller.dart';
 import '../../controllers/image/imagecontroller.dart';
@@ -23,7 +24,12 @@ class ReviewDanceClassPage extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: () {
+            try {
             Get.find<DanceClassController>().addLiveDanceClass(danceClass);
+              Get.offAll(InstructorHome());
+            } catch (e) {
+              throw Exception(e);
+            }
           },
           child: const Center(
             child: Text('Create Dance Class'),

@@ -60,18 +60,18 @@ class LiveDanceClassModel extends DanceClassModel{
     return newLiveClass;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['instructor_id'] = this.instructor.instructorId;
-    data['dance_name'] = this.danceName;
-    data['dance_song'] = this.danceSong;
-    data['dance_difficulty'] = this.danceDifficulty;
-    data['date'] = this.date;
-    data['location'] = this.location;
-    data['price'] = '${this.price}';
-    data['description'] = this.description;
-    data['student_limit'] = this.studentLimit;
-    data['payment'] = this.payment.toJson();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = <dynamic, dynamic>{};
+    data['instructor_id'] = '${instructor.instructorId}';
+    data['dance_name'] = danceName;
+    data['dance_song'] = danceSong;
+    data['dance_difficulty'] = danceDifficulty;
+    data['date'] = date;
+    data['location'] = location;
+    data['price'] = '${price}';
+    data['description'] = description;
+    data['student_limit'] = studentLimit;
+    data['payment'] = payment.toJson();
     return data;
   }
 }

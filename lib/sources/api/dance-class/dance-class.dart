@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:i_dance/sources/localstorage/localstorage.dart';
 
 import '../../../constants/api.dart';
 import '../../../models/live_dance_class.dart';
@@ -8,10 +10,15 @@ import '../../../models/live_dance_class.dart';
 
 class DanceClassAPI{
   static Future<int> addDanceClass(LiveDanceClassModel danceClass)async{
+    final token = LocalStorageSource.readFromStorage('instructor_token');
     const route = '/dance-class/add/live';
     final response = await http.post(
       Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
-      body: danceClass.toJson() 
+      body: jsonEncode(danceClass.toJson()) ,
+      headers: {
+        "Content-Type": "application/json",
+        HttpHeaders.authorizationHeader: 'Basic $token',
+      },
     );
 
     if(response.statusCode == 200){

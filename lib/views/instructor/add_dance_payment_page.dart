@@ -74,6 +74,7 @@ class AddPaymentPage extends StatelessWidget {
                       accountName: fullNameController.text,
                       accountNumber: referenceNumberController.text)
                     );
+                    print(danceClass);
                   Get.to(ReviewDanceClassPage(danceClass: danceClass));
                   }
                 },child: Text("Next")),
