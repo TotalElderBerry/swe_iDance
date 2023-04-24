@@ -15,7 +15,7 @@ class Payment{
 
   factory Payment.fromJson(Map<String, dynamic> json) {
     print(json['mode_of_payment']);
-    return Payment(int.parse(json['payment_details_id']), modeOfPayment: json['mode_of_payment'], accountName: json['account_name'], accountNumber: json['account_number']);
+    return Payment(json['payment_details_id'], modeOfPayment: json['mode_of_payment'], accountName: json['account_name'], accountNumber: json['account_number']);
   }
 
   Map<String, dynamic> toJson() {

@@ -13,7 +13,6 @@ class LiveDanceClassModel extends DanceClassModel{
   LiveDanceClassModel(
     this.liveClassId, 
     {
-
       required this.date,
       required this.location,
       required this.studentLimit,
@@ -63,15 +62,29 @@ class LiveDanceClassModel extends DanceClassModel{
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['instructor_id'] = this.instructor.instructorId;
     data['dance_name'] = this.danceName;
     data['dance_song'] = this.danceSong;
     data['dance_difficulty'] = this.danceDifficulty;
     data['date'] = this.date;
     data['location'] = this.location;
-    data['price'] = this.price;
+    data['price'] = '${this.price}';
     data['description'] = this.description;
     data['student_limit'] = this.studentLimit;
     data['payment'] = this.payment.toJson();
     return data;
   }
 }
+
+//  "instructor_id": 24,
+//     "dance_name": "Cupid Tiktok",
+//     "dance_song": "Cupid",
+//     "dance_difficulty": "Hard",
+//     "date": "06/14/2001",
+//     "location": "Talamban",
+//     "price": "400",
+//     "description": "Forda Tiktok",
+//     "student_limit": 20,
+//     "mode_of_payment": "Paypal",
+//     "account_name": "Brian",
+//     "account_number": "12345"

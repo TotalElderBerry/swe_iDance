@@ -12,7 +12,7 @@ class StudentAPI {
     const route = "/student/add";
     print(newUser.firstName);
 
-    final response = await  http.post(Uri.parse(ApiConstants.baseUrl+route),
+    final response = await  http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
     body: jsonEncode(
         <String, String> {
           "id": newUser.id,
@@ -40,7 +40,7 @@ class StudentAPI {
   static Future<StudentModel> getStudentbyId(String id) async {
     final route = "/student/${id}";
     final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl+route),
+        Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
           headers: {
             "Content-Type": "application/json"
           },
@@ -59,7 +59,7 @@ class StudentAPI {
   //error naa dri
   static Future<InstructorModel> switchToInstructor(String token) async {
     final route = '/instructor/profile/me';
-    final response = await http.get(Uri.parse(ApiConstants.baseUrl+route),headers: {
+    final response = await http.get(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),headers: {
       'Authorization': 'Bearer $token', 
       "Content-Type": "application/json"
     });

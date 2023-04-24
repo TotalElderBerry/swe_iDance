@@ -15,7 +15,7 @@ class StudentInstructorAuth{
     final route = '/student/me/$id';
     try {
       final response = await http.get(
-         Uri.parse(ApiConstants.baseUrl+route),
+         Uri.parse(ApiConstants.baseEmuUrl+route),
           headers: {
               "Content-Type": "application/json"
             },
@@ -41,7 +41,7 @@ class StudentInstructorAuth{
   static Future<InstructorModel> getProileInstructor() async {
     final route = '/profile/me';
     final response = await http.get(
-      Uri.parse(ApiConstants.baseUrl+route),
+      Uri.parse(ApiConstants.baseEmuUrl+route),
        headers: {
             "Content-Type": "application/json"
           },

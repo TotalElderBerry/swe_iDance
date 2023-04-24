@@ -10,7 +10,7 @@ class DanceClassAPI{
   static Future<int> addDanceClass(LiveDanceClassModel danceClass)async{
     const route = '/dance-class/add/live';
     final response = await http.post(
-      Uri.parse(ApiConstants.baseUrl+route),
+      Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
       body: danceClass.toJson() 
     );
 
@@ -26,7 +26,7 @@ class DanceClassAPI{
     String route = "/dance-class/live/all";
     String uri = "${ApiConstants.baseUrl}$route"; 
     final response = await http.get(
-        Uri.parse('http://192.168.1.10:8000/api/dance-class/live/all'),
+        Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
           headers: {
             "Content-Type": "application/json"
           },
