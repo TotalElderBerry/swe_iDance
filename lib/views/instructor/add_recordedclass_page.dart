@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
 import 'add_dance_payment_page.dart';
 import '../../models/recorded_dance_model.dart';
 
@@ -279,28 +278,37 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                   width: (MediaQuery.of(context).size.width),
                   child: ElevatedButton(
                       onPressed: () {
-                        String difficulty;
-                        int id;
-                        if (isEasy == true) {
-                          difficulty = "Easy";
-                        } else if (isMedium == true) {
-                          difficulty = "Medium";
-                        } else {
-                          difficulty = "Hard";
-                        }
-                        if (recordedDance.isEmpty) {
-                          id = 1;
-                        } else {
-                          id = recordedDance.last["id"] + 1;
-                        }
+                        // String difficulty;
+                        // int id;
+                        // if (isEasy == true) {
+                        //   difficulty = "Easy";
+                        // } else if (isMedium == true) {
+                        //   difficulty = "Medium";
+                        // } else {
+                        //   difficulty = "Hard";
+                        // }
+                        // if (recordedDance.isEmpty) {
+                        //   id = 1;
+                        // } else {
+                        //   id = recordedDance.last["id"] + 1;
+                        // }
+                        // recordedDance.add({
+                        //   "id": id,
+                        //   "classname": danceController.text,
+                        //   "song": songController.text,
+                        //   "price": priceController.text,
+                        //   "link": linkController.text,
+                        //   "difficulty": difficulty,
+                        //   "details": detailsController.text,
+                        // });
                         recordedDance.add({
-                          "id": id,
-                          "classname": danceController.text,
-                          "song": songController.text,
-                          "price": priceController.text,
-                          "link": linkController.text,
-                          "difficulty": difficulty,
-                          "details": detailsController.text,
+                          "id": 1,
+                          "classname": "Sample Dance Class",
+                          "song": "Big Boy - Sza",
+                          "price": "200",
+                          "link": "Youtube.com/watch?v=9U-opxT87_w",
+                          "difficulty": "Easy",
+                          "details": "Lorem Ipsum Dolor Iset",
                         });
                         print(recordedDance);
                         Get.to(AddPaymentPage());

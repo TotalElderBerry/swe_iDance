@@ -22,108 +22,125 @@ class ReviewRecordedClass extends StatelessWidget {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              recordedDance.last['classname'],
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.music_note,
-                      color: Colors.purple,
-                    ),
-                    Text(recordedDance.last['song']),
-                  ],
+                Image.network(
+                  'https://i.ytimg.com/vi/9U-opxT87_w/maxresdefault.jpg',
+                  fit: BoxFit.fill,
+                ),
+                Text(
+                  recordedDance.last['classname'],
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                const SizedBox(
+                  height: 12,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const Icon(
-                      Icons.directions_walk,
-                      color: Colors.purple,
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.music_note,
+                          color: Colors.purple,
+                        ),
+                        Text(recordedDance.last['song']),
+                      ],
                     ),
-                    Text(recordedDance.last['difficulty']),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.directions_walk,
+                          color: Colors.purple,
+                        ),
+                        Text(recordedDance.last['difficulty']),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.money,
+                          color: Colors.purple,
+                        ),
+                        Text(recordedDance.last['price']),
+                      ],
+                    ),
                   ],
+                ),
+                const SizedBox(
+                  height: 12,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const Icon(
-                      Icons.money,
-                      color: Colors.purple,
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.link,
+                          color: Colors.purple,
+                        ),
+                        TextButton(
+                          onPressed: () => launchUrl(
+                            Uri.parse('https://' + recordedDance.last['link']),
+                            mode: LaunchMode.externalApplication,
+                          ),
+                          child: Text(recordedDance.last['link']),
+                        )
+                      ],
                     ),
-                    Text(recordedDance.last['price']),
                   ],
                 ),
+                const SizedBox(
+                  height: 24,
+                ),
+                const Divider(),
+                const SizedBox(
+                  height: 24,
+                ),
+                Text(
+                  'Payment Details',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                const ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://mb.com.ph/wp-content/uploads/2021/09/32049-1568x1460.png'),
+                  ),
+                  title: Text("PayMaya"),
+                ),
+                const ListTile(
+                  leading: Text('Full Name:'),
+                  title: Text('Juan Dela Cruz'),
+                ),
+                const ListTile(
+                  leading: Text('Reference Number:'),
+                  title: Text('ASDJKJ29UASKDJ'),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                const Divider(),
+                const SizedBox(
+                  height: 24,
+                ),
+                Text(
+                  'Dance Description',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Text(recordedDance.last['details']),
               ],
             ),
-            const SizedBox(
-              height: 12,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.link,
-                      color: Colors.purple,
-                    ),
-                    TextButton(
-                      onPressed: () => launchUrl(
-                        Uri.parse('https://' + recordedDance.last['link']),
-                        mode: LaunchMode.externalApplication,
-                      ),
-                      child: Text(recordedDance.last['link']),
-                    )
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            const Divider(),
-            const SizedBox(
-              height: 24,
-            ),
-            Text(
-              'Payment Details',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            const ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://mb.com.ph/wp-content/uploads/2021/09/32049-1568x1460.png'),
-              ),
-              title: Text("PayMaya"),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            const Divider(),
-            const SizedBox(
-              height: 24,
-            ),
-            Text(
-              'Dance Description',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Text(recordedDance.last['details']),
-          ],
+          ),
         ),
       ),
     );
