@@ -1,5 +1,5 @@
 import 'package:i_dance/models/dance_class.dart';
-import 'package:i_dance/models/payment.dart';
+import 'package:i_dance/models/payment_details.dart';
 
 import 'instructor.dart';
 
@@ -22,7 +22,7 @@ class LiveDanceClassModel extends DanceClassModel{
       required String danceSong,
       required String danceDifficulty,
       required String description,
-      required Payment payment,
+      required PaymentDetails payment,
       required InstructorModel instructor,
     }
   ):super(
@@ -52,7 +52,7 @@ class LiveDanceClassModel extends DanceClassModel{
     // accountName = json['account_name'];
     // accountNumber = json['account_number'];
  
-    Payment temp = Payment.fromJson(json['payment']);
+    PaymentDetails temp = PaymentDetails.fromJson(json['payment']);
     InstructorModel instructorTemp = InstructorModel.fromJson(json['instructor']);
 
     LiveDanceClassModel newLiveClass = LiveDanceClassModel(int.parse(json['live_danceclass_id']), date: json['date'], location: json['location'], studentLimit: int.parse(json['student_limit']), danceClassId: int.parse(json['dance_id']), danceName: json['dance_name'], danceSong: json['dance_song'], danceDifficulty: json['dance_difficulty'], price: int.parse(json['price']), description: json['description'], payment: temp, instructor: instructorTemp);
@@ -71,7 +71,9 @@ class LiveDanceClassModel extends DanceClassModel{
     data['price'] = '${price}';
     data['description'] = description;
     data['student_limit'] = studentLimit;
-    data['payment'] = payment.toJson();
+    data['mode_of_payment'] = payment.modeOfPayment;
+    data['account_name'] = payment.accountName;
+    data['account_number'] = payment.accountNumber;
     return data;
   }
 }

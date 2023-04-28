@@ -35,7 +35,27 @@ class StudentAPI {
     );
   }
 
-  
+  static Future<List<dynamic>> getStudentDanceClasses(int student_id) async {
+    final route = '/student/$student_id/classes';
+    try {
+      final response = await  http.get(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+        headers: {
+              "Content-Type": "application/json"
+            },
+        );
+      if(response.statusCode == 200){
+        print("get student dance class api");
+        print(response.body);
+        return jsonDecode(response.body);
+      }else{
+        throw Exception("error getting student's danceclasses");
+      }
+      
+    } catch (e) {
+      print(e);
+      throw Exception(e);
+    }
+  }
 
   static Future<StudentModel> getStudentbyId(String id) async {
     final route = "/student/${id}";
@@ -59,7 +79,9 @@ class StudentAPI {
   //error naa dri
   static Future<InstructorModel> switchToInstructor(String token) async {
     final route = '/instructor/profile/me';
-    final response = await http.get(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),headers: {
+    final response = await http.get(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+   
+    headers: {
       'Authorization': 'Bearer $token', 
       "Content-Type": "application/json"
     });
@@ -70,4 +92,31 @@ class StudentAPI {
       throw Exception('Unauthorised ');
     }
   }
+
+  static Future<bool> bookDanceClass(int student_id, int dance_class_id,String referenceNumber, int price, String name) async {
+    print("in dance book api");
+    final route = '/student/book/class/$dance_class_id';
+    String token = LocalStorageSource.readFromStorage('instructor_token');
+    print(route);
+    final response = await http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+    body: jsonEncode(
+      <String, dynamic> {
+        "student_id": student_id,
+        "reference_number": referenceNumber,
+        "amount": price,
+        "sender_name": name
+      }
+    ),
+    headers: {
+      "Content-Type": "application/json"
+    });
+    print(response.statusCode);
+    if(response.statusCode == 200){
+      return true;
+    }else{
+      throw Exception('Unauthorised ');
+    }
+  }
+
+  
 }

@@ -1,20 +1,20 @@
 import 'package:flutter/widgets.dart';
 
-class Payment{
+class PaymentDetails{
   int paymentDetailsId;
   String modeOfPayment;
   String accountName;
   String accountNumber;
 
-  Payment(
+  PaymentDetails(
       this.paymentDetailsId,
       {
       required this.modeOfPayment,
       required this.accountName,
       required this.accountNumber});
 
-  factory Payment.fromJson(Map<String, dynamic> json) {
-    return Payment(int.parse(json['payment_details_id']), modeOfPayment: json['mode_of_payment'], accountName: json['account_name'], accountNumber: json['account_number']);
+  factory PaymentDetails.fromJson(Map<String, dynamic> json) {
+    return PaymentDetails(int.parse(json['payment_details_id']), modeOfPayment: json['mode_of_payment'], accountName: json['account_name'], accountNumber: json['account_number']);
   }
 
   Map<dynamic, dynamic> toJson() {

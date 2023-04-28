@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:i_dance/controllers/student/student.dart';
 
 import '../../widgets/student/dance_class_card.dart';
 
@@ -74,18 +76,30 @@ class StudentProfilePage extends StatelessWidget {
           // ),
             Padding(
               padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // DanceClassCard(),
-                      // DanceClassCard(),
-                    ],
-                  ),
-                ],
+              child: FutureBuilder(
+                future: Get.find<StudentController>().getStudentDanceClass(),
+                builder: (context, snapshot) {
+                  if(snapshot.hasData){
+                    if (Get.find<StudentController>().studentBookingClasses.isEmpty) {
+                        return Text("No data");
+                    }
+                    print(Get.find<StudentController>().studentBookingClasses.length);
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // DanceClassCard(),
+                            // DanceClassCard(),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                  return Text("Number");
+                }
               ),
             ),
         ],
