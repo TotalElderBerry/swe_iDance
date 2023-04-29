@@ -3,6 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../../widgets/student/dance_class_card.dart';
+import '../../widgets/student/student_class_card.dart';
+
 
 class StudentProfilePage extends StatelessWidget {
   const StudentProfilePage({super.key});
@@ -81,8 +83,9 @@ class StudentProfilePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      DanceClassCard(),
-                      DanceClassCard(),
+                      
+                      StudentDanceClassCard(),
+                      StudentDanceClassCard(),
                     ],
                   ),
                 ],

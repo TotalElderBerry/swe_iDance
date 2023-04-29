@@ -306,7 +306,7 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                           "classname": "Sample Dance Class",
                           "song": "Big Boy - Sza",
                           "price": "200",
-                          "link": "Youtube.com/watch?v=9U-opxT87_w",
+                          "link": "youtube.com/watch?v=MhaH4XkHK5A",
                           "difficulty": "Easy",
                           "details": "Lorem Ipsum Dolor Iset",
                         });

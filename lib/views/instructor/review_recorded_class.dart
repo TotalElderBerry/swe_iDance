@@ -7,6 +7,11 @@ class ReviewRecordedClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String link = recordedDance.last['link'];
+    RegExp regExp = RegExp(r"(?<=v=)[\w-]+");
+    RegExpMatch? match = regExp.firstMatch(link);
+    String? id = match?.group(0);
+
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
@@ -15,7 +20,7 @@ class ReviewRecordedClass extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => null,
           child: const Center(
-            child: Text('Create Dance'),
+            child: Text('Book Dance'),
           ),
         ),
       ),
@@ -29,7 +34,7 @@ class ReviewRecordedClass extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.network(
-                  'https://i.ytimg.com/vi/9U-opxT87_w/maxresdefault.jpg',
+                  'https://i.ytimg.com/vi/$id/maxresdefault.jpg',
                   fit: BoxFit.fill,
                 ),
                 Text(
@@ -116,11 +121,11 @@ class ReviewRecordedClass extends StatelessWidget {
                   title: Text("PayMaya"),
                 ),
                 const ListTile(
-                  leading: Text('Full Name:'),
+                  leading: Text('Full Name'),
                   title: Text('Juan Dela Cruz'),
                 ),
                 const ListTile(
-                  leading: Text('Reference Number:'),
+                  leading: Text('Reference Number'),
                   title: Text('ASDJKJ29UASKDJ'),
                 ),
                 const SizedBox(

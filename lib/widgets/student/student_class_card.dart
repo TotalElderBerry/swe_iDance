@@ -5,13 +5,14 @@ import 'package:get/get.dart';
 import 'package:i_dance/views/student/dance_class_details.dart';
 import 'package:i_dance/views/student/instructor_details_page.dart';
 
-class DanceClassCard extends StatelessWidget {
-  const DanceClassCard({super.key});
+class StudentDanceClassCard extends StatelessWidget {
+  const StudentDanceClassCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        //to change (page for attendance)
         Get.to(DanceClassDetails());
       },
       child: Container(

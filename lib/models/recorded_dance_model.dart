@@ -1,2 +1,1 @@
-List<Map> recordedDance = [{}
-];
+List<Map> recordedDance = [{}];
