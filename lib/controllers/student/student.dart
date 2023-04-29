@@ -14,10 +14,22 @@ import '../../models/live_dance_class.dart';
 class StudentController extends GetxController{
 
   RxList<DanceBooking> studentBookingClasses = <DanceBooking>[].obs;
-
+  RxList<DanceBooking> filteredBookingClass = <DanceBooking>[].obs;
 
   void getStudentbyId(){
     
+  }
+
+
+  //to fix
+  void getBookedClasses(){
+    print("called get booked dance classes");
+     filteredBookingClass.value = studentBookingClasses.where((element) => element.dateApproved != 'PENDING').toList();
+  }
+
+  void getPendingClasses(){
+    filteredBookingClass.value = studentBookingClasses.where((element) => element.dateApproved == 'PENDING').toList();
+     print(filteredBookingClass.length);
   }
 
 
@@ -26,9 +38,19 @@ class StudentController extends GetxController{
     try {
       studentBookingClasses.clear();
       final response = await StudentAPI.getStudentDanceClasses(Get.find<AuthController>().currentUser.value!.studentId);
-      final studentClass = Get.find<DanceClassController>().upcomingDanceClasses.where((element) => element.danceClassId = response[0].dance_class_id);
+      int i;
+      for(i = 0; i < Get.find<DanceClassController>().upcomingDanceClasses.length;i++){
+        final studentClass = Get.find<DanceClassController>().upcomingDanceClasses.where((element) => element.danceClassId == response[i]['dance_class_id']);
+        print("student danceclassesnjhj");
+        DanceBooking danceBooking = DanceBooking();
+        danceBooking.liveDanceClass = studentClass.first;
+        danceBooking.dateApproved = response[i]['date_approved'];
+        Payment p = Payment.fromJson(response[i]['payment']);
+        danceBooking.payment = p;
+        studentBookingClasses.add(danceBooking);
+      }
+      print(studentBookingClasses.length);
       print("student danceclasses");
-      print(studentClass);
       return true;
     } catch (e) {
       print("erro");
