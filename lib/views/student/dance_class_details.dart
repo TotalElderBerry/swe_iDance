@@ -23,7 +23,7 @@ class DanceClassDetails extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: () {
-            Get.to(JoinDanceClassPage());
+            Get.to(JoinDanceClassPage(liveClass: liveClass,));
           },
           child: const Center(
             child: Text('Book this Class'),

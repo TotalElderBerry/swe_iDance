@@ -1,5 +1,5 @@
 import 'package:i_dance/models/dance_class.dart';
-import 'package:i_dance/models/payment.dart';
+import 'package:i_dance/models/payment_details.dart';
 
 import 'instructor.dart';
 
@@ -13,7 +13,6 @@ class LiveDanceClassModel extends DanceClassModel{
   LiveDanceClassModel(
     this.liveClassId, 
     {
-
       required this.date,
       required this.location,
       required this.studentLimit,
@@ -23,7 +22,7 @@ class LiveDanceClassModel extends DanceClassModel{
       required String danceSong,
       required String danceDifficulty,
       required String description,
-      required Payment payment,
+      required PaymentDetails payment,
       required InstructorModel instructor,
     }
   ):super(
@@ -53,7 +52,7 @@ class LiveDanceClassModel extends DanceClassModel{
     // accountName = json['account_name'];
     // accountNumber = json['account_number'];
  
-    Payment temp = Payment.fromJson(json['payment']);
+    PaymentDetails temp = PaymentDetails.fromJson(json['payment']);
     InstructorModel instructorTemp = InstructorModel.fromJson(json['instructor']);
 
     LiveDanceClassModel newLiveClass = LiveDanceClassModel(int.parse(json['live_danceclass_id']), date: json['date'], location: json['location'], studentLimit: int.parse(json['student_limit']), danceClassId: int.parse(json['dance_id']), danceName: json['dance_name'], danceSong: json['dance_song'], danceDifficulty: json['dance_difficulty'], price: int.parse(json['price']), description: json['description'], payment: temp, instructor: instructorTemp);
@@ -61,17 +60,33 @@ class LiveDanceClassModel extends DanceClassModel{
     return newLiveClass;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['dance_name'] = this.danceName;
-    data['dance_song'] = this.danceSong;
-    data['dance_difficulty'] = this.danceDifficulty;
-    data['date'] = this.date;
-    data['location'] = this.location;
-    data['price'] = this.price;
-    data['description'] = this.description;
-    data['student_limit'] = this.studentLimit;
-    data['payment'] = this.payment.toJson();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = <dynamic, dynamic>{};
+    data['instructor_id'] = '${instructor.instructorId}';
+    data['dance_name'] = danceName;
+    data['dance_song'] = danceSong;
+    data['dance_difficulty'] = danceDifficulty;
+    data['date'] = date;
+    data['location'] = location;
+    data['price'] = '${price}';
+    data['description'] = description;
+    data['student_limit'] = studentLimit;
+    data['mode_of_payment'] = payment.modeOfPayment;
+    data['account_name'] = payment.accountName;
+    data['account_number'] = payment.accountNumber;
     return data;
   }
 }
+
+//  "instructor_id": 24,
+//     "dance_name": "Cupid Tiktok",
+//     "dance_song": "Cupid",
+//     "dance_difficulty": "Hard",
+//     "date": "06/14/2001",
+//     "location": "Talamban",
+//     "price": "400",
+//     "description": "Forda Tiktok",
+//     "student_limit": 20,
+//     "mode_of_payment": "Paypal",
+//     "account_name": "Brian",
+//     "account_number": "12345"

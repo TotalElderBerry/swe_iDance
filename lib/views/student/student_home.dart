@@ -131,8 +131,10 @@ class _StudentHomePageState extends State<StudentHomePage> {
                     builder: (context, snapshot) {
                       if(snapshot.hasData){
                         print(Get.find<DanceClassController>().upcomingDanceClasses);
-                        return 
-                        Expanded(
+                        if(Get.find<DanceClassController>().upcomingDanceClasses.length == 0){
+                          return Text("Empty");
+                        }
+                        return Expanded(
                           child: ListView.builder(
                             itemCount: Get.find<DanceClassController>().upcomingDanceClasses.length,
                             itemBuilder: (context, idx){

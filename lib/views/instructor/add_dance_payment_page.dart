@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/models/live_dance_class.dart';
-import 'package:i_dance/models/payment.dart';
+import 'package:i_dance/models/payment_details.dart';
 import 'package:i_dance/views/instructor/review_created_dance_class.dart';
 
 import '../../controllers/auth/auth_controller.dart';
@@ -13,8 +13,8 @@ class AddPaymentPage extends StatelessWidget {
 
   TextEditingController fullNameController = TextEditingController();
   TextEditingController referenceNumberController = TextEditingController();
-  String date,danceName,time,price,maxStudents;
-  AddPaymentPage({super.key, required this.date,required this.danceName, required this.time, required this.price,required this.maxStudents});
+  String date,danceName,time,price,maxStudents,location;
+  AddPaymentPage({super.key, required this.date,required this.danceName, required this.time, required this.price,required this.maxStudents,required this.location });
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +67,14 @@ class AddPaymentPage extends StatelessWidget {
                       price: int.parse(price),
                       description: "",
                       date: date,
-                      location: "",
+                      location: location,
                       studentLimit: int.parse(maxStudents),
                       instructor: Get.find<AuthController>().currentInstructor.value!,
-                      payment: Payment(-1,modeOfPayment: "paypal",
+                      payment: PaymentDetails(-1,modeOfPayment: "paypal",
                       accountName: fullNameController.text,
                       accountNumber: referenceNumberController.text)
                     );
+                    print(danceClass);
                   Get.to(ReviewDanceClassPage(danceClass: danceClass));
                   }
                 },child: Text("Next")),

@@ -4,10 +4,15 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:i_dance/controllers/student/student.dart';
 import 'package:i_dance/views/student/pay_page.dart';
 
+import '../../models/live_dance_class.dart';
+import '../../utils/generateRefNumber.dart';
 class JoinDanceClassPage extends StatelessWidget {
-  const JoinDanceClassPage({super.key});
+  LiveDanceClassModel liveClass;
+  
+  JoinDanceClassPage({super.key, required this.liveClass});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +25,20 @@ class JoinDanceClassPage extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             
+            String refNumber = generateReferenceNumber(7);
+            refNumber += "-";
+            refNumber += generateReferenceNumber(4);
+            refNumber += "-";
+            refNumber += generateReferenceNumber(4);
+            refNumber += "-";
+            refNumber += generateReferenceNumber(4);
+            refNumber += "-";
+            refNumber += generateReferenceNumber(7);
             final response = await http.post(Uri.parse('https://pg-sandbox.paymaya.com/checkout/v1/checkouts'),
               body: jsonEncode(
                 <String,dynamic> {
-                  "totalAmount": {"value": "100", "currency": 'PHP'},
-                  "requestReferenceNumber": '5fc10b93-bdbd-4f31-b31d-4575a3785009',
+                  "totalAmount": {"value": liveClass.price, "currency": 'PHP'},
+                  "requestReferenceNumber": refNumber,
                   "redirectUrl": {
                     "success": 'https://www.merchantsite.com/success?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
                     "failure": 'https://www.mechantsite.com/failure?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
@@ -42,7 +56,10 @@ class JoinDanceClassPage extends StatelessWidget {
               final res = jsonDecode(response.body);
               final redirectLink = Uri.parse(res['redirectUrl']);
               print(res['redirectUrl']);
-              Get.to(PaymentPage(url: res['redirectUrl'],));
+              Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
+              // Get.to(PaymentPage(url: res['redirectUrl'],));
+              // print("hello");
+              // print(liveClass.liveClassId);
             }
 
           },

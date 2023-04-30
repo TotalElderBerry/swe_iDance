@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/views/instructor/instructor_home.dart';
 
 import '../../controllers/danceclass/danceclasscontroller.dart';
+import '../../controllers/image/imagecontroller.dart';
 import '../../models/live_dance_class.dart';
 
 class ReviewDanceClassPage extends StatelessWidget {
@@ -20,7 +24,12 @@ class ReviewDanceClassPage extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: () {
+            try {
             Get.find<DanceClassController>().addLiveDanceClass(danceClass);
+              Get.offAll(InstructorHome());
+            } catch (e) {
+              throw Exception(e);
+            }
           },
           child: const Center(
             child: Text('Create Dance Class'),
@@ -34,7 +43,7 @@ class ReviewDanceClassPage extends StatelessWidget {
             children: [
                ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
-                  child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
+                  child: Image.file(File((Get.find<ImagePickerController>().imgPathDanceClass.value)),
                   fit: BoxFit.contain,
                   height: 200,
                   ),
@@ -47,7 +56,7 @@ class ReviewDanceClassPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Run - BTS", style: Theme.of(context).textTheme.headlineLarge,),
+                        Text(danceClass.danceName, style: Theme.of(context).textTheme.headlineLarge,),
                     
                       ],
                     ),
@@ -55,7 +64,7 @@ class ReviewDanceClassPage extends StatelessWidget {
                       Row(
                           children: [
                             Icon(size: 24, Icons.location_on,color: Theme.of(context).primaryColor,),
-                            Text(" UC Main Campus", style: Theme.of(context).textTheme.labelSmall,),
+                            Text(danceClass.location, style: Theme.of(context).textTheme.labelSmall,),
                           ],
                       ),
               
@@ -71,7 +80,7 @@ class ReviewDanceClassPage extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(size: 24, Icons.calendar_month,color: Theme.of(context).primaryColor,),
-                                    Text("March 12,2023", style: Theme.of(context).textTheme.labelSmall,),
+                                    Text(danceClass.date, style: Theme.of(context).textTheme.labelSmall,),
                                   ],
                                 ),
                                 const SizedBox(width:15,),
@@ -87,7 +96,7 @@ class ReviewDanceClassPage extends StatelessWidget {
                                   Row(
                                     children: [
                                       Icon(size: 24, Icons.money,color: Theme.of(context).primaryColor,),
-                                      Text("400 Pesos", style: Theme.of(context).textTheme.labelSmall,),
+                                      Text('${danceClass.price}', style: Theme.of(context).textTheme.labelSmall,),
                                     ],
                                   ),
                         
@@ -130,13 +139,6 @@ class ReviewDanceClassPage extends StatelessWidget {
                         ],
                       )
 
-        
-
-                     
-        
-                      
-                      
-                 
                   ],
                 ),
               ),

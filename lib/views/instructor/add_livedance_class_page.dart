@@ -18,6 +18,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
   TextEditingController danceNameController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
   TextEditingController maxStudentsController = TextEditingController();
 
   AddLiveDanceClassPage({super.key});
@@ -26,16 +27,19 @@ class AddLiveDanceClassPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 32.0, left: 32, ),
-          child: Column(
+      body: Padding(
+        padding: const EdgeInsets.only(right: 32.0, left: 32, ),
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
             children: [
                Text('Provide Basic Details',style: Theme.of(context).textTheme.headlineMedium),
                const SizedBox(height: 5,),
               const Text('This section contains general information of your dance class',textAlign: TextAlign.center,),
               const SizedBox(height: 10,),
-      
+              
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: Container(
@@ -70,7 +74,8 @@ class AddLiveDanceClassPage extends StatelessWidget {
                   
                 ),
               ),
-              const TextField(
+              TextField(
+                controller: danceNameController,
                 decoration: InputDecoration(
                   labelText: "Dance Class Name"
                 ),
@@ -93,7 +98,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2025),
                                 );
-
+        
                                 if(picked != null){
                                   dateController.text = picked.toString().split(" ")[0];
                                 }
@@ -124,7 +129,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
                                   context: context,
                                   initialTime: TimeOfDay.now(),
                                 );
-
+        
                                 print(picked!.format(context));
                                 if(picked != null){
                                   timeController.text = picked.format(context).toString();
@@ -144,47 +149,46 @@ class AddLiveDanceClassPage extends StatelessWidget {
                       ),
                 ],
               ),
-              Expanded(
-                        child: TextFormField(
-                          controller: timeController,
-                          decoration: InputDecoration(
-                            labelText: "Location",
-                            border: OutlineInputBorder(),
-                            isDense: true,
-                            suffixIcon: IconButton(
-                              onPressed: () async {
-                                showDialog(context: context, builder: (BuildContext context){
-                                  return Dialog(
-                                      child: Container(
-                                        constraints: BoxConstraints(maxHeight: 350),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            children: [
-                                              TextField(),
-                                              const SizedBox(height: 10,),
-                                              Expanded(
-                                                child: MapWidget()
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                  );
-                                });
-                              },
-                              icon: Icon(Icons.location_city),
+              const SizedBox(height: 20,),
+              TextFormField(
+                controller: locationController,
+                decoration: InputDecoration(
+                  labelText: "Location",
+                  border: OutlineInputBorder(),
+                  isDense: true,
+                  suffixIcon: IconButton(
+                    onPressed: () async {
+                      showDialog(context: context, builder: (BuildContext context){
+                        return Dialog(
+                            child: Container(
+                              constraints: BoxConstraints(maxHeight: 350),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    TextField(),
+                                    const SizedBox(height: 10,),
+                                    Expanded(
+                                      child: MapWidget()
+                                    ),
+                                  ],
+                                ),
+                              ),
                             )
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please enter your time";
-                            }
-                            return null;
-                          },
-                          
-                        ),
-                      ),
+                        );
+                      });
+                    },
+                    icon: Icon(Icons.location_city),
+                  )
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter your time";
+                  }
+                  return null;
+                },
+                
+              ),
               const SizedBox(height: 10,),
                Row(
                 children: [
@@ -218,11 +222,14 @@ class AddLiveDanceClassPage extends StatelessWidget {
               Container(
                 width: (MediaQuery.of(context).size.width),
                 child: ElevatedButton(onPressed: (){
-                  Get.to(AddPaymentPage(date: dateController.text, danceName: danceNameController.text, time: timeController.text,price: priceController.text,maxStudents: maxStudentsController.text,));
+                  Get.to(AddPaymentPage(date: dateController.text, danceName: danceNameController.text, time: timeController.text,price: priceController.text,maxStudents: maxStudentsController.text, location: locationController.text,));
                 },child: Text("Next")),
               )
             ],
           ),
+            )
+          ],
+          
         ),
       ),
     );
