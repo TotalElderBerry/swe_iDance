@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/views/instructor/add_class_landing.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../widgets/instructor/dance_class_card.dart';
 import '../../widgets/instructor_appbar.dart';
 
@@ -38,7 +39,7 @@ class InstructorHome extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Welcome, Sarah!", style: Theme.of(context).textTheme.titleLarge),
+                Text("Welcome, ${Get.find<AuthController>().currentInstructor.value!.firstName} ${Get.find<AuthController>().currentInstructor.value!.lastName}!", style: Theme.of(context).textTheme.titleLarge),
                 const Divider(color: Colors.transparent,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

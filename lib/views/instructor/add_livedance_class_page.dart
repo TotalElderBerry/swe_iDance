@@ -94,8 +94,8 @@ class AddLiveDanceClassPage extends StatelessWidget {
                               onPressed: () async {
                                 final DateTime? picked = await showDatePicker(
                                   context: context,
-                                  initialDate: DateTime(2000), // Refer step 1
-                                  firstDate: DateTime(2000),
+                                  initialDate: DateTime.now(), 
+                                  firstDate: DateTime.now(),
                                   lastDate: DateTime(2025),
                                 );
         

@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/controllers/student/student.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../widgets/student/dance_class_card.dart';
 
 class StudentProfilePage extends StatelessWidget{
@@ -32,7 +33,7 @@ class StudentProfilePage extends StatelessWidget{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text("Brian Keith Lisondra",style: Theme.of(context).textTheme.labelLarge),
+                        Text("${Get.find<AuthController>().currentUser.value!.firstName} ${Get.find<AuthController>().currentUser.value!.lastName}",style: Theme.of(context).textTheme.labelLarge),
                         Chip(label: Text("Beginner"),materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,visualDensity: VisualDensity(horizontal: 0.0, vertical: -4))
                       ],
                     ),
@@ -47,10 +48,10 @@ class StudentProfilePage extends StatelessWidget{
                     isScrollable: true,
                     onTap: (int indx){
                        if(indx == 0){
-                          Get.find<StudentController>().getBookedClasses();
+                           Get.find<StudentController>().filteredBookingClass.value =  Get.find<StudentController>().getBookedClasses();
                         }
                         if(indx == 1){
-                          Get.find<StudentController>().getPendingClasses();
+                          Get.find<StudentController>().filteredBookingClass.value = Get.find<StudentController>().getPendingClasses();
                         }
                     },
                     tabs: [
@@ -90,41 +91,33 @@ class StudentProfilePage extends StatelessWidget{
     
     
     
-                Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: FutureBuilder(
-                    future: Get.find<StudentController>().getStudentDanceClass(),
-                    builder: (context, snapshot) {
-                      if(snapshot.hasData){
-                        if (Get.find<StudentController>().studentBookingClasses.isEmpty) {
-                            return Text("No data");
-                        }
-                       
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Obx((){
-                                return Expanded(
-                                  child: ListView.builder(itemCount: Get.find<StudentController>().filteredBookingClass.length ,itemBuilder: (context, index) {
-                                      return Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          DanceClassCard(
-                                            liveClass:
-                                            Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!
-                                          ),
-                                          // DanceClassCard(),
-                                        ],
-                                      );
-                                  }),
-                                );
-                              }),
-                            ],
-                          );
-                      }
-                      return Text("Number");
-                    }
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Obx((){
+                                  print("inside obx");
+                                  return Expanded(
+                                    child: ListView.builder(itemCount: Get.find<StudentController>().filteredBookingClass.length ,itemBuilder: (context, index) {
+                                        return Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            DanceClassCard(
+                                              liveClass:
+                                              Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!
+                                            ),
+                                            // Text(Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!.danceName)
+                                            // DanceClassCard(),
+                                          ],
+                                        );
+                                    }),
+                                  );
+                                }),
+                              ],
+                            )
                   ),
                 ),
             ],

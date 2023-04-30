@@ -56,6 +56,7 @@ class AddPaymentPage extends StatelessWidget {
               Container(
                 width: (MediaQuery.of(context).size.width),
                 child: ElevatedButton(onPressed: (){
+                  print(Get.find<AuthController>().currentInstructor.value);
                   if(Get.find<AuthController>().currentInstructor.value != null){
 
                     LiveDanceClassModel danceClass = LiveDanceClassModel(

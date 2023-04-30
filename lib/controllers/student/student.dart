@@ -22,14 +22,16 @@ class StudentController extends GetxController{
 
 
   //to fix
-  void getBookedClasses(){
+  List<DanceBooking> getBookedClasses(){
     print("called get booked dance classes");
-     filteredBookingClass.value = studentBookingClasses.where((element) => element.dateApproved != 'PENDING').toList();
+     return studentBookingClasses.where((element) => element.dateApproved != 'PENDING').toList();
+
   }
 
-  void getPendingClasses(){
-    filteredBookingClass.value = studentBookingClasses.where((element) => element.dateApproved == 'PENDING').toList();
-     print(filteredBookingClass.length);
+  List<DanceBooking> getPendingClasses(){
+    print("called get pedning dance classes ${studentBookingClasses.length}");
+
+    return studentBookingClasses.where((element) => element.dateApproved == 'PENDING').toList();
   }
 
 
@@ -57,7 +59,16 @@ class StudentController extends GetxController{
       print(e);
       return false;
     }
+  }
 
+  bool isBookedClasses(int class_id){
+      int i;
+      for(i = 0; i < studentBookingClasses.length && studentBookingClasses[i].danceClassId != class_id;i++){
+            print("niside ${studentBookingClasses[i].liveDanceClass!.liveClassId}");
+      }
+            print("2 niside ${studentBookingClasses[i].liveDanceClass!.liveClassId} $i");
+
+      return (i < studentBookingClasses.length)?true:false;
   }
 
   Future<bool> bookDanceClass(int dance_class_id, String referenceNumber, int price){

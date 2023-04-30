@@ -6,6 +6,7 @@ import 'package:i_dance/sources/api/dance-class/dance-class.dart';
 
 import '../../models/live_dance_class.dart';
 import '../../sources/firebasestorage/firebase_storage.dart';
+import '../student/student.dart';
 
 class DanceClassController extends GetxController{
   List classes = ["Name1", "Name2"];
@@ -36,10 +37,20 @@ class DanceClassController extends GetxController{
         upcomingDanceClasses.add(upClass);
       }
       hasFetched = true;
+      await Get.find<StudentController>().getStudentDanceClass();
+      
     } catch (e) {
       print("haha err");
       print(e);
     }
     return hasFetched;
+  }
+
+  void extractToBeShown(){
+    for(int i = 0; i < upcomingDanceClasses.length; i++){
+      if(Get.find<StudentController>().isBookedClasses(upcomingDanceClasses[i].liveClassId)){
+        print("true");
+      }
+    }
   }
 }
