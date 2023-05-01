@@ -27,13 +27,18 @@ class StudentInstructorAuth{
       if(response.statusCode == 200){
         print("200");
         Map<String, dynamic> json = jsonDecode(response.body)[0];
+        print("user from db");
+        print(json);
         LocalStorageSource.writeToStorage('instructor_token',(json['token'] != null)?json['token']:'');
         print("response 200");
         return StudentModel.fromJson(jsonDecode(response.body)[0]);
       } else {
+      print("agay1");
+
         throw Exception('Failed to get');
       }
     } catch (e) {
+      print("agay2");
       throw Exception(e);
     }
   }

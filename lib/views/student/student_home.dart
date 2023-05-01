@@ -102,6 +102,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
           future: Get.find<AuthController>().getLoggedStudent(),
           builder: (context, snapshot) {
             if(snapshot.hasData){  
+              print(snapshot.data);
               return Column(
                 children: [
                   
@@ -131,14 +132,15 @@ class _StudentHomePageState extends State<StudentHomePage> {
                     builder: (context, snapshot) {
                       if(snapshot.hasData){
                         print(Get.find<DanceClassController>().upcomingDanceClasses);
-                        if(Get.find<DanceClassController>().upcomingDanceClasses.length == 0){
+                        if(Get.find<DanceClassController>().upcomingDanceClasses.isEmpty){
                           return Text("Empty");
                         }
                         return Expanded(
                           child: ListView.builder(
                             itemCount: Get.find<DanceClassController>().upcomingDanceClasses.length,
                             itemBuilder: (context, idx){
-                             return DanceClassCard(liveClass: Get.find<DanceClassController>().upcomingDanceClasses.elementAt(idx));
+                              print(Get.find<StudentController>().isBookedClasses(Get.find<DanceClassController>().upcomingDanceClasses[idx].danceClassId));
+                                return DanceClassCard(liveClass: Get.find<DanceClassController>().upcomingDanceClasses.elementAt(idx));
                             }
                           ),
                         );

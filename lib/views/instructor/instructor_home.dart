@@ -49,20 +49,20 @@ class InstructorHome extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Welcome, ${Get.find<AuthController>().currentInstructor.value!.firstName} ${Get.find<AuthController>().currentInstructor.value!.lastName}!", style: Theme.of(context).textTheme.titleLarge),
+                Text("Welcome, Teacher ${Get.find<AuthController>().currentInstructor.value!.firstName}!", style: Theme.of(context).textTheme.titleLarge),
                 const Divider(color: Colors.transparent,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Your Next Event", style: Theme.of(context).textTheme.bodyMedium,),
                     TextButton(onPressed: (){
-          
+                    
                     }, child: 
                       Text("View All", style: Theme.of(context).textTheme.bodySmall),
                     )
                   ],
                 ),
-
+            
                 FutureBuilder(
                   future: Get.find<InstructorController>().getLiveClassesOfInstructorbyId(Get.find<AuthController>().currentInstructor.value!),
                   builder: (context,snapshot){
@@ -74,15 +74,16 @@ class InstructorHome extends StatelessWidget {
                         LiveDanceClassModel temp = Get.find<InstructorController>().instructorDanceClass[i];
                         
                         LiveDanceClassDaysBetween tempDance = LiveDanceClassDaysBetween(danceClass: temp, daysBetween: getDaysBetweenFromToday(temp.date));
+                        print('loop ${Get.find<InstructorController>().instructorDanceClass[i].danceName}');
                         liveDances.add(tempDance);
                       }
                       // wa pa na test nga algo
-                      Get.find<InstructorController>().instructorDanceClass.sort((a,b){
-                        int aDaysBetween = getDaysBetweenFromToday(a.date);
-                        int bDaysBetween = getDaysBetweenFromToday(b.date);
-                        return aDaysBetween.compareTo(bDaysBetween);
-                      });
-
+                      // Get.find<InstructorController>().instructorDanceClass.sort((a,b){
+                      //   int aDaysBetween = getDaysBetweenFromToday(a.date);
+                      //   int bDaysBetween = getDaysBetweenFromToday(b.date);
+                      //   return aDaysBetween.compareTo(bDaysBetween);
+                      // });
+            
                       if(Get.find<InstructorController>().instructorDanceClass.isEmpty){
                           return Text("Empty Data");
                       }
@@ -107,7 +108,7 @@ class InstructorHome extends StatelessWidget {
                                     children: [
                                       Text(Get.find<InstructorController>().instructorDanceClass[0].danceName, style: Theme.of(context).textTheme.headlineSmall,),
                                       const SizedBox(height:5,),
-                
+                                    
                                       Row(
                                         children: [
                                           Row(
@@ -138,7 +139,7 @@ class InstructorHome extends StatelessWidget {
                                   ),
                                 ),
                                       const SizedBox(height:5,),
-                
+                                    
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -179,7 +180,7 @@ class InstructorHome extends StatelessWidget {
                                             ),
                                           ),
                                       Text(" 120 are going", style: Theme.of(context).textTheme.labelSmall,),
-                
+                                    
                                         ],
                                         
                                       )
@@ -187,7 +188,7 @@ class InstructorHome extends StatelessWidget {
                                     
                                   ),
                                     
-
+                      
                                 ],
                               ),
                             ),
@@ -201,45 +202,61 @@ class InstructorHome extends StatelessWidget {
                               ),
                               Tab(
                                 icon: Text("Done", style: Theme.of(context).textTheme.bodyMedium),
-                    
+                                        
                               ),
                               Tab(
                                 icon: Text("Recorded", style: Theme.of(context).textTheme.bodyMedium),
-                    
+                                        
                               )
                             ])
-                    
-                    
+                                        
+                                        
                           )),
                           const SizedBox(height:10,),
-
+                      
                           //OBX here
-                
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      
+                          // Column(
+                          //   children: [
+                          //     Wrap(
+                          //       children: [
+                          //         ListView.builder(
+                          //           shrinkWrap: true,
+                          //           itemCount: Get.find<InstructorController>().instructorDanceClass.length,
+                          //           itemBuilder: (context,index){
+                          //              return DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[index]);
+                          //         }),
+                          //       ],
+                          //     ),
+                          //   ],
+                          // )
+                                    
+                          Wrap(
                             children: [
-                              Column(
-                                children: [
-                                  DanceClassCard(),
-                                  DanceClassCard(),
-                                ],
+                              // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[0]),
+                              // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[0]),
+                              // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[1]),
+                              ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: Get.find<InstructorController>().instructorDanceClass.length,
+                                itemBuilder: (context,index){
+                                    print(Get.find<InstructorController>().instructorDanceClass[index].liveClassId);
+                                    return SizedBox( width: ((MediaQuery.of(context).size.width / 2)-25), child: DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[index]));
+                                }
                               ),
-                              Column(
-                                children: [
-                                  DanceClassCard(),
-                                  DanceClassCard(),
-                                ],
-                              ),
+                              // DanceClassCard(),
                             ],
                           ),
+                         
                         ],
                       );
-
+            
                     }
                     return Text("Wait");
                   }
                 ),
-
+            
                 
                  
               ],

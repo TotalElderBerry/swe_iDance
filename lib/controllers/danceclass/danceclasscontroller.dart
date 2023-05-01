@@ -5,12 +5,15 @@ import 'package:i_dance/controllers/image/imagecontroller.dart';
 import 'package:i_dance/sources/api/dance-class/dance-class.dart';
 
 import '../../models/live_dance_class.dart';
+import '../../models/student.dart';
 import '../../sources/firebasestorage/firebase_storage.dart';
 import '../student/student.dart';
 
 class DanceClassController extends GetxController{
   List classes = ["Name1", "Name2"];
   RxList<LiveDanceClassModel> upcomingDanceClasses = <LiveDanceClassModel>[].obs;
+  RxList<StudentModel> studentsApproved = <StudentModel>[].obs;
+  RxList<StudentModel> studentsPending = <StudentModel>[].obs;
 
   void filterList(String query){
 
@@ -44,6 +47,29 @@ class DanceClassController extends GetxController{
       print(e);
     }
     return hasFetched;
+  }
+
+  Future<bool> getLiveDanceClassStudents(int live_danceclass_id) async {
+    studentsApproved.clear();
+    studentsPending.clear();
+    try {
+      final response = await DanceClassAPI.getLiveDanceClassStudents(live_danceclass_id);
+      for(var booked in response){
+        // print(response['student']);
+        print(booked);
+          StudentModel studentModel = StudentModel.fromJson(booked['student']);
+          studentModel.profilePicture =  await ImageCloudStorage.getProfilePicture(studentModel.userId);
+        if(booked['date_approved'] == 'PENDING'){
+          studentsPending.add(studentModel);
+        }else{
+          studentsApproved.add(studentModel);
+        }
+      }
+    } catch (e) {
+      print("fooked");
+      print(e);
+    }
+    return true;
   }
 
   void extractToBeShown(){

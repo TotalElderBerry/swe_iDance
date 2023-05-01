@@ -52,6 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       Flexible(
                         child: TextFormField(
+                          textCapitalization: TextCapitalization.words,
                           controller: firstNameController,
                           decoration: InputDecoration(
                             hintText: "Enter your first name",
@@ -70,6 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(width: 16),
                       Flexible(
                         child: TextFormField(
+                          textCapitalization: TextCapitalization.words,
                           controller: lastNameController,
                           decoration: InputDecoration(
                             hintText: "Enter your last name",

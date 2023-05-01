@@ -44,4 +44,22 @@ class DanceClassAPI{
       throw Exception("error etting live danceclasses");
     }
   }
+
+  static Future<dynamic> getLiveDanceClassStudents(int live_danceclass_id)async {
+    print(live_danceclass_id);
+    String route = "/dance-class/live/$live_danceclass_id/students";
+    String uri = "${ApiConstants.baseUrl}$route"; 
+    final response = await http.get(
+        Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+          headers: {
+            "Content-Type": "application/json"
+          },
+      );
+      
+    if(response.statusCode == 200){
+      return jsonDecode(response.body);
+    }else{
+      throw Exception("error etting live danceclasses students");
+    }
+  }
 }

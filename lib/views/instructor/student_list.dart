@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:i_dance/models/live_dance_class.dart';
+import '../../controllers/danceclass/danceclasscontroller.dart';
 import '../../widgets/instructor/approved_widget.dart';
 import '../../widgets/instructor/pending_widget.dart';
 
-class StudentListScreen extends StatefulWidget {
-  StudentListScreen({super.key, required this.initIndex});
+class StudentListScreen extends StatelessWidget {
+  LiveDanceClassModel liveDance;
+  StudentListScreen({super.key, required this.initIndex, required this.liveDance});
   final int initIndex;
 
   @override
-  State<StudentListScreen> createState() => _StudentListScreenState();
-}
-
-class _StudentListScreenState extends State<StudentListScreen> {
-  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: widget.initIndex,
+      initialIndex: initIndex,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           actions: [],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(32.0),
           child: Column(
             children: [
               Row(
@@ -70,14 +69,25 @@ class _StudentListScreenState extends State<StudentListScreen> {
                   ),
                 ),
               ),
-              const Expanded(
-                child: TabBarView(
-                  children: [
-                    PendingWidget(),
-                    ApprovedWidget(),
-                  ],
-                ),
-              ),
+              const SizedBox(height: 20,),
+
+              FutureBuilder(
+                future: Get.find<DanceClassController>().getLiveDanceClassStudents(liveDance.danceClassId),
+                builder: ((context, snapshot) {
+                  if(snapshot.hasData){
+
+                    return Expanded(
+                      child: TabBarView(
+                        children: [
+                          PendingWidget(),
+                          ApprovedWidget(),
+                        ],
+                      ),
+                    );
+                  }
+                  return Text("Loading");
+                  
+              })),
             ],
           ),
         ),

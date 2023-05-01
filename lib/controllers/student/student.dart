@@ -15,7 +15,7 @@ class StudentController extends GetxController{
 
   RxList<DanceBooking> studentBookingClasses = <DanceBooking>[].obs;
   RxList<DanceBooking> filteredBookingClass = <DanceBooking>[].obs;
-
+  RxBool isPending = false.obs;
   void getStudentbyId(){
     
   }
@@ -40,8 +40,7 @@ class StudentController extends GetxController{
     try {
       studentBookingClasses.clear();
       final response = await StudentAPI.getStudentDanceClasses(Get.find<AuthController>().currentUser.value!.studentId);
-      int i;
-      for(i = 0; i < Get.find<DanceClassController>().upcomingDanceClasses.length;i++){
+      for(int i = 0; i < Get.find<DanceClassController>().upcomingDanceClasses.length;i++){
         final studentClass = Get.find<DanceClassController>().upcomingDanceClasses.where((element) => element.danceClassId == response[i]['dance_class_id']);
         print("student danceclassesnjhj");
         DanceBooking danceBooking = DanceBooking();
@@ -50,9 +49,8 @@ class StudentController extends GetxController{
         Payment p = Payment.fromJson(response[i]['payment']);
         danceBooking.payment = p;
         studentBookingClasses.add(danceBooking);
+        Get.find<DanceClassController>().upcomingDanceClasses.removeAt(i);
       }
-      print(studentBookingClasses.length);
-      print("student danceclasses");
       return true;
     } catch (e) {
       print("erro");
@@ -63,12 +61,13 @@ class StudentController extends GetxController{
 
   bool isBookedClasses(int class_id){
       int i;
-      for(i = 0; i < studentBookingClasses.length && studentBookingClasses[i].danceClassId != class_id;i++){
-            print("niside ${studentBookingClasses[i].liveDanceClass!.liveClassId}");
-      }
-            print("2 niside ${studentBookingClasses[i].liveDanceClass!.liveClassId} $i");
+      // for(i = 0; i < studentBookingClasses.length && studentBookingClasses[i].danceClassId != class_id;i++){
+      //       print("niside ${studentBookingClasses[i].liveDanceClass!.liveClassId}");
+      // }
+      //       print("2 niside ${studentBookingClasses[i].liveDanceClass!.liveClassId} $i");
 
-      return (i < studentBookingClasses.length)?true:false;
+      // return (i < studentBookingClasses.length)?true:false;
+    return true;
   }
 
   Future<bool> bookDanceClass(int dance_class_id, String referenceNumber, int price){

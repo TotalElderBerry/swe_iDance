@@ -15,7 +15,12 @@ class ImageCloudStorage{
   }  
 
   static Future<String> getProfilePicture(String id) async {
-    return await storage.child('users/$id/profile_picture.jpg').getDownloadURL();
+    print(id);
+    try {
+      return await storage.child('users/$id/profile_picture.jpg').getDownloadURL();
+    } catch (e) {
+      return "";
+    }
   }
   
   Future<String?> uploadProfilePicture(String id, File profPic) async {

@@ -33,7 +33,7 @@ class InstructorController extends GetxController{
         // LiveDanceClassModel ldance =LiveDanceClassModel.fromJson(response[0]);
 
         for(int i = 0; i < response.length; i++){
-          LiveDanceClassModel ldance = LiveDanceClassModel(int.parse(response[0]['live_danceclass_id']), date: response[0]['date'], location: response[0]['location'], studentLimit: int.parse(response[0]['student_limit']), danceClassId: int.parse(response[0]['dance_id']), danceName: response[0]['dance_name'], danceSong: response[0]['dance_song'], danceDifficulty: response[0]['dance_difficulty'], price: int.parse(response[0]['price']), description: response[0]['description'], payment: PaymentDetails.fromJson(response[0]['payment']), instructor: instructor);
+          LiveDanceClassModel ldance = LiveDanceClassModel(int.parse(response[i]['live_danceclass_id']), date: response[i]['date'], location: response[i]['location'], studentLimit: int.parse(response[i]['student_limit']), danceClassId: int.parse(response[i]['dance_id']), danceName: response[i]['dance_name'], danceSong: response[i]['dance_song'], danceDifficulty: response[i]['dance_difficulty'], price: int.parse(response[i]['price']), description: response[i]['description'], payment: PaymentDetails.fromJson(response[i]['payment']), instructor: instructor);
 
           instructorDanceClass.add(ldance);
 

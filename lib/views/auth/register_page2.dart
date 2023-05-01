@@ -132,6 +132,7 @@ class _RegisterPage2 extends State<RegisterPage2> {
             onPressed: () async {
               print("register");
               StudentModel student = StudentModel(1,"0",firstName: widget.firstName, lastName: widget.lastName, gender: "C", contactNumber: widget.contactNumber, emailAddress: widget.email, dateOfBirth: DateTime.utc(2001,06,14), level: _selectedSkillLevel, isInstructor: 0);
+              print(student.firstName);
               bool isSuccess= await Get.find<AuthController>().register(student, widget.password);
               if(isSuccess){
                 Get.find<AuthController>().isLoggedIn.value = true;

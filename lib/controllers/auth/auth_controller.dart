@@ -58,7 +58,7 @@ class AuthController extends GetxController{
       StudentAPI.addStudent(registeredUser);
       isLoggedIn.value = true;
       String? path = await ImageCloudStorage().uploadProfilePicture(user.uid,File(Get.find<ImagePickerController>().imgPath.value));
-      user.updatePhotoURL(path);
+      await user.updatePhotoURL(path);
       getLoggedStudent();
       return true;
     } catch (e) {
@@ -72,6 +72,8 @@ class AuthController extends GetxController{
   }
 
   Future<StudentModel> getLoggedStudent() async {
+    print("inside future");
+    print(authService.getUser()!.uid);
     try {
       currentUser.value = await StudentInstructorAuth.getProfileStudentbyId(authService.getUser()!.uid);
       currentInstructor.value = await Get.find<StudentController>().switchToInstructor();

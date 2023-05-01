@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/models/live_dance_class.dart';
 import 'package:i_dance/views/instructor/dance_class_details.dart';
 
 class DanceClassCard extends StatelessWidget {
-  const DanceClassCard({super.key});
+  LiveDanceClassModel liveDance;
+  DanceClassCard({super.key,required this.liveDance});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(DanceClassDetails());
+        Get.to(DanceClassDetails(liveDance: liveDance,));
         print("object");
       },
-      child: Container(
+      child: SizedBox(
         width: ((MediaQuery.of(context).size.width / 2)-25),
         child: Card(
           color: Theme.of(context).colorScheme.onSecondary,
@@ -35,7 +37,7 @@ class DanceClassCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Run - BTS", style: Theme.of(context).textTheme.labelMedium,),
+                            Text(liveDance.danceName, style: Theme.of(context).textTheme.labelMedium,),
                             const Divider(),
       
                             Row(
@@ -43,7 +45,7 @@ class DanceClassCard extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(size: 10, Icons.calendar_month,color: Theme.of(context).primaryColor,),
-                                    Text(" March 12,2023", style: Theme.of(context).textTheme.labelSmall,),
+                                    Text(" ${liveDance.date}", style: Theme.of(context).textTheme.labelSmall,),
                                   ],
                                 ),
                                 const SizedBox(width:10,),

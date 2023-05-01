@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:i_dance/models/live_dance_class.dart';
 import '../../views/student/dance_class_details.dart';
-import '../../views/student/students_class_details.dart';
 
-class StudentClassCard extends StatelessWidget {
-  LiveDanceClassModel liveDance;
-  bool isPending;
-  StudentClassCard({super.key, required this.isPending, required this.liveDance});
+class PendingClassCard extends StatelessWidget {
+  const PendingClassCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(
-          StudentDanceClassDetails(
-            liveDance: liveDance,
-            isPending: isPending,
-          ),
-        );
+        // Get.to(
+        //   DanceClassDetails(
+        //     isPending: true,
+        //   ),
+        // );
       },
       child: Container(
-        width: (MediaQuery.of(context).size.width) - 52,
+        width: (MediaQuery.of(context).size.width) - 32,
         child: Card(
           color: Theme.of(context).colorScheme.onSecondary,
           elevation: 2,
@@ -39,7 +34,7 @@ class StudentClassCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  width: 10,
+                  width: 20,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +97,7 @@ class StudentClassCard extends StatelessWidget {
                           children: [
                             const Icon(size: 10, Icons.calendar_month),
                             const SizedBox(
-                              width: 2,
+                              width: 5,
                             ),
                             Text(
                               "March 12,2023",
@@ -117,7 +112,7 @@ class StudentClassCard extends StatelessWidget {
                           children: [
                             const Icon(size: 10, Icons.location_on),
                             const SizedBox(
-                              width: 2,
+                              width: 5,
                             ),
                             Text(
                               "UC Main Campus",
