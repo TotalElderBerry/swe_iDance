@@ -12,7 +12,11 @@ class DanceClassCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(DanceClassDetails());
+        Get.to(
+          DanceClassDetails(
+            isPending: false,
+          ),
+        );
       },
       child: Container(
         width: (MediaQuery.of(context).size.width) - 32,
