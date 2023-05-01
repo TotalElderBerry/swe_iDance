@@ -126,14 +126,9 @@ class DanceClassDetails extends StatelessWidget {
                       Text("Get ready to dance the night away with us! We're excited to announce that our upcoming dance class will be taught by the one and only Dennis Kaldag. Dennis is a talented and experienced dance instructor, and we're thrilled to have him leading our class.",style: Theme.of(context).textTheme.bodyMedium,),
         
                       SizedBox(height: 100,),
-                      
-        
-                 
                   ],
                 ),
               ),
-        
-        
             ],
           ),
         ),

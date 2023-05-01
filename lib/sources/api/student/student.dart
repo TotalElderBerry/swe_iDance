@@ -37,6 +37,7 @@ class StudentAPI {
 
   static Future<List<dynamic>> getStudentDanceClasses(int student_id) async {
     final route = '/student/$student_id/classes';
+    print(student_id);
     try {
       final response = await  http.get(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
         headers: {
@@ -44,8 +45,6 @@ class StudentAPI {
             },
         );
       if(response.statusCode == 200){
-        print("get student dance class api");
-        print(response.body);
         return jsonDecode(response.body);
       }else{
         throw Exception("error getting student's danceclasses");
@@ -85,7 +84,6 @@ class StudentAPI {
       'Authorization': 'Bearer $token', 
       "Content-Type": "application/json"
     });
-    print(response.statusCode);
     if(response.statusCode == 200){
       return InstructorModel.fromJson(jsonDecode(response.body)[0]);
     }else{
@@ -97,7 +95,6 @@ class StudentAPI {
     print("in dance book api");
     final route = '/student/book/class/$dance_class_id';
     String token = LocalStorageSource.readFromStorage('instructor_token');
-    print(route);
     final response = await http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
     body: jsonEncode(
       <String, dynamic> {
@@ -110,7 +107,6 @@ class StudentAPI {
     headers: {
       "Content-Type": "application/json"
     });
-    print(response.statusCode);
     if(response.statusCode == 200){
       return true;
     }else{

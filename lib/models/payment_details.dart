@@ -14,7 +14,7 @@ class PaymentDetails{
       required this.accountNumber});
 
   factory PaymentDetails.fromJson(Map<String, dynamic> json) {
-    return PaymentDetails(int.parse(json['payment_details_id']), modeOfPayment: json['mode_of_payment'], accountName: json['account_name'], accountNumber: json['account_number']);
+    return PaymentDetails(int.parse('${json['payment_details_id']}'), modeOfPayment: json['mode_of_payment'], accountName: json['account_name'], accountNumber: json['account_number']);
   }
 
   Map<dynamic, dynamic> toJson() {

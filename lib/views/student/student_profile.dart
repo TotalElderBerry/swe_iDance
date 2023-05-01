@@ -7,6 +7,8 @@ import 'package:i_dance/controllers/student/student.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../../widgets/student/dance_class_card.dart';
+import '../../widgets/student/student_class_card.dart';
+
 
 class StudentProfilePage extends StatelessWidget{
   const StudentProfilePage({super.key});

@@ -44,5 +44,23 @@ class InstructorAPI {
       throw Exception("error sa insructor");
     }
   }
+
+  static Future<List<dynamic>> getLiveClassesOfInstructorbyId(int instructor_id)async{
+    print(instructor_id);
+    final route = "/instructor/${instructor_id}/live";
+    final response = await http.get(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+    headers: {
+            "Content-Type": "application/json"
+          },
+    );
+    print(response);
+    if(response.statusCode == 200){
+     return jsonDecode(response.body);
+    }else{
+    print(response.statusCode);
+      
+      throw Exception("error sa get classes of instructor");
+    }
+  }
   
 }

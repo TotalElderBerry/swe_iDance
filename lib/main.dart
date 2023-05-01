@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           textTheme: TextTheme(
             bodySmall: TextStyle(color: Colors.blue),
             titleLarge: TextStyle(fontWeight: FontWeight.bold),
-            labelMedium: TextStyle(fontWeight: FontWeight.bold)
+            labelMedium: TextStyle(fontWeight: FontWeight.bold),
           )
         ),
         // home: authController.isLoggedIn.value == true ? HomePage() : LoginPage(),

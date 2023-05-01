@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:i_dance/views/instructor/add_livedance_class_page.dart';
 
 import '../../widgets/my_appbar.dart';
-import 'add_recordedclass_page.dart';
+import 'add_recorded_class_page.dart';
 
 class AddClassLandingPage extends StatefulWidget {
   AddClassLandingPage({super.key});
@@ -55,7 +55,7 @@ class _AddClassLandingPageState extends State<AddClassLandingPage> {
               Container(
                 width: (MediaQuery.of(context).size.width),
                 child: ElevatedButton(onPressed: (_value == null)?null:(){
-                Get.to((_value == 0)?AddRecordedDanceClassPage():AddLiveDanceClassPage());
+                Get.to((_value == 0)?AddRecordedDancePage():AddLiveDanceClassPage());
                 },child: Text("Next")),
               )
           ],

@@ -25,18 +25,28 @@ class AddPaymentPage extends StatelessWidget {
           padding: const EdgeInsets.all(32.0),
           child: Column(
             children: [
-              Text('Add Payment Details',style: Theme.of(context).textTheme.headlineMedium),
-              const SizedBox(height: 5,),
-              const Text('Please provide your payment details',textAlign: TextAlign.center,),
-              const SizedBox(height: 30,),
+              Text('Add Payment Details',
+                  style: Theme.of(context).textTheme.headlineMedium),
+              const SizedBox(
+                height: 5,
+              ),
+              const Text(
+                'Please provide your payment details',
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
               Card(
                 elevation: 2,
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage('https://mb.com.ph/wp-content/uploads/2021/09/32049-1568x1460.png'),
+                    backgroundImage: NetworkImage(
+                        'https://mb.com.ph/wp-content/uploads/2021/09/32049-1568x1460.png'),
                   ),
                   title: Text("PayMaya"),
-                  trailing: Radio(value: "", groupValue: "", onChanged: (val){}),
+                  trailing:
+                      Radio(value: "", groupValue: "", onChanged: (val) {}),
                 ),
               ),
               const SizedBox(height: 20,),
