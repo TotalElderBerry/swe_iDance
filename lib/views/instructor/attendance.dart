@@ -1,17 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
 import 'package:quickalert/quickalert.dart';
 
+import '../../models/live_dance_class.dart';
 import '../../widgets/instructor/attended_widget.dart';
 import '../../widgets/instructor/fulllist_widget.dart';
 
-class AttendanceScreen extends StatefulWidget {
-  const AttendanceScreen({super.key});
+class AttendanceScreen extends StatelessWidget {
+  LiveDanceClassModel liveDance;
+  AttendanceScreen({super.key, required this.liveDance});
 
-  @override
-  State<AttendanceScreen> createState() => _AttendanceScreenState();
-}
-
-class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -20,14 +21,28 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         appBar: AppBar(
           actions: [
             IconButton(
-              onPressed: () {
-                QuickAlert.show(
-                  context: context,
-                  type: QuickAlertType.custom,
-                  widget: Image.network(
-                      'https://codehunting.games/assets/images/qrcode-free-code-hunting.jpg'),
-                  customAsset: null,
-                );
+              onPressed: () async {
+                try {
+                  final qrLink = await Get.find<DanceClassController>().generateQrAttendance(liveDance.danceClassId);
+                  // print(qrLink);
+                  QuickAlert.show(
+                    context: context,
+                    type: QuickAlertType.custom,
+                    widget: 
+                    Image.memory(Base64Decoder().convert(qrLink.split(',').last)),
+                    customAsset: null,
+                  );
+                  
+                } catch (e) {
+                  print(e);
+                  // QuickAlert.show(
+                  //   context: context,
+                  //   type: QuickAlertType.custom,
+                  //   widget: 
+                  //   Image.memory(Base64Decoder().convert(qrLink)),
+                  //   customAsset: null,
+                  // );
+                }
               },
               icon: const Icon(Icons.qr_code),
             ),

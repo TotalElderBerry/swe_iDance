@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:i_dance/constants/api.dart';
+import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/models/instructor.dart';
 import 'package:http/http.dart' as http;
 
@@ -61,6 +63,29 @@ class InstructorAPI {
       
       throw Exception("error sa get classes of instructor");
     }
+  }
+
+  static Future<dynamic> acceptStudentDanceBooking(int student_id, int dance_class_id) async {
+
+    final route = "/instructor/live/$dance_class_id/accept-student";
+
+    final response = await http.put(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+      body: jsonEncode(
+      <String, dynamic>{
+        "student_id": student_id,
+      }
+    ),
+    headers: {
+            "Content-Type": "application/json"
+      },
+    );
+
+    if(response.statusCode == 200){
+      return jsonDecode(response.body);
+    }else{
+      throw Exception("API for acceptStudentBooking failed");
+    }
+    
   }
   
 }

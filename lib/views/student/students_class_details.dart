@@ -2,6 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:get/get.dart';
+import 'package:i_dance/controllers/auth/auth_controller.dart';
+import 'package:i_dance/controllers/student/student.dart';
 import 'package:i_dance/models/attendance_model.dart';
 import 'package:i_dance/models/live_dance_class.dart';
 import 'package:quickalert/quickalert.dart';
@@ -25,25 +28,32 @@ class StudentDanceClassDetails extends StatelessWidget {
                   String COLOR_CODE = '#ffffff';
                   String CANCEL_BUTTON_TEXT = 'CANCEL';
                   bool isShowFlashIcon = true;
-                  ScanMode scanMode = ScanMode.DEFAULT;
+                  ScanMode scanMode = ScanMode.QR;
                   String qr = await FlutterBarcodeScanner.scanBarcode(
                     COLOR_CODE,
                     CANCEL_BUTTON_TEXT,
                     isShowFlashIcon,
                     scanMode,
                   );
-                  attended.add(
-                    {
-                      "Name": "Jose Cruz",
-                      "Date": "2023-04-21 - 05:57",
-                    },
-                  );
-                  // ignore: use_build_context_synchronously
-                  QuickAlert.show(
-                    context: context,
-                    type: QuickAlertType.success,
-                    text: 'Qr Scanned Successfully!',
-                  );
+                  print(qr);
+                  try {
+                    bool res = await Get.find<StudentController>().attendDanceClass(Get.find<AuthController>().currentUser.value!.studentId, int.parse(qr));
+                    // ignore: use_build_context_synchronously
+                    print(res);
+                    if(res == true){
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        text: 'Attended Successfully!',
+                      );
+                    }
+                  } catch (e) {
+                     QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.error,
+                          text: 'Attendance Failed',
+                        );
+                  }
                 },
                 child: const Center(
                   child: Text('Attendance'),

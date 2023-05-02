@@ -6,6 +6,7 @@ import 'package:i_dance/sources/api/dance-class/dance-class.dart';
 
 import '../../models/live_dance_class.dart';
 import '../../models/student.dart';
+import '../../sources/api/attendance/attendance.dart';
 import '../../sources/firebasestorage/firebase_storage.dart';
 import '../student/student.dart';
 
@@ -77,6 +78,15 @@ class DanceClassController extends GetxController{
       if(Get.find<StudentController>().isBookedClasses(upcomingDanceClasses[i].liveClassId)){
         print("true");
       }
+    }
+  }
+
+  Future<dynamic> generateQrAttendance(int classId)async{
+    try {
+      final response = await AttendanceAPI.generateQr(classId);
+      return response['url'];
+    } catch (e) {
+      throw Exception(e);
     }
   }
 }
