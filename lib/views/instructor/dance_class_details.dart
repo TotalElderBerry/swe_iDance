@@ -19,7 +19,7 @@ class DanceClassDetails extends StatelessWidget {
         height: 50,
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
-          onPressed: () => Get.to(AttendanceScreen()),
+          onPressed: () => Get.to(AttendanceScreen(liveDance: liveDance,)),
           child: const Center(
             child: Text('Attendance'),
           ),

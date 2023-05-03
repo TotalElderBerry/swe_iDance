@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
                     print(FirebaseAuth.instance.currentUser);
                     return const StudentHomePage();
                   }
-                  return const LoginPage();
+                  return LoginPage();
                   
 
                 });

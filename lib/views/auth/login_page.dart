@@ -7,9 +7,15 @@ import 'package:i_dance/views/home.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool? isCorrect = true;
   @override
   Widget build(BuildContext context) {
       final _auth = Get.find<AuthController>();
@@ -38,6 +44,12 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           Divider(),
+
+          (isCorrect!)?
+          Text("")
+          :
+          Text("Credentials Incorrect"),
+
          ElevatedButton(onPressed: () async {
           AuthController authController = Get.find();
           if(authController.name.value == null){
@@ -48,9 +60,13 @@ class LoginPage extends StatelessWidget {
           }
           print(userController.text);
           bool isSuccess = await authController.login(userController.text, passwordController.text);
+          setState(() {
+            isCorrect = isSuccess;
+          });
           print(isSuccess);
           if(isSuccess) Get.to(HomePage());
          }, child: Text("Login")),
+
           TextButton(onPressed: (){
             Get.to(RegisterPage());
           }, child: Text("Register Now")),

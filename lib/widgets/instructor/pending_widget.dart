@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/controllers/instructor/instructor.dart';
 import 'package:intl/intl.dart';
 
 import '../../controllers/danceclass/danceclasscontroller.dart';
+import '../../models/live_dance_class.dart';
+import '../../models/student.dart';
 import '../../models/studentlist_model.dart';
 import '../../sources/firebasestorage/firebase_storage.dart';
 
-class PendingWidget extends StatefulWidget {
-  const PendingWidget({super.key});
 
-  @override
-  State<PendingWidget> createState() => _PendingWidgetState();
-}
-
-class _PendingWidgetState extends State<PendingWidget> {
+class PendingWidget extends StatelessWidget {
+  LiveDanceClassModel liveDance;
+  PendingWidget({super.key, required this.liveDance});
+  
   @override
   Widget build(BuildContext context) {
     return 
@@ -41,16 +41,22 @@ class _PendingWidgetState extends State<PendingWidget> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          setState(() {
-                            DateTime now = DateTime.now();
-                            String dateFormat =
-                                DateFormat('yyyy-MM-dd - hh:mm').format(now);
-                            approvedAttend.add({
-                              "Name": pendingAttend.elementAt(index).toString(),
-                              "Date": dateFormat,
-                            });
-                            pendingAttend.removeAt(index);
-                          });
+                          // setState(() {
+                          //   DateTime now = DateTime.now();
+                          //   String dateFormat =
+                          //       DateFormat('yyyy-MM-dd - hh:mm').format(now);
+                          //   approvedAttend.add({
+                          //     "Name": pendingAttend.elementAt(index).toString(),
+                          //     "Date": dateFormat,
+                          //   });
+                          //   pendingAttend.removeAt(index);
+                          // });
+                          Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentsPending[index].studentId, liveDance.danceClassId);
+                          StudentModel temp = Get.find<DanceClassController>().studentsPending[index];
+
+                          Get.find<DanceClassController>().studentsPending.removeAt(index);
+                          Get.find<DanceClassController>().studentsApproved.add(temp);
+                          
                         },
                         icon: const Icon(
                           Icons.check,
@@ -59,9 +65,10 @@ class _PendingWidgetState extends State<PendingWidget> {
                       ),
                       IconButton(
                         onPressed: () {
-                          setState(() {
-                            pendingAttend.removeAt(index);
-                          });
+                          // setState(() {
+                          //   //here
+                          //   pendingAttend.removeAt(index);
+                          // });
                         },
                         icon: const Icon(
                           Icons.close,

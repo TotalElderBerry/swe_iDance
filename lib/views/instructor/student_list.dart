@@ -79,7 +79,7 @@ class StudentListScreen extends StatelessWidget {
                     return Expanded(
                       child: TabBarView(
                         children: [
-                          PendingWidget(),
+                          PendingWidget(liveDance: liveDance),
                           ApprovedWidget(),
                         ],
                       ),

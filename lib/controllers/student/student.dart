@@ -4,6 +4,7 @@ import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
 import 'package:i_dance/models/instructor.dart';
 import 'package:i_dance/models/student.dart';
+import 'package:i_dance/sources/api/attendance/attendance.dart';
 import 'package:i_dance/sources/api/student/student.dart';
 import 'package:i_dance/sources/localstorage/localstorage.dart';
 import 'package:i_dance/widgets/instructor/dance_class_card.dart';
@@ -95,6 +96,15 @@ class StudentController extends GetxController{
     }
     // print( LocalStorageSource.readFromStorage('instructor_token'));
 
+  }
+
+  Future<bool> attendDanceClass(int studentId, int liveClassId) async {
+    try {
+        await AttendanceAPI.attendStudent(liveClassId, studentId);
+        return true;
+    } catch (e) {
+      throw Exception(e);
+  }
   }
 
 }

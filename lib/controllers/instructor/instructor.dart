@@ -47,4 +47,12 @@ class InstructorController extends GetxController{
       return true;
     }
 
+    Future<bool> acceptStudentBooking(int studentId, int danceClassId)async{
+      try {
+         final response = await InstructorAPI.acceptStudentDanceBooking(studentId, danceClassId);
+         return true;
+      } catch (e) {
+        return false;
+      }
+    }  
 }
