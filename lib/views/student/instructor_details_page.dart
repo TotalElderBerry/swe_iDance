@@ -9,6 +9,7 @@ import '../../controllers/instructor/instructor.dart';
 import '../../models/instructor.dart';
 import '../../widgets/student/dance_class_card.dart';
 
+
 class InstructorDetailsPage extends StatelessWidget {
   InstructorModel instructor;
   InstructorDetailsPage({super.key, required this.instructor});

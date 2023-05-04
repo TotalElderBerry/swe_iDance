@@ -13,8 +13,10 @@ import '../student/student.dart';
 class DanceClassController extends GetxController{
   List classes = ["Name1", "Name2"];
   RxList<LiveDanceClassModel> upcomingDanceClasses = <LiveDanceClassModel>[].obs;
+  RxList<LiveDanceClassModel> doneDanceClasses = <LiveDanceClassModel>[].obs;
   RxList<StudentModel> studentsApproved = <StudentModel>[].obs;
   RxList<StudentModel> studentsPending = <StudentModel>[].obs;
+  RxList<StudentModel> studentsAttendance = <StudentModel>[].obs;
 
   void filterList(String query){
 
@@ -33,12 +35,17 @@ class DanceClassController extends GetxController{
     try {
       final classes = await DanceClassAPI.getLiveDanceClasses();
       final upcoming = classes['upcoming_classes'];
-    
+      final done = classes['classes_done'];
+      print("done ${done.toString()}");
 
       for(var upcomingClass in upcoming){
-        print("loop");
         LiveDanceClassModel upClass = LiveDanceClassModel.fromJson(upcomingClass);
         upcomingDanceClasses.add(upClass);
+      }
+
+      for(var doneClass in done){
+        LiveDanceClassModel doneTemp = LiveDanceClassModel.fromJson(doneClass);
+        doneDanceClasses.add(doneTemp);
       }
       hasFetched = true;
       await Get.find<StudentController>().getStudentDanceClass();
@@ -87,6 +94,26 @@ class DanceClassController extends GetxController{
       return response['url'];
     } catch (e) {
       throw Exception(e);
+    }
+  }
+
+  Future<bool> getStudentsAttended(int liveClassId, int live)async{
+    studentsAttendance.clear();
+    studentsApproved.clear();
+    studentsPending.clear();
+    await getLiveDanceClassStudents(liveClassId);
+    try {
+      final response = await DanceClassAPI.getStudentsAttended(live);
+      for(final student in response){
+        print(student);
+        StudentModel stud = StudentModel.fromJson(student['student']);
+        stud.profilePicture =  await ImageCloudStorage.getProfilePicture(stud.userId);
+
+        studentsAttendance.add(stud);
+      }
+      return true;
+    } catch (e) {
+      throw Exception("error sa students attended controller");
     }
   }
 }

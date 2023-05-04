@@ -15,6 +15,7 @@ import '../../models/live_dance_class.dart';
 class StudentController extends GetxController{
 
   RxList<DanceBooking> studentBookingClasses = <DanceBooking>[].obs;
+  RxList<DanceBooking> studentDone = <DanceBooking>[].obs;
   RxList<DanceBooking> filteredBookingClass = <DanceBooking>[].obs;
   RxBool isPending = false.obs;
   void getStudentbyId(){
@@ -35,26 +36,66 @@ class StudentController extends GetxController{
     return studentBookingClasses.where((element) => element.dateApproved == 'PENDING').toList();
   }
 
+  List<DanceBooking> getDoneClasses(){
+    print("called get done dance classes ${studentDone.length} and done ${Get.find<DanceClassController>().doneDanceClasses.length}");
+    List<DanceBooking> temp = [];
+    for(int i = 0; i < Get.find<DanceClassController>().doneDanceClasses.length;i++){
+      final t = studentDone.where((element) => element.danceClassId == Get.find<DanceClassController>().doneDanceClasses[i].danceClassId).toList();
+      if(t.isNotEmpty){
+        print(t[0].danceBookingId);
+        temp.add(t[0]);
+      }
+    }
+    print("temp length ${temp.length}");
+    return temp;
+  }
+
 
   //FIX HEREEE!!!
   Future<bool> getStudentDanceClass()async{
     try {
       studentBookingClasses.clear();
+      List<LiveDanceClassModel> listtemp = Get.find<DanceClassController>().upcomingDanceClasses;
       final response = await StudentAPI.getStudentDanceClasses(Get.find<AuthController>().currentUser.value!.studentId);
       for(int i = 0; i < Get.find<DanceClassController>().upcomingDanceClasses.length;i++){
-        final studentClass = Get.find<DanceClassController>().upcomingDanceClasses.where((element) => element.danceClassId == response[i]['dance_class_id']);
-        print("student danceclassesnjhj");
-        DanceBooking danceBooking = DanceBooking();
-        danceBooking.liveDanceClass = studentClass.first;
-        danceBooking.dateApproved = response[i]['date_approved'];
-        Payment p = Payment.fromJson(response[i]['payment']);
-        danceBooking.payment = p;
-        studentBookingClasses.add(danceBooking);
-        Get.find<DanceClassController>().upcomingDanceClasses.removeAt(i);
+        for(int j = 0; j < response.length;j++){
+          print("response length");
+          print(response.length);
+          if(response[j]['dance_class_id'] == Get.find<DanceClassController>().upcomingDanceClasses[i].danceClassId){
+              DanceBooking danceBooking = DanceBooking();
+              danceBooking.liveDanceClass = Get.find<DanceClassController>().upcomingDanceClasses[i];
+              danceBooking.dateApproved = response[j]['date_approved'];
+              danceBooking.danceClassId = response[j]['dance_class_id'];
+              Payment p = Payment.fromJson(response[j]['payment']);
+              danceBooking.payment = p;
+              studentBookingClasses.add(danceBooking);
+              Get.find<DanceClassController>().upcomingDanceClasses.remove(Get.find<DanceClassController>().upcomingDanceClasses[i]);
+              // listtemp.removeAt(i);
+          }
+        }
       }
+
+    for(int i = 0; i < Get.find<DanceClassController>().doneDanceClasses.length;i++){
+        for(int j = 0; j < response.length;j++){
+          print("response length");
+          print(response.length);
+          if(response[j]['dance_class_id'] == Get.find<DanceClassController>().doneDanceClasses[i].danceClassId){
+              DanceBooking danceBooking = DanceBooking();
+              danceBooking.liveDanceClass = Get.find<DanceClassController>().doneDanceClasses[i];
+              danceBooking.dateApproved = response[j]['date_approved'];
+              danceBooking.danceClassId = response[j]['dance_class_id'];
+              Payment p = Payment.fromJson(response[j]['payment']);
+              danceBooking.payment = p;
+              studentDone.add(danceBooking);
+              // listtemp.removeAt(i);
+          }
+
+        }
+    }
+      
       return true;
     } catch (e) {
-      print("erro");
+      print("error kuha student's danceclass");
       print(e);
       return false;
     }
@@ -100,10 +141,9 @@ class StudentController extends GetxController{
 
   Future<bool> attendDanceClass(int studentId, int liveClassId) async {
     try {
-        await AttendanceAPI.attendStudent(liveClassId, studentId);
-        return true;
+        return await AttendanceAPI.attendStudent(liveClassId, studentId);
     } catch (e) {
-      throw Exception(e);
+      return false;
   }
   }
 

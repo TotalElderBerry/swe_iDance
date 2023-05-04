@@ -87,7 +87,7 @@ class AttendanceScreen extends StatelessWidget {
                 ),
               ),
               FutureBuilder(
-                future: Get.find<DanceClassController>().getLiveDanceClassStudents(liveDance.danceClassId),
+                future: Get.find<DanceClassController>().getStudentsAttended(liveDance.danceClassId,liveDance.liveClassId),
                 builder: ((context, snapshot) {
                   if(snapshot.hasData){
 

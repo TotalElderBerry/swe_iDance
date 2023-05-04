@@ -36,24 +36,25 @@ class StudentDanceClassDetails extends StatelessWidget {
                     scanMode,
                   );
                   print(qr);
-                  try {
-                    bool res = await Get.find<StudentController>().attendDanceClass(Get.find<AuthController>().currentUser.value!.studentId, int.parse(qr));
+                  
+                    await Get.find<StudentController>().attendDanceClass(Get.find<AuthController>().currentUser.value!.studentId, int.parse(qr)).then((res) => {
+                        // print(res);
+                        if(res == true){
+                          QuickAlert.show(
+                            context: context,
+                            type: QuickAlertType.success,
+                            text: 'Attended Successfully!',
+                          )
+                        }else{
+                          QuickAlert.show(
+                                context: context,
+                                type: QuickAlertType.error,
+                                text: 'Attendance Failed',
+                              )
+                        }
+                    });
                     // ignore: use_build_context_synchronously
-                    print(res);
-                    if(res == true){
-                      QuickAlert.show(
-                        context: context,
-                        type: QuickAlertType.success,
-                        text: 'Attended Successfully!',
-                      );
-                    }
-                  } catch (e) {
-                     QuickAlert.show(
-                          context: context,
-                          type: QuickAlertType.error,
-                          text: 'Attendance Failed',
-                        );
-                  }
+                 
                 },
                 child: const Center(
                   child: Text('Attendance'),

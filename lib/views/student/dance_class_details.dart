@@ -8,6 +8,7 @@ import '../../models/live_dance_class.dart';
 import '../instructor/add_dance_payment_page.dart';
 import 'instructor_details_page.dart';
 
+import '../../utils/getDaysBetween.dart';
 class DanceClassDetails extends StatelessWidget {
   LiveDanceClassModel liveClass;
 
@@ -15,10 +16,12 @@ class DanceClassDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("live class id ${liveClass.liveClassId} and dance class id ${liveClass.danceClassId}");
+
     return Scaffold(
       floatingActionButtonLocation:
           FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
+      floatingActionButton: (getDaysBetweenFromToday(liveClass.date) > 0)? Container(
         height: 50,
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
@@ -29,6 +32,10 @@ class DanceClassDetails extends StatelessWidget {
             child: Text('Book this Class'),
           ),
         ),
+      ):Container(
+         height: 50,
+        margin: const EdgeInsets.all(10),
+        child: null
       ),
       appBar: AppBar(),
       body: Padding(

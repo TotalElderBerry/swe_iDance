@@ -13,6 +13,7 @@ class DanceClassDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("live class id ${liveDance.liveClassId} and dance class id ${liveDance.danceClassId}");
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(

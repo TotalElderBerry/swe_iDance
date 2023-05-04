@@ -55,9 +55,8 @@ class JoinDanceClassPage extends StatelessWidget {
             if(response.statusCode == 200){
               final res = jsonDecode(response.body);
               final redirectLink = Uri.parse(res['redirectUrl']);
-              print(res['redirectUrl']);
-              Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
-              // Get.to(PaymentPage(url: res['redirectUrl'],));
+              // Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
+              Get.to(PaymentPage(url: res['redirectUrl'],));
               // print("hello");
               // print(liveClass.liveClassId);
             }
@@ -82,7 +81,29 @@ class JoinDanceClassPage extends StatelessWidget {
               title: Text("PayMaya"),
               trailing: Radio(value: "", groupValue: "", onChanged: (val){}),
             ),
-            Divider()
+            Divider(),
+
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text("Name"),
+                      trailing: Text(liveClass.payment.accountName),
+                    ),
+                    Divider(
+                      indent: 5,
+                      endIndent: 5,
+                    ),
+                    ListTile(
+                      title: Text("Reference Number"),
+                      trailing: Text(liveClass.payment.accountNumber),
+                    )
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

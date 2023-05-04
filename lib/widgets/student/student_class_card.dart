@@ -66,7 +66,7 @@ class StudentClassCard extends StatelessWidget {
                           backgroundColor: Colors.purple,
                         ),
                         Text(
-                          "Run - BTS",
+                          liveDance.danceName,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(
@@ -83,7 +83,7 @@ class StudentClassCard extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              "Roger Intong",
+                              '${liveDance.instructor.firstName} ${liveDance.instructor.lastName}',
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ],
@@ -105,7 +105,7 @@ class StudentClassCard extends StatelessWidget {
                               width: 2,
                             ),
                             Text(
-                              "March 12,2023",
+                              liveDance.date,
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ],
@@ -120,7 +120,7 @@ class StudentClassCard extends StatelessWidget {
                               width: 2,
                             ),
                             Text(
-                              "UC Main Campus",
+                              liveDance.location,
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ],

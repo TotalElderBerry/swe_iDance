@@ -15,6 +15,8 @@ class StudentProfilePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    Get.find<StudentController>().filteredBookingClass.value =  Get.find<StudentController>().getBookedClasses();
+    Get.find<StudentController>().isPending.value = false;
     return DefaultTabController(
       length: 4,
       child: Builder(
@@ -56,6 +58,9 @@ class StudentProfilePage extends StatelessWidget{
                       }else if(indx == 1){
                         Get.find<StudentController>().filteredBookingClass.value = Get.find<StudentController>().getPendingClasses();
                         Get.find<StudentController>().isPending.value = true;
+                      }else if(indx == 2){
+                        Get.find<StudentController>().filteredBookingClass.value = Get.find<StudentController>().getDoneClasses();
+
                       }else{
                         Get.find<StudentController>().filteredBookingClass.clear();
                       }
@@ -133,6 +138,8 @@ class StudentProfilePage extends StatelessWidget{
                                   print("inside obx");
                                   return Expanded(
                                     child: ListView.builder(itemCount: Get.find<StudentController>().filteredBookingClass.length ,itemBuilder: (context, index) {
+                                        print("dance class ${Get.find<StudentController>().filteredBookingClass[index].payment!.referenceNumber}");
+                                        print(Get.find<StudentController>().filteredBookingClass[index].dateApproved);
                                         return Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
