@@ -86,12 +86,27 @@ class AttendanceScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const Expanded(
-                child: TabBarView(children: [
-                  AttendedWidget(),
-                  FullListWidget(),
-                ]),
-              ),
+              FutureBuilder(
+                future: Get.find<DanceClassController>().getLiveDanceClassStudents(liveDance.danceClassId),
+                builder: ((context, snapshot) {
+                  if(snapshot.hasData){
+
+                    return Expanded(
+                        child: TabBarView(children: [
+                          AttendedWidget(),
+                          FullListWidget(),
+                        ]),
+                      );
+                  }
+                  return Text("Loading");
+                  
+              })),
+              // const Expanded(
+              //   child: TabBarView(children: [
+              //     AttendedWidget(),
+              //     FullListWidget(),
+              //   ]),
+              // ),
             ],
           ),
         ),
