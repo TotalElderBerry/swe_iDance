@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
           controller: userController,
             decoration: InputDecoration(
               hintText: "Email",
-              labelText: "FIrst EMail"
+              labelText: "First Email"
             ),
           ),
           TextField(

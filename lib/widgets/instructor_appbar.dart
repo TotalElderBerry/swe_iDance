@@ -4,6 +4,7 @@ import 'package:i_dance/views/student/student_home.dart';
 
 import '../controllers/auth/auth_controller.dart';
 import '../views/instructor/instructor_home.dart';
+import '../views/instructor/instructor_profile.dart';
 import '../views/student/student_profile.dart';
 
 class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
@@ -81,7 +82,7 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
         actions: [
           GestureDetector(
             onTap: () {
-              Get.to(StudentProfilePage());
+              Get.to(InstructorProfilePage());
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 10),

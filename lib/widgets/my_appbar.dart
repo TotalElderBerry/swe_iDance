@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-
+import 'package:i_dance/views/instructor/instructor_profile.dart';
+ 
 import '../controllers/auth/auth_controller.dart';
 import '../controllers/student/student.dart';
 import '../models/instructor.dart';
 import '../views/instructor/instructor_home.dart';
 import '../views/instructor/instructor_signin.dart';
 import '../views/student/student_profile.dart';
-
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
+ 
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   BuildContext parentContext;
 
   MyAppBar(this.parentContext,{super.key});
@@ -64,7 +65,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
                   //     Get.to(InstructorHome());
                   //   }
                   // } catch (e) {
-                  //   print(e);                  
+                  //   print(e);
                   // }
                   if(Get.find<AuthController>().currentInstructor.value == null){
                     Get.to(InstructorSignIn());
@@ -92,14 +93,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
       },
     );
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        scrolledUnderElevation: 0,
-        elevation: 0,
-        leadingWidth: 76.0,
-        leading: IconButton(onPressed: () {
+      scrolledUnderElevation: 0,
+      elevation: 0,
+      leadingWidth: 76.0,
+      leading: IconButton(
+          onPressed: () {
             _showBottomSheet(context);
         }, icon: const Icon(Icons.menu)),
         actions: [
@@ -116,10 +118,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
               ),
             ),
           ),
-        ],
+        ]
       );
-
+    
   }
-      @override
-      Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+ 
+  @override
+  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
 }
+ 
