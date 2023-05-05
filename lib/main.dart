@@ -11,6 +11,7 @@ import 'package:i_dance/views/auth/register_page.dart';
 import 'package:i_dance/views/auth/register_page2.dart';
 import 'package:i_dance/views/home.dart';
 import 'package:i_dance/views/instructor/instructor_home.dart';
+import 'package:i_dance/views/student/home_screen.dart';
 import 'package:i_dance/views/student/payment_success.dart';
 import 'package:i_dance/views/student/student_home.dart';
 
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
                   if (snapshot.hasData || Get.find<AuthController>().isLoggedIn.value) {
                     print("The current user");
                     print(FirebaseAuth.instance.currentUser);
-                    return const StudentHomePage();
+                    return const HomeScreen();
                   }
                   return const LoginPage();
                   

@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-
+import 'package:i_dance/views/instructor/instructor_profile.dart';
+ 
 import '../controllers/auth/auth_controller.dart';
 import '../controllers/student/student.dart';
 import '../models/instructor.dart';
 import '../views/instructor/instructor_home.dart';
 import '../views/student/student_profile.dart';
-
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
+ 
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   BuildContext parentContext;
-  MyAppBar(this.parentContext,{super.key});
-
-   void _showBottomSheet(BuildContext context) {
+  MyAppBar(this.parentContext, {super.key, required this.isStudent});
+ 
+  bool isStudent;
+ 
+  void _showBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -61,10 +64,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
                   //     Get.to(InstructorHome());
                   //   }
                   // } catch (e) {
-                  //   print(e);                  
+                  //   print(e);
                   // }
-                      Get.to(InstructorHome());
-
+                  Get.to(InstructorHome());
                 },
                 icon: Icon(Icons.school),
                 label: Text('Switch to Student'),
@@ -83,30 +85,41 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
       },
     );
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        scrolledUnderElevation: 0,
-        elevation: 0,
-        leadingWidth: 76.0,
-        leading: IconButton(onPressed: () {
+      scrolledUnderElevation: 0,
+      elevation: 0,
+      leadingWidth: 76.0,
+      leading: IconButton(
+          onPressed: () {
             _showBottomSheet(context);
-        }, icon: const Icon(Icons.menu)),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Get.to(StudentProfilePage());
-            },
-            child: CircleAvatar(
-              radius: 20,
-              backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL == null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),
-            ),
+          },
+          icon: const Icon(Icons.menu)),
+      actions: [
+        GestureDetector(
+          onTap: () {
+            Get.to(isStudent == true
+                ? StudentProfilePage()
+                : InstructorProfilePage());
+          },
+          child: CircleAvatar(
+            radius: 20,
+            backgroundImage: NetworkImage((Get.find<AuthController>()
+                        .authService
+                        .getUser()!
+                        .photoURL ==
+                    null)
+                ? 'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'
+                : Get.find<AuthController>().authService.getUser()!.photoURL!),
           ),
-        ],
-      );
-
+        ),
+      ],
+    );
   }
-      @override
-      Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+ 
+  @override
+  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
 }
+ 

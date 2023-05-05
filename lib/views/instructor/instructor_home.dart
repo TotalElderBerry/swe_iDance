@@ -12,7 +12,7 @@ class InstructorHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context),
+      appBar: MyAppBar(context,isStudent: false),
       body: (isEmpty)? 
       Center(
         child: Padding(

@@ -56,19 +56,19 @@ class StudentProfilePage extends StatelessWidget {
                   tabs: [
                     Tab(
                       icon: Text("Upcoming",
-                          style: Theme.of(context).textTheme.bodyMedium),
+                          style: Theme.of(context).textTheme.bodySmall),
                     ),
                     Tab(
                       icon: Text("Pending",
-                          style: Theme.of(context).textTheme.bodyMedium),
+                          style: Theme.of(context).textTheme.bodySmall),
                     ),
                     Tab(
                       icon: Text("Done",
-                          style: Theme.of(context).textTheme.bodyMedium),
+                          style: Theme.of(context).textTheme.bodySmall),
                     ),
                     Tab(
                       icon: Text("Likes",
-                          style: Theme.of(context).textTheme.bodyMedium),
+                          style: Theme.of(context).textTheme.bodySmall),
                     ),
                   ],
                 ),
@@ -81,14 +81,17 @@ class StudentProfilePage extends StatelessWidget {
               child: TabBarView(
                 children: [
                   Column(
-                    children: const [
-                      DanceClassCard(),
-                      StudentClassCard(),
+                    children: [
+                      StudentClassCard(
+                        fromPage: 'CardUpcoming',
+                      ),
                     ],
                   ),
                   Column(
-                    children: const [
-                      PendingClassCard(),
+                    children: [
+                      StudentClassCard(
+                        fromPage: 'CardPending',
+                      ),
                     ],
                   ),
                   Column(

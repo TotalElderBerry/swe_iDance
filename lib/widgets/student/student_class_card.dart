@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import '../../views/student/dance_class_details.dart';
 
 class StudentClassCard extends StatelessWidget {
-  const StudentClassCard({super.key});
+  StudentClassCard({super.key, required this.fromPage});
+
+  String fromPage;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,7 @@ class StudentClassCard extends StatelessWidget {
       onTap: () {
         Get.to(
           DanceClassDetails(
-            isPending: false,
+            fromPage: fromPage,
           ),
         );
       },
