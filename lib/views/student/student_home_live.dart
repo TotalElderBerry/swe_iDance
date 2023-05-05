@@ -9,14 +9,16 @@ import 'package:i_dance/widgets/student/dance_class_card.dart';
 import 'package:i_dance/widgets/my_appbar.dart';
 import 'package:i_dance/widgets/student/student_class_card.dart';
 
-class StudentHomePage extends StatefulWidget {
-  const StudentHomePage({Key? key}) : super(key: key);
+import '../../widgets/student/student_class_live_card.dart';
+
+class StudentHomeLivePage extends StatefulWidget {
+  const StudentHomeLivePage({Key? key}) : super(key: key);
 
   @override
-  _StudentHomePageState createState() => _StudentHomePageState();
+  _StudentHomeLivePageState createState() => _StudentHomeLivePageState();
 }
 
-class _StudentHomePageState extends State<StudentHomePage> {
+class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
   List<String> items = [
     'Hello World',
     'Flutter',
@@ -109,7 +111,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context,isStudent: true),
+      appBar: MyAppBar(context,isStudent: true,),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FutureBuilder(
@@ -144,8 +146,8 @@ class _StudentHomePageState extends State<StudentHomePage> {
                     ),
                     Row(
                       children: [
-                        StudentClassCard(
-                          fromPage: 'StudentHome',
+                        StudentClassLiveCard(
+                          fromPage: 'StudentHomeLive',
                         ),
                       ],
                     ),

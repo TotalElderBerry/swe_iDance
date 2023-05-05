@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
           controller: userController,
             decoration: InputDecoration(
               hintText: "Email",
-              labelText: "FIrst EMail"
+              labelText: "First Email"
             ),
           ),
           TextField(

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../views/student/dance_class_details.dart';
 
-class PendingClassCard extends StatelessWidget {
-  const PendingClassCard({super.key});
+class StudentClassLiveCard extends StatelessWidget {
+  StudentClassLiveCard({super.key, required this.fromPage});
+
+  String fromPage;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,7 @@ class PendingClassCard extends StatelessWidget {
       onTap: () {
         Get.to(
           DanceClassDetails(
-            fromPage: 'samp',
+            fromPage: fromPage,
           ),
         );
       },
@@ -53,7 +55,7 @@ class PendingClassCard extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                'Recorded Class',
+                                'Live Class',
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ],

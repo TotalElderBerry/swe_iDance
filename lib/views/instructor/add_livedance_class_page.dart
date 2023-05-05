@@ -16,7 +16,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context),
+      appBar: MyAppBar(context,isStudent: false),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(32.0),

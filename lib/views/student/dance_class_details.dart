@@ -2,13 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:get/get.dart';
 import 'package:i_dance/models/attendance_model.dart';
+import 'package:i_dance/views/instructor/add_dance_payment_page.dart';
 import 'package:quickalert/quickalert.dart';
 
 class DanceClassDetails extends StatelessWidget {
-  DanceClassDetails({super.key, required this.isPending});
+  DanceClassDetails({super.key, required this.fromPage});
 
-  bool isPending;
+  String fromPage;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class DanceClassDetails extends StatelessWidget {
       floatingActionButton: Container(
         height: 50,
         margin: const EdgeInsets.all(10),
-        child: isPending == false
+        child: fromPage == "CardUpcoming"
             ? ElevatedButton(
                 onPressed: () async {
                   String COLOR_CODE = '#ffffff';
@@ -47,12 +49,26 @@ class DanceClassDetails extends StatelessWidget {
                   child: Text('Attendance'),
                 ),
               )
-            : ElevatedButton(
-                onPressed: () {},
-                child: const Center(
-                  child: Text('Cancel'),
-                ),
-              ),
+            : fromPage == "CardPending"
+                ? ElevatedButton(
+                    onPressed: () {},
+                    child: const Center(
+                      child: Text('Cancel'),
+                    ),
+                  )
+                : fromPage == "StudentHomeLive"
+                    ? ElevatedButton(
+                        onPressed: () => Get.to(AddPaymentPage()),
+                        child: const Center(
+                          child: Text('Book Dance Class'),
+                        ),
+                      )
+                    : ElevatedButton(
+                        onPressed: () => Get.to(AddPaymentPage()),
+                        child: const Center(
+                          child: Text('Buy Dance Class'),
+                        ),
+                      ),
       ),
       appBar: AppBar(),
       body: Padding(

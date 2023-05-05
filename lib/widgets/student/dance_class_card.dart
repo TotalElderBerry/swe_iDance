@@ -6,7 +6,7 @@ import 'package:i_dance/views/student/dance_class_details.dart';
 import 'package:i_dance/views/student/instructor_details_page.dart';
 
 class DanceClassCard extends StatelessWidget {
-  const DanceClassCard({super.key});
+  DanceClassCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class DanceClassCard extends StatelessWidget {
       onTap: () {
         Get.to(
           DanceClassDetails(
-            isPending: false,
+            fromPage: 'samp',
           ),
         );
       },
