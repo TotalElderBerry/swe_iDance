@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/controllers/auth/auth_controller.dart';
+import 'package:i_dance/views/instructor/add_recorded_dance_payment_page.dart';
+import '../../models/payment_details.dart';
 import 'add_dance_payment_page.dart';
 import '../../models/recorded_dance_model.dart';
 
@@ -22,6 +25,8 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
   bool isMedium = false;
 
   bool isHard = false;
+
+  String difficult = "Easy";
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +167,7 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                             isEasy = true;
                             isMedium = false;
                             isHard = false;
+                            difficult = "Easy";
                           });
                         },
                         child: Container(
@@ -195,6 +201,8 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                             isEasy = false;
                             isMedium = true;
                             isHard = false;
+                            difficult = "Medium";
+
                           });
                         },
                         child: Container(
@@ -228,6 +236,8 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                             isEasy = false;
                             isMedium = false;
                             isHard = true;
+                            difficult = "Difficult";
+
                           });
                         },
                         child: Container(
@@ -310,8 +320,10 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                           "difficulty": "Easy",
                           "details": "Lorem Ipsum Dolor Iset",
                         });
+                        RecordedDanceClassModel recordedDanceClass = RecordedDanceClassModel(-1, youtubeLink: linkController.text, danceClassId: -1, price: int.parse(priceController.text), danceName: danceController.text, danceSong: songController.text, danceDifficulty: difficult, description: detailsController.text, payment: PaymentDetails(-1,accountName: '', accountNumber: '', modeOfPayment: ''), instructor: Get.find<AuthController>().currentInstructor.value!
+                        );
                         print(recordedDance);
-                        // Get.to(AddPaymentPage());
+                        Get.to(AddRecordedPaymentPage(recordedDanceClassModel: recordedDanceClass,));
                       },
                       child: Text("Next")),
                 )

@@ -1,9 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:i_dance/models/recorded_dance_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../utils/generateRefNumber.dart';
+import '../student/pay_page.dart';
+import 'package:http/http.dart' as http;
+
+
 class ReviewRecordedClass extends StatelessWidget {
-  const ReviewRecordedClass({super.key});
+  RecordedDanceClassModel recordedDanceClass;
+  ReviewRecordedClass({super.key, required this.recordedDanceClass});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +27,46 @@ class ReviewRecordedClass extends StatelessWidget {
         height: 50,
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
-          onPressed: () => null,
+          onPressed: () async {
+            String refNumber = generateReferenceNumber(7);
+            refNumber += "-";
+            refNumber += generateReferenceNumber(4);
+            refNumber += "-";
+            refNumber += generateReferenceNumber(4);
+            refNumber += "-";
+            refNumber += generateReferenceNumber(4);
+            refNumber += "-";
+            refNumber += generateReferenceNumber(7);
+            final response = await http.post(Uri.parse('https://pg-sandbox.paymaya.com/checkout/v1/checkouts'),
+              body: jsonEncode(
+                <String,dynamic> {
+                  "totalAmount": {"value": recordedDanceClass.price, "currency": 'PHP'},
+                  "requestReferenceNumber": refNumber,
+                  "redirectUrl": {
+                    "success": 'https://www.merchantsite.com/success?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
+                    "failure": 'https://www.mechantsite.com/failure?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
+                    "cancel": 'https://www.merchantsite.com/cancel?id=5fc10b93-bdbd-4f31-b31d-4575a3785009'
+                  }
+                }
+              ),
+              headers: {
+                'content-type': 'application/json',
+                "authorization": 'Basic cGstWjBPU3pMdkljT0kyVUl2RGhkVEdWVmZSU1NlaUdTdG5jZXF3VUU3bjBBaDo='
+              },
+            );
+
+            if(response.statusCode == 200){
+              final res = jsonDecode(response.body);
+              final redirectLink = Uri.parse(res['redirectUrl']);
+              // Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
+              Get.to(PaymentPage(url: res['redirectUrl'],));
+              // print("hello");
+              // print(liveClass.liveClassId);
+            }
+
+          },
           child: const Center(
-            child: Text('Book Dance'),
+            child: Text('Create Dance'),
           ),
         ),
       ),
