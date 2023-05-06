@@ -1,6 +1,7 @@
 import 'package:i_dance/models/user.dart';
 
 class InstructorModel extends UserModel{
+  String? img;
   String userId;
   int instructorId;
   int rating;

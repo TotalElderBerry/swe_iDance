@@ -54,8 +54,7 @@ class JoinDanceClassPage extends StatelessWidget {
 
             if(response.statusCode == 200){
               final res = jsonDecode(response.body);
-              final redirectLink = Uri.parse(res['redirectUrl']);
-              // Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
+              await Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
               Get.to(PaymentPage(url: res['redirectUrl'],));
               // print("hello");
               // print(liveClass.liveClassId);

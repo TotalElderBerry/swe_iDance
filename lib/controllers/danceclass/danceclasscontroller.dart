@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:i_dance/controllers/image/imagecontroller.dart';
 import 'package:i_dance/sources/api/dance-class/dance-class.dart';
+import 'package:i_dance/views/student/recorded_dance_class_booking.dart';
 
 import '../../models/live_dance_class.dart';
+import '../../models/recorded_dance_model.dart';
 import '../../models/student.dart';
 import '../../sources/api/attendance/attendance.dart';
 import '../../sources/firebasestorage/firebase_storage.dart';
@@ -28,6 +30,10 @@ class DanceClassController extends GetxController{
     await ImageCloudStorage.uploadDanceClassPicture(liveDanceClass.instructor.instructorId, id, File(Get.find<ImagePickerController>().imgPathDanceClass.value));
   }
 
+  void addRecordedDanceClass(RecordedDanceClassModel recordedDanceClass)async{
+    final id = await DanceClassAPI.addRecordedDanceClass(recordedDanceClass);
+  }
+
   Future<bool> populateUpcomingClasses() async {
     bool hasFetched = false;
     print("in populate classes");
@@ -40,11 +46,13 @@ class DanceClassController extends GetxController{
 
       for(var upcomingClass in upcoming){
         LiveDanceClassModel upClass = LiveDanceClassModel.fromJson(upcomingClass);
+        upClass.instructor.profilePicture = await ImageCloudStorage.getInstructorPicture(upClass.instructor.userId);
         upcomingDanceClasses.add(upClass);
       }
 
       for(var doneClass in done){
         LiveDanceClassModel doneTemp = LiveDanceClassModel.fromJson(doneClass);
+        doneTemp.instructor.profilePicture = await ImageCloudStorage.getInstructorPicture(doneTemp.instructor.userId);
         doneDanceClasses.add(doneTemp);
       }
       hasFetched = true;

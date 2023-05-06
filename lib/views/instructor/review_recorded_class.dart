@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
 import 'package:i_dance/models/recorded_dance_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/generateRefNumber.dart';
 import '../student/pay_page.dart';
 import 'package:http/http.dart' as http;
+
+import 'instructor_home.dart';
 
 
 class ReviewRecordedClass extends StatelessWidget {
@@ -27,42 +30,9 @@ class ReviewRecordedClass extends StatelessWidget {
         height: 50,
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
-          onPressed: () async {
-            String refNumber = generateReferenceNumber(7);
-            refNumber += "-";
-            refNumber += generateReferenceNumber(4);
-            refNumber += "-";
-            refNumber += generateReferenceNumber(4);
-            refNumber += "-";
-            refNumber += generateReferenceNumber(4);
-            refNumber += "-";
-            refNumber += generateReferenceNumber(7);
-            final response = await http.post(Uri.parse('https://pg-sandbox.paymaya.com/checkout/v1/checkouts'),
-              body: jsonEncode(
-                <String,dynamic> {
-                  "totalAmount": {"value": recordedDanceClass.price, "currency": 'PHP'},
-                  "requestReferenceNumber": refNumber,
-                  "redirectUrl": {
-                    "success": 'https://www.merchantsite.com/success?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
-                    "failure": 'https://www.mechantsite.com/failure?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
-                    "cancel": 'https://www.merchantsite.com/cancel?id=5fc10b93-bdbd-4f31-b31d-4575a3785009'
-                  }
-                }
-              ),
-              headers: {
-                'content-type': 'application/json',
-                "authorization": 'Basic cGstWjBPU3pMdkljT0kyVUl2RGhkVEdWVmZSU1NlaUdTdG5jZXF3VUU3bjBBaDo='
-              },
-            );
-
-            if(response.statusCode == 200){
-              final res = jsonDecode(response.body);
-              final redirectLink = Uri.parse(res['redirectUrl']);
-              // Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
-              Get.to(PaymentPage(url: res['redirectUrl'],));
-              // print("hello");
-              // print(liveClass.liveClassId);
-            }
+          onPressed: () {
+            Get.find<DanceClassController>().addRecordedDanceClass(recordedDanceClass);
+              Get.offAll(InstructorHome());
 
           },
           child: const Center(
@@ -80,11 +50,11 @@ class ReviewRecordedClass extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.network(
-                  'https://i.ytimg.com/vi/$id/maxresdefault.jpg',
+                  "https://img.youtube.com/vi/${recordedDanceClass.youtubeLink.split('/')[3]}/0.jpg",
                   fit: BoxFit.fill,
                 ),
                 Text(
-                  recordedDance.last['classname'],
+                  recordedDanceClass.danceName,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const SizedBox(
@@ -99,7 +69,7 @@ class ReviewRecordedClass extends StatelessWidget {
                           Icons.music_note,
                           color: Colors.purple,
                         ),
-                        Text(recordedDance.last['song']),
+                        Text(recordedDanceClass.danceSong),
                       ],
                     ),
                     Row(
@@ -108,7 +78,7 @@ class ReviewRecordedClass extends StatelessWidget {
                           Icons.directions_walk,
                           color: Colors.purple,
                         ),
-                        Text(recordedDance.last['difficulty']),
+                        Text(recordedDanceClass.danceDifficulty),
                       ],
                     ),
                     Row(
@@ -117,7 +87,7 @@ class ReviewRecordedClass extends StatelessWidget {
                           Icons.money,
                           color: Colors.purple,
                         ),
-                        Text(recordedDance.last['price']),
+                        Text('${recordedDanceClass.price}'),
                       ],
                     ),
                   ],
@@ -136,10 +106,10 @@ class ReviewRecordedClass extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () => launchUrl(
-                            Uri.parse('https://' + recordedDance.last['link']),
+                            Uri.parse(recordedDanceClass.youtubeLink),
                             mode: LaunchMode.externalApplication,
                           ),
-                          child: Text(recordedDance.last['link']),
+                          child: Text(recordedDanceClass.youtubeLink),
                         )
                       ],
                     ),
@@ -166,13 +136,13 @@ class ReviewRecordedClass extends StatelessWidget {
                   ),
                   title: Text("PayMaya"),
                 ),
-                const ListTile(
+                ListTile(
                   leading: Text('Full Name'),
-                  title: Text('Juan Dela Cruz'),
+                  title: Text(recordedDanceClass.payment.accountName),
                 ),
-                const ListTile(
+                ListTile(
                   leading: Text('Reference Number'),
-                  title: Text('ASDJKJ29UASKDJ'),
+                  title: Text(recordedDanceClass.payment.accountNumber),
                 ),
                 const SizedBox(
                   height: 24,
@@ -188,7 +158,7 @@ class ReviewRecordedClass extends StatelessWidget {
                 const SizedBox(
                   height: 12,
                 ),
-                Text(recordedDance.last['details']),
+                Text(recordedDanceClass.description),
               ],
             ),
           ),

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
+import 'package:i_dance/controllers/image/imagecontroller.dart';
 import 'package:i_dance/models/live_dance_class.dart';
 import 'package:i_dance/models/payment_details.dart';
 import 'package:i_dance/sources/localstorage/localstorage.dart';
@@ -7,6 +10,7 @@ import '../../models/dance_class.dart';
 import '../../models/instructor.dart';
 import '../../models/recorded_dance_model.dart';
 import '../../sources/api/instructor/instructor.dart';
+import '../../sources/firebasestorage/firebase_storage.dart';
 
 class InstructorController extends GetxController{
   RxList<LiveDanceClassModel> instructorDanceClass = <LiveDanceClassModel>[].obs;
@@ -17,6 +21,8 @@ class InstructorController extends GetxController{
       try {
         String token = await InstructorAPI.addInstructor(newInstructor);
         print(token);
+        await ImageCloudStorage.uploadInstructorImage(newInstructor.userId, File(Get.find<ImagePickerController>().instructorImagePath.value));
+
         LocalStorageSource.writeToStorage('instructor_token',token);
         return true;
       } catch (e) {

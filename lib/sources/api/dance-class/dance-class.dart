@@ -6,12 +6,33 @@ import 'package:i_dance/sources/localstorage/localstorage.dart';
 
 import '../../../constants/api.dart';
 import '../../../models/live_dance_class.dart';
+import '../../../models/recorded_dance_model.dart';
 
 
 class DanceClassAPI{
   static Future<int> addDanceClass(LiveDanceClassModel danceClass)async{
     final token = LocalStorageSource.readFromStorage('instructor_token');
     const route = '/dance-class/add/live';
+    final response = await http.post(
+      Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+      body: jsonEncode(danceClass.toJson()) ,
+      headers: {
+        "Content-Type": "application/json",
+        HttpHeaders.authorizationHeader: 'Basic $token',
+      },
+    );
+
+    if(response.statusCode == 200){
+      // return StudentModel.fromJson(jsonDecode(response.body));
+      return jsonDecode(response.body)['insertId'];
+    } else {
+      throw Exception('Failed to get');
+    }
+  }
+
+  static Future<int> addRecordedDanceClass(RecordedDanceClassModel danceClass)async{
+    final token = LocalStorageSource.readFromStorage('instructor_token');
+    const route = '/dance-class/add/recorded';
     final response = await http.post(
       Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
       body: jsonEncode(danceClass.toJson()) ,

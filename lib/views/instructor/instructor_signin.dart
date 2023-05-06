@@ -6,6 +6,7 @@ import 'package:i_dance/models/instructor.dart';
 import 'package:i_dance/views/instructor/instructor_home.dart';
 
 import '../../models/student.dart';
+import 'instructor_signin_addimage.dart';
 
 class InstructorSignIn extends StatelessWidget {
   const InstructorSignIn({Key? key}) : super(key: key);
@@ -43,17 +44,18 @@ class InstructorSignIn extends StatelessWidget {
             ),
             SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () async{
+              onPressed: (){
                 StudentModel? current = Get.find<AuthController>().currentUser.value;
                 InstructorModel newInstructor = InstructorModel(current!.userId, -1, firstName: current.firstName, lastName: current.lastName, gender: current.gender, contactNumber: current.contactNumber, emailAddress: current.emailAddress, dateOfBirth: current.dateOfBirth, rating: 0, description: descriptionController.text);
                 try {
-                    bool isSuccess = await Get.find<InstructorController>().addInstructor(newInstructor);
-                    if(isSuccess == true) Get.offAll(InstructorHome());
+                    // bool isSuccess = await Get.find<InstructorController>().addInstructor(newInstructor);
+                    // if(isSuccess == true) Get.offAll(InstructorHome());
+                    Get.to(InstructorAddImage(instructor: newInstructor));
                 } catch (e) {
                   
                 }
               },
-              child: Text('Register'),
+              child: Text('Next'),
             ),
           ],
         ),

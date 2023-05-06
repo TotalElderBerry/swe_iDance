@@ -31,13 +31,27 @@ class InstructorDetailsPage extends StatelessWidget {
                       height: 200,
                       child: Stack(
                         children: [
+                          (instructor.profilePicture == "")?
                           ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                                child: SizedBox(
+                                  height: 150,
+                                  width: double.infinity,
+                                  child: DecoratedBox(decoration: const BoxDecoration(color: Colors.grey)),
+                                ),
+                                // child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
+                                // fit: BoxFit.contain,
+                                // height: 150,
+                                // ),
+                            ):
+                             ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(12)),
                                 child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
                                 fit: BoxFit.contain,
                                 height: 150,
                                 ),
-                            ),
+                            )
+                            ,
                             const Positioned.fill(
                               child: Align(
                                 alignment: Alignment.bottomCenter,

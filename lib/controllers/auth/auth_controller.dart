@@ -39,6 +39,9 @@ class AuthController extends GetxController{
       currentUser.value = await StudentInstructorAuth.getProfileStudentbyId(user.uid);
       try {
         currentInstructor.value = await Get.find<StudentController>().switchToInstructor();
+        if(currentInstructor.value != null){
+        currentInstructor.value!.img = await ImageCloudStorage.getInstructorPicture(currentInstructor.value!.userId);
+        }
       } catch (e) {
         return false;
       }

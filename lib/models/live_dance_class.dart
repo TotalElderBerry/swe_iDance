@@ -54,7 +54,7 @@ class LiveDanceClassModel extends DanceClassModel{
  
     PaymentDetails temp = PaymentDetails.fromJson(json['payment']);
     InstructorModel instructorTemp = InstructorModel.fromJson(json['instructor']);
-
+    
     LiveDanceClassModel newLiveClass = LiveDanceClassModel(int.parse(json['live_danceclass_id']), date: json['date'], location: json['location'], studentLimit: int.parse(json['student_limit']), danceClassId: int.parse(json['dance_id']), danceName: json['dance_name'], danceSong: json['dance_song'], danceDifficulty: json['dance_difficulty'], price: int.parse(json['price']), description: json['description'], payment: temp, instructor: instructorTemp);
 
     return newLiveClass;

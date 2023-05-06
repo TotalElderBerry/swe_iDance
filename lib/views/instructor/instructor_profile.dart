@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:i_dance/controllers/auth/auth_controller.dart';
+import 'package:i_dance/models/instructor.dart';
 import 'package:quickalert/quickalert.dart';
 
 class InstructorProfilePage extends StatefulWidget {
+  InstructorModel instructor = Get.find<AuthController>().currentInstructor.value!;
   InstructorProfilePage({super.key});
 
   @override
@@ -53,20 +57,39 @@ class _InstructorProfilePageState extends State<InstructorProfilePage> {
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.red,
                     ),
-                    child: Image.network(
-                      'https://images.unsplash.com/photo-1483884105135-c06ea81a7a80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y292ZXIlMjBnaXJsfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
-                      fit: BoxFit.cover,
-                    ),
+                    child: 
+                    (widget.instructor.img == null)?
+                          ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                                child: SizedBox(
+                                  height: 150,
+                                  width: double.infinity,
+                                  child: DecoratedBox(decoration: const BoxDecoration(color: Colors.grey)),
+                                ),
+                                // child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
+                                // fit: BoxFit.contain,
+                                // height: 150,
+                                // ),
+                            ):
+                             ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                                child: Image.network(widget.instructor.img!,
+                                fit: BoxFit.contain,
+                                height: 150,
+                                ),
+                            ),
+                    // Image.network(
+                    //   'https://images.unsplash.com/photo-1483884105135-c06ea81a7a80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y292ZXIlMjBnaXJsfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
+                    //   fit: BoxFit.cover,
+                    // ),
                   ),
                   Positioned(
                     top: 125,
                     left: 15,
                     child: Row(
-                      children: const [
+                      children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
-                          ),
+                          backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL == null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),
                           radius: 50,
                         ),
                       ],
@@ -79,7 +102,7 @@ class _InstructorProfilePageState extends State<InstructorProfilePage> {
                       height: 50,
                       width: 210,
                       child: ListTile(
-                        title: const Text('Catto Dela Meow'),
+                        title: Text("${widget.instructor.firstName} ${widget.instructor.lastName}"),
                         subtitle: Row(
                           children: [
                             const Text(
@@ -230,8 +253,8 @@ class _InstructorProfilePageState extends State<InstructorProfilePage> {
                   ),
                 ],
               ),
-              const Text(
-                'Lorem Ipsum Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."',
+              Text(
+                '${widget.instructor.description}',
               ),
               const SizedBox(
                 height: 12,

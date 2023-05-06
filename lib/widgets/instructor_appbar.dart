@@ -5,6 +5,7 @@ import 'package:i_dance/views/student/student_home.dart';
 import '../controllers/auth/auth_controller.dart';
 import '../views/instructor/instructor_home.dart';
 import '../views/instructor/instructor_profile.dart';
+import '../views/student/home_screen.dart';
 import '../views/student/student_profile.dart';
 
 class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
@@ -49,7 +50,7 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
               Divider(),
              TextButton.icon(
                 onPressed: () {
-                  Get.offAll(StudentHomePage());
+                  Get.offAll(HomeScreen());
                 },
                 icon: Icon(Icons.school),
                 label: Text('Switch to Student'),
@@ -88,8 +89,8 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
               padding: const EdgeInsets.only(right: 10),
               child: CircleAvatar(
                 radius: 20,
-                // backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL != null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),
-                backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
+                backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL == null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),
+                // backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
               ),
             ),
           ),

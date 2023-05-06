@@ -54,19 +54,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               Obx((){
               return TextButton.icon(
                 onPressed: () async {
-                  //  try {
-                  //   InstructorModel? instructorModel = await Get.find<StudentController>().switchToInstructor();
-                  //   print("instructor is");
-                  //   print(instructorModel);
-                  //   if(instructorModel == null){
-                  //     print("unauthorized");
-                  //   }else{
-                  //     print("authorized");
-                  //     Get.to(InstructorHome());
-                  //   }
-                  // } catch (e) {
-                  //   print(e);
-                  // }
+                  
                   if(Get.find<AuthController>().currentInstructor.value == null){
                     Get.to(InstructorSignIn());
                   }else{
