@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/sources/firebasestorage/firebase_storage.dart';
 import 'package:i_dance/views/instructor/instructor_home.dart';
 
 import '../../controllers/danceclass/danceclasscontroller.dart';
@@ -26,6 +27,7 @@ class ReviewDanceClassPage extends StatelessWidget {
           onPressed: () {
             try {
             Get.find<DanceClassController>().addLiveDanceClass(danceClass);
+            ImageCloudStorage.uploadDanceClassPicture(danceClass.instructor.instructorId, danceClass.danceClassId, File(Get.find<ImagePickerController>().imgPathDanceClass.value));
               Get.offAll(InstructorHome());
             } catch (e) {
               throw Exception(e);

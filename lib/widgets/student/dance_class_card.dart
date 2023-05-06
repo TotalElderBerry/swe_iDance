@@ -27,11 +27,19 @@ class DanceClassCard extends StatelessWidget {
                     child: Row(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                            child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
-                            fit: BoxFit.cover,
-                            width: 80,
-                            height: 80,
+                          borderRadius:const  BorderRadius.all(Radius.circular(8)),
+                            child:
+                            (liveClass.img == "")?
+                            const SizedBox(
+                                  width: 80,
+                                  height: 80,
+                                  child: DecoratedBox(decoration: BoxDecoration(color: Colors.grey)),
+                                ): 
+                            Image.network(
+                                liveClass.img!,
+                                fit: BoxFit.cover,
+                                width: 80,
+                                height: 80,
                             ),
                         ),
                         const SizedBox(width: 20,),
@@ -50,7 +58,8 @@ class DanceClassCard extends StatelessWidget {
                                     children: [
                                       CircleAvatar(
                                           radius: 10,
-                                          backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
+                                          backgroundImage: 
+                                          NetworkImage(liveClass.instructor.profilePicture!)
                                         ),
                                         SizedBox(width: 5,),
                                       Text("${liveClass.instructor.firstName} ${liveClass.instructor.lastName}", style: Theme.of(context).textTheme.labelSmall,),

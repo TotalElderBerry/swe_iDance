@@ -19,6 +19,7 @@ class DanceClassController extends GetxController{
   RxList<StudentModel> studentsApproved = <StudentModel>[].obs;
   RxList<StudentModel> studentsPending = <StudentModel>[].obs;
   RxList<StudentModel> studentsAttendance = <StudentModel>[].obs;
+  RxList<RecordedDanceClassModel> recordedClasses = <RecordedDanceClassModel>[].obs;
 
   void filterList(String query){
 
@@ -46,13 +47,17 @@ class DanceClassController extends GetxController{
 
       for(var upcomingClass in upcoming){
         LiveDanceClassModel upClass = LiveDanceClassModel.fromJson(upcomingClass);
-        upClass.instructor.profilePicture = await ImageCloudStorage.getInstructorPicture(upClass.instructor.userId);
+        upClass.img = await ImageCloudStorage.getDanceClassPicture(upClass.danceClassId);
+        upClass.instructor.img = await ImageCloudStorage.getInstructorPicture(upClass.instructor.userId);
+        upClass.instructor.profilePicture = await ImageCloudStorage.getProfilePicture(upClass.instructor.userId);
         upcomingDanceClasses.add(upClass);
       }
 
       for(var doneClass in done){
         LiveDanceClassModel doneTemp = LiveDanceClassModel.fromJson(doneClass);
-        doneTemp.instructor.profilePicture = await ImageCloudStorage.getInstructorPicture(doneTemp.instructor.userId);
+        doneTemp.img = await ImageCloudStorage.getDanceClassPicture(doneTemp.danceClassId);
+        doneTemp.instructor.profilePicture = await ImageCloudStorage.getProfilePicture(doneTemp.instructor.userId);
+        doneTemp.instructor.img = await ImageCloudStorage.getInstructorPicture(doneTemp.instructor.userId);
         doneDanceClasses.add(doneTemp);
       }
       hasFetched = true;
@@ -124,4 +129,23 @@ class DanceClassController extends GetxController{
       throw Exception("error sa students attended controller");
     }
   }
+
+  Future<bool> getRecordedDanceClasses() async {
+    bool hasFetched = false;
+    print("in get recorded classes");
+    try{
+      final recordings = await DanceClassAPI.getRecordedDanceClasses();
+      for(var recording in recordings){
+        print(recording.toString());
+        RecordedDanceClassModel recordedClass = RecordedDanceClassModel.fromJson(recording);
+        recordedClass.instructor.profilePicture = await ImageCloudStorage.getInstructorPicture(recordedClass.instructor.userId);
+        recordedClasses.add(recordedClass);
+      }
+    } catch (e) {
+      print("haha err");
+      print(e);
+    }
+    return hasFetched;
+  }
+
 }

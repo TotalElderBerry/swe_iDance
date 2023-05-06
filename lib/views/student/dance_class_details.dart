@@ -45,9 +45,17 @@ class DanceClassDetails extends StatelessWidget {
             children: [
                ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
-                  child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
-                  fit: BoxFit.contain,
+                  child: 
+                  (liveClass.img == "")?
+                  const SizedBox(
+                                  height: 200,
+                                  width: double.infinity,
+                                  child: DecoratedBox(decoration: const BoxDecoration(color: Colors.grey)),
+                                ):
+                  Image.network(liveClass.img!,
+                  fit: BoxFit.fill,
                   height: 200,
+                  width: double.infinity,
                   ),
               ),
               SizedBox(height: 10,),
@@ -119,7 +127,7 @@ class DanceClassDetails extends StatelessWidget {
                           children: [
                             CircleAvatar(
                                 radius: 16,
-                                backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
+                                backgroundImage: NetworkImage(liveClass.instructor.profilePicture!),
                               ),
                               SizedBox(width: 10,),
                             Text("${liveClass.instructor.firstName} ${liveClass.instructor.lastName}", style: Theme.of(context).textTheme.labelMedium,),
@@ -130,7 +138,7 @@ class DanceClassDetails extends StatelessWidget {
         
                       SizedBox(height: 20,),
         
-                      Text("Get ready to dance the night away with us! We're excited to announce that our upcoming dance class will be taught by the one and only Dennis Kaldag. Dennis is a talented and experienced dance instructor, and we're thrilled to have him leading our class.",style: Theme.of(context).textTheme.bodyMedium,),
+                      Text(liveClass.description,style: Theme.of(context).textTheme.bodyMedium,),
         
                       SizedBox(height: 100,),
                   ],

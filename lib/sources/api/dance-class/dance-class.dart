@@ -83,6 +83,22 @@ class DanceClassAPI{
     }
   }
 
+  static Future<dynamic> getRecordedDanceClasses() async {
+    String route = "/dance-class/recorded/all";
+    String uri = "${ApiConstants.baseUrl}$route"; 
+    final response = await http.get(
+        Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+          headers: {
+            "Content-Type": "application/json"
+          },
+      );
+    if(response.statusCode == 200){
+      return jsonDecode(response.body);
+    }else{
+      throw Exception("error etting live danceclasses");
+    }
+  }
+
   static Future<dynamic> getStudentsAttended(int live_danceclass_id) async {
     print(live_danceclass_id);
     String route = "/dance-class/$live_danceclass_id/attendance";

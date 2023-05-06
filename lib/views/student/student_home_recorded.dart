@@ -10,8 +10,8 @@ import 'package:i_dance/widgets/student/dance_class_card.dart';
 import 'package:i_dance/widgets/my_appbar.dart';
 import 'package:i_dance/widgets/student/student_class_card.dart';
 
-class StudentHomePage extends StatelessWidget {
-  const StudentHomePage({Key? key}) : super(key: key);
+class StudentRecordedHomePage extends StatelessWidget {
+  const StudentRecordedHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +19,7 @@ class StudentHomePage extends StatelessWidget {
       appBar: MyAppBar(context),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: FutureBuilder(
-          future: Get.find<AuthController>().getLoggedStudent(),
-          builder: (context, snapshot) {
-            if(snapshot.hasData){  
-              print(snapshot.data);
-              return Column(
+        child: Column(
                 
                 children: [
                   
@@ -42,13 +37,13 @@ class StudentHomePage extends StatelessWidget {
                     ),
                   ),
                   FutureBuilder(
-                    future: Get.find<DanceClassController>().populateUpcomingClasses(),
+                    future: Get.find<DanceClassController>().getRecordedDanceClasses(),
                     builder: (context, snapshot) {
                       if(snapshot.hasData){
-                        print(Get.find<DanceClassController>().upcomingDanceClasses);
-                        if(Get.find<DanceClassController>().upcomingDanceClasses.isEmpty){
+                        if(Get.find<DanceClassController>().recordedClasses.isEmpty){
                           return Text("Empty");
                         }
+                        
                         return Expanded(
                           child: ListView.builder(
                             itemCount: Get.find<DanceClassController>().upcomingDanceClasses.length,
@@ -63,11 +58,10 @@ class StudentHomePage extends StatelessWidget {
                     }
                   ),
                 ],
-              );
-            }
-            return Text("Loading pa");
-          }
-        ),
+              )
+            
+          
+        
       ),
     );
   }

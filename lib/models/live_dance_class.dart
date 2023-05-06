@@ -4,6 +4,7 @@ import 'package:i_dance/models/payment_details.dart';
 import 'instructor.dart';
 
 class LiveDanceClassModel extends DanceClassModel{
+  String? img;
   int liveClassId;
   String date;
   String location;

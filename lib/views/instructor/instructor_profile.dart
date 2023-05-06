@@ -59,7 +59,7 @@ class _InstructorProfilePageState extends State<InstructorProfilePage> {
                     ),
                     child: 
                     (widget.instructor.img == null)?
-                          ClipRRect(
+                          const ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(12)),
                                 child: SizedBox(
                                   height: 150,
@@ -74,7 +74,7 @@ class _InstructorProfilePageState extends State<InstructorProfilePage> {
                              ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(12)),
                                 child: Image.network(widget.instructor.img!,
-                                fit: BoxFit.contain,
+                                fit: BoxFit.cover,
                                 height: 150,
                                 ),
                             ),

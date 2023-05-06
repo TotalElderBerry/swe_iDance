@@ -113,12 +113,7 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
       appBar: MyAppBar(context),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: FutureBuilder(
-          future: Get.find<AuthController>().getLoggedStudent(),
-          builder: (context, snapshot) {
-            if(snapshot.hasData){  
-              print(snapshot.data);
-              return Column(
+        child:  Column(
                 children: [
                   
                   Container(
@@ -156,11 +151,7 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
                     }
                   ),
                 ],
-              );
-            }
-            return Text("Loading pa");
-          }
-        ),
+              )
       ),
     );
   }
