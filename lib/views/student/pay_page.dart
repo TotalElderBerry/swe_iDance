@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:i_dance/views/student/student_home.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'home_screen.dart';
+
 
 class PaymentPage extends StatelessWidget {
   String url;
@@ -14,7 +16,7 @@ class PaymentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: (){
-        Get.offAll(StudentHomePage());
+        Get.offAll(HomeScreen());
         return Future.value(true);
 
       },

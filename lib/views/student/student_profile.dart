@@ -55,12 +55,16 @@ class StudentProfilePage extends StatelessWidget{
                      if(indx == 0){
                          Get.find<StudentController>().filteredBookingClass.value =  Get.find<StudentController>().getBookedClasses();
                          Get.find<StudentController>().isPending.value = false;
+                        Get.find<StudentController>().isDone.value = false;
+
                       }else if(indx == 1){
                         Get.find<StudentController>().filteredBookingClass.value = Get.find<StudentController>().getPendingClasses();
                         Get.find<StudentController>().isPending.value = true;
+                        Get.find<StudentController>().isDone.value = false;
+
                       }else if(indx == 2){
                         Get.find<StudentController>().filteredBookingClass.value = Get.find<StudentController>().getDoneClasses();
-
+                        Get.find<StudentController>().isDone.value = true;
                       }else{
                         Get.find<StudentController>().filteredBookingClass.clear();
                       }
@@ -144,12 +148,7 @@ class StudentProfilePage extends StatelessWidget{
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             StudentClassCard(isPending: Get.find<StudentController>().isPending.value, liveDance: Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!)
-                                            // DanceClassCard(
-                                            //   liveClass:
-                                            //   Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!
-                                            // ),
-                                            // Text(Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!.danceName)
-                                            // DanceClassCard(),
+                                           
                                           ],
                                         );
                                     }),

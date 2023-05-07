@@ -65,6 +65,22 @@ class InstructorAPI {
     }
   }
 
+  static Future<List<dynamic>> getInstructors()async{
+    final route = "/instructor/all";
+    final response = await http.get(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+    headers: {
+            "Content-Type": "application/json"
+          },
+    );
+    if(response.statusCode == 200){
+     return jsonDecode(response.body);
+    }else{
+    print(response.statusCode);
+      
+      throw Exception("error sa get classes of instructor");
+    }
+  }
+
   static Future<dynamic> acceptStudentDanceBooking(int student_id, int dance_class_id) async {
 
     final route = "/instructor/live/$dance_class_id/accept-student";

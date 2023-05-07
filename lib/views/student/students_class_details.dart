@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/controllers/student/student.dart';
@@ -22,7 +23,9 @@ class StudentDanceClassDetails extends StatelessWidget {
       floatingActionButton: Container(
         height: 50,
         margin: const EdgeInsets.all(10),
-        child: isPending == false
+        child: 
+        Obx((){
+          return (isPending == false && Get.find<StudentController>().isDone.value == false)
             ? ElevatedButton(
                 onPressed: () async {
                   String COLOR_CODE = '#ffffff';
@@ -60,12 +63,50 @@ class StudentDanceClassDetails extends StatelessWidget {
                   child: Text('Attendance'),
                 ),
               )
-            : ElevatedButton(
+            : 
+            (Get.find<StudentController>().isDone == true)?
+            ElevatedButton(
+                onPressed: () {
+                  int rate = 5;
+                  QuickAlert.show(
+                      title: "Rate Teacher ${liveDance.instructor.firstName}",
+                      text: "Please rate your instructor below",
+                      type: QuickAlertType.confirm,
+                      widget: RatingBar.builder(
+                              itemSize: 40.0,
+                              initialRating: 5.0,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: false,
+                              itemCount: 5,
+                              itemPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              onRatingUpdate: (a) => {
+                                rate = a.toInt()
+                              }
+                            ),
+                      onConfirmBtnTap: ()async{
+                        print(rate);
+                        await Get.find<StudentController>().giveRatingToInstructor(liveDance.instructor.instructorId, rate);
+                        Navigator.pop(context);
+                      },
+                      context: context,
+                  );
+                },
+                child: const Center(
+                  child: Text('Rate Instructor'),
+                ),
+              ):ElevatedButton(
                 onPressed: () {},
                 child: const Center(
                   child: Text('Cancel'),
                 ),
-              ),
+              );
+        })
+        
       ),
       appBar: AppBar(),
       body: Padding(
@@ -74,13 +115,21 @@ class StudentDanceClassDetails extends StatelessWidget {
           child: Column(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-                child: Image.network(
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
-                  fit: BoxFit.contain,
-                  height: 200,
-                ),
-              ),
+                          borderRadius:const  BorderRadius.all(Radius.circular(8)),
+                            child:
+                            (liveDance.img == "")?
+                            const SizedBox(
+                                  width: double.infinity,
+                                  height: 150,
+                                  child: DecoratedBox(decoration: BoxDecoration(color: Colors.grey)),
+                                ): 
+                            Image.network(
+                                liveDance.img!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 150,
+                            ),
+                        ),
               SizedBox(
                 height: 10,
               ),
@@ -92,7 +141,7 @@ class StudentDanceClassDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Run - BTS",
+                          liveDance.danceName,
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ],
@@ -105,7 +154,7 @@ class StudentDanceClassDetails extends StatelessWidget {
                           color: Theme.of(context).primaryColor,
                         ),
                         Text(
-                          " UC Main Campus",
+                          liveDance.location,
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ],
@@ -127,7 +176,7 @@ class StudentDanceClassDetails extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                 ),
                                 Text(
-                                  "March 12,2023",
+                                  liveDance.date,
                                   style: Theme.of(context).textTheme.labelSmall,
                                 ),
                               ],
@@ -159,7 +208,7 @@ class StudentDanceClassDetails extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                 ),
                                 Text(
-                                  "400 Pesos",
+                                  "${liveDance.price} Pesos",
                                   style: Theme.of(context).textTheme.labelSmall,
                                 ),
                               ],
@@ -180,13 +229,13 @@ class StudentDanceClassDetails extends StatelessWidget {
                         CircleAvatar(
                           radius: 16,
                           backgroundImage: NetworkImage(
-                              'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
+                              liveDance.instructor.profilePicture!),
                         ),
                         SizedBox(
                           width: 10,
                         ),
                         Text(
-                          "Roger Intong",
+                          "${liveDance.instructor.firstName} ${liveDance.instructor.lastName}",
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
@@ -195,7 +244,7 @@ class StudentDanceClassDetails extends StatelessWidget {
                       height: 20,
                     ),
                     Text(
-                      "Get ready to dance the night away with us! We're excited to announce that our upcoming dance class will be taught by the one and only Dennis Kaldag. Dennis is a talented and experienced dance instructor, and we're thrilled to have him leading our class.",
+                      liveDance.description,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     SizedBox(

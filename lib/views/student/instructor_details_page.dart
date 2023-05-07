@@ -31,7 +31,7 @@ class InstructorDetailsPage extends StatelessWidget {
                       height: 200,
                       child: Stack(
                         children: [
-                          (instructor.profilePicture == "")?
+                          (instructor.img == "")?
                           ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(12)),
                                 child: SizedBox(
@@ -46,18 +46,19 @@ class InstructorDetailsPage extends StatelessWidget {
                             ):
                              ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(12)),
-                                child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
-                                fit: BoxFit.contain,
+                                child: Image.network(instructor.img!,
+                                fit: BoxFit.cover,
                                 height: 150,
+                                width: double.infinity,
                                 ),
                             )
                             ,
-                            const Positioned.fill(
+                             Positioned.fill(
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: CircleAvatar(
                                           radius:50,
-                                          backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
+                                          backgroundImage: NetworkImage(instructor.profilePicture!),
                                         ),
                               ),
                             ),
@@ -67,20 +68,21 @@ class InstructorDetailsPage extends StatelessWidget {
                     const SizedBox(height: 10,),
                     Text('${instructor.firstName} ${instructor.lastName}', style: Theme.of(context).textTheme.titleLarge,),
                     RatingBar.builder(
+                      ignoreGestures: true,
                       itemSize: 20.0,
-                      initialRating: 3,
+                      initialRating: instructor.rating * 1.0,
                       minRating: 1,
                       direction: Axis.horizontal,
-                      allowHalfRating: true,
+                      allowHalfRating: false,
                       itemCount: 5,
                       itemPadding: EdgeInsets.symmetric(horizontal: 0.0),
                       itemBuilder: (context, _) => Icon(
                         Icons.star,
                         color: Colors.amber,
                       ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
+                      onRatingUpdate: (a) => {
+
+                      }
                     ),
                 
                   ],

@@ -11,6 +11,7 @@ import 'package:i_dance/widgets/instructor/dance_class_card.dart';
 
 import '../../models/dance_booking.dart';
 import '../../models/live_dance_class.dart';
+import '../../sources/api/like/like.dart';
 
 class StudentController extends GetxController{
 
@@ -18,6 +19,7 @@ class StudentController extends GetxController{
   RxList<DanceBooking> studentDone = <DanceBooking>[].obs;
   RxList<DanceBooking> filteredBookingClass = <DanceBooking>[].obs;
   RxBool isPending = false.obs;
+  RxBool isDone = false.obs;
   void getStudentbyId(){
     
   }
@@ -59,7 +61,6 @@ class StudentController extends GetxController{
       final response = await StudentAPI.getStudentDanceClasses(Get.find<AuthController>().currentUser.value!.studentId);
       for(int i = 0; i < Get.find<DanceClassController>().upcomingDanceClasses.length;i++){
         for(int j = 0; j < response.length;j++){
-          print("response length");
           print(response.length);
           if(response[j]['dance_class_id'] == Get.find<DanceClassController>().upcomingDanceClasses[i].danceClassId){
               DanceBooking danceBooking = DanceBooking();
@@ -77,7 +78,6 @@ class StudentController extends GetxController{
 
     for(int i = 0; i < Get.find<DanceClassController>().doneDanceClasses.length;i++){
         for(int j = 0; j < response.length;j++){
-          print("response length");
           print(response.length);
           if(response[j]['dance_class_id'] == Get.find<DanceClassController>().doneDanceClasses[i].danceClassId){
               DanceBooking danceBooking = DanceBooking();
@@ -118,8 +118,13 @@ class StudentController extends GetxController{
 
 
 
-  void giveRatingToInstructor(){
-
+  Future<bool> giveRatingToInstructor(int instructorId, int rating)async{
+    try {
+        await StudentAPI.rateInstructor(instructorId, rating);
+        return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<InstructorModel?> switchToInstructor() async {
@@ -145,6 +150,15 @@ class StudentController extends GetxController{
     } catch (e) {
       return false;
   }
+  }
+
+  Future<bool> likeDanceClass(int dance_class_id) async {
+    try {
+      await LikeAPI.setLike(dance_class_id, Get.find<AuthController>().currentUser.value!.studentId);
+      return true;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
 }

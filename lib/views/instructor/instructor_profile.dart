@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/models/instructor.dart';
@@ -58,7 +59,7 @@ class _InstructorProfilePageState extends State<InstructorProfilePage> {
                       color: Colors.red,
                     ),
                     child: 
-                    (widget.instructor.img == null)?
+                    (widget.instructor.img == "")?
                           const ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(12)),
                                 child: SizedBox(
@@ -109,30 +110,24 @@ class _InstructorProfilePageState extends State<InstructorProfilePage> {
                               '@catto',
                               style: TextStyle(color: Colors.grey),
                             ),
-                            Row(
-                              children: const [
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.yellow,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.yellow,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.yellow,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.yellow,
-                                ),
-                                Icon(
-                                  Icons.star_half_rounded,
-                                  color: Colors.yellow,
-                                ),
-                              ],
-                            )
+                            RatingBar.builder(
+                              ignoreGestures: true,
+                              itemSize: 20.0,
+                              initialRating: widget.instructor.rating * 1.0,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: false,
+                              itemCount: 5,
+                              itemPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              onRatingUpdate: (a) => {
+
+                              }
+                            ),
+                            
                           ],
                         ),
                       ),

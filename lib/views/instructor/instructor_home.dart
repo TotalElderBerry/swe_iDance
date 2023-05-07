@@ -196,7 +196,26 @@ class InstructorHome extends StatelessWidget {
                           const SizedBox(height:10,),
                                           
                           DefaultTabController(length: 3, child: Container(
-                            child: TabBar(tabs: [
+                            child: TabBar(
+                              onTap: (idx){
+                                print(idx);
+                                switch(idx){
+                                  case 0:
+                                      Get.find<InstructorController>().toShowList.value = Get.find<InstructorController>().getUpcomingClasses();
+                                      Get.find<InstructorController>().toShowLive.value = 0;
+                                    break;
+                                  case 1:
+                                      Get.find<InstructorController>().toShowList.value = Get.find<InstructorController>().getDoneClasses();
+                                      Get.find<InstructorController>().toShowLive.value = 1;
+                                    break;
+                                  case 2:
+                                    Get.find<InstructorController>().toShowList.clear();
+                                    Get.find<InstructorController>().toShowLive.value = 2;
+
+                                    break;
+                                }
+                              },
+                              tabs: [
                               Tab(
                                 icon: Text("Upcoming", style: Theme.of(context).textTheme.bodyMedium),
                               ),
@@ -230,24 +249,28 @@ class InstructorHome extends StatelessWidget {
                           //     ),
                           //   ],
                           // )
-                                    
-                          Wrap(
-                            children: [
-                              // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[0]),
-                              // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[0]),
-                              // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[1]),
-                              ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: Get.find<InstructorController>().instructorDanceClass.length,
-                                itemBuilder: (context,index){
-                                    print(Get.find<InstructorController>().instructorDanceClass[index].liveClassId);
-                                    return SizedBox( width: ((MediaQuery.of(context).size.width / 2)-25), child: DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[index]));
-                                }
-                              ),
-                              // DanceClassCard(),
-                            ],
-                          ),
+                          Obx((){
+                            if(Get.find<InstructorController>().toShowLive.value <= 1){
+                              return Wrap(
+                                children: [
+                                  // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[0]),
+                                  // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[0]),
+                                  // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[1]),
+                                  ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: Get.find<InstructorController>().toShowList.length,
+                                    itemBuilder: (context,index){
+                                        print(Get.find<InstructorController>().toShowList[index].liveClassId);
+                                        return SizedBox( width: ((MediaQuery.of(context).size.width / 2)-25), child: DanceClassCard(liveDance: Get.find<InstructorController>().toShowList[index]));
+                                    }
+                                  ),
+                                  // DanceClassCard(),
+                                ],
+                              );
+                            }
+                            return Text("Recording classes");
+                          }),
                          
                         ],
                       );

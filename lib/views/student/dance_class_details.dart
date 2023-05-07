@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/controllers/student/student.dart';
 import 'package:i_dance/views/student/dance_class_booking.dart';
 
 import '../../models/live_dance_class.dart';
@@ -9,24 +10,29 @@ import '../instructor/add_dance_payment_page.dart';
 import 'instructor_details_page.dart';
 
 import '../../utils/getDaysBetween.dart';
-class DanceClassDetails extends StatelessWidget {
+class DanceClassDetails extends StatefulWidget{
   LiveDanceClassModel liveClass;
 
   DanceClassDetails({super.key, required this.liveClass});
 
   @override
+  State<DanceClassDetails> createState() => _DanceClassDetailsState();
+}
+
+class _DanceClassDetailsState extends State<DanceClassDetails> {
+  @override
   Widget build(BuildContext context) {
-    print("live class id ${liveClass.liveClassId} and dance class id ${liveClass.danceClassId}");
+    print("live class id ${widget.liveClass.liveClassId} and dance class id ${widget.liveClass.danceClassId}");
 
     return Scaffold(
       floatingActionButtonLocation:
           FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: (getDaysBetweenFromToday(liveClass.date) > 0)? Container(
+      floatingActionButton: (getDaysBetweenFromToday(widget.liveClass.date) > 0)? Container(
         height: 50,
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: () {
-            Get.to(JoinDanceClassPage(liveClass: liveClass,));
+            Get.to(JoinDanceClassPage(liveClass: widget.liveClass,));
           },
           child: const Center(
             child: Text('Book this Class'),
@@ -46,13 +52,13 @@ class DanceClassDetails extends StatelessWidget {
                ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
                   child: 
-                  (liveClass.img == "")?
+                  (widget.liveClass.img == "")?
                   const SizedBox(
                                   height: 200,
                                   width: double.infinity,
                                   child: DecoratedBox(decoration: const BoxDecoration(color: Colors.grey)),
                                 ):
-                  Image.network(liveClass.img!,
+                  Image.network(widget.liveClass.img!,
                   fit: BoxFit.fill,
                   height: 200,
                   width: double.infinity,
@@ -66,16 +72,31 @@ class DanceClassDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(liveClass.danceName, style: Theme.of(context).textTheme.headlineLarge,),
+                        Text(widget.liveClass.danceName, style: Theme.of(context).textTheme.headlineLarge,),
                     
-                        IconButton(onPressed: (){}, icon: Icon(Icons.favorite, color: Colors.red,))
+                        IconButton(onPressed: ()async{
+                          setState(() {
+                            if(widget.liveClass.isLiked == 0){
+                              widget.liveClass.isLiked = 1;
+                            }else{
+                              widget.liveClass.isLiked = 0;
+                            }
+                          //  widget.liveClass.isLiked = !widget.liveClass.isLiked; 
+                          });
+                            await Get.find<StudentController>().likeDanceClass(widget.liveClass.danceClassId);
+                        }, icon: 
+                        (widget.liveClass.isLiked == 0)?
+                        Icon(Icons.favorite_outline, color: Colors.red,)
+                        :
+                        Icon(Icons.favorite, color: Colors.red,)
+                        )
                       ],
                     ),
               
                       Row(
                           children: [
                             Icon(size: 24, Icons.location_on,color: Theme.of(context).primaryColor,),
-                            Text(" ${liveClass.location}", style: Theme.of(context).textTheme.labelSmall,),
+                            Text(" ${widget.liveClass.location}", style: Theme.of(context).textTheme.labelSmall,),
                           ],
                       ),
               
@@ -91,7 +112,7 @@ class DanceClassDetails extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(size: 24, Icons.calendar_month,color: Theme.of(context).primaryColor,),
-                                    Text(liveClass.date, style: Theme.of(context).textTheme.labelSmall,),
+                                    Text(widget.liveClass.date, style: Theme.of(context).textTheme.labelSmall,),
                                   ],
                                 ),
                                 const SizedBox(width:15,),
@@ -107,7 +128,7 @@ class DanceClassDetails extends StatelessWidget {
                                   Row(
                                     children: [
                                       Icon(size: 24, Icons.money,color: Theme.of(context).primaryColor,),
-                                      Text(liveClass.price.toString(), style: Theme.of(context).textTheme.labelSmall,),
+                                      Text(widget.liveClass.price.toString(), style: Theme.of(context).textTheme.labelSmall,),
                                     ],
                                   ),
                         
@@ -121,16 +142,16 @@ class DanceClassDetails extends StatelessWidget {
         
                        GestureDetector(
                          onTap: (){
-                          Get.to(InstructorDetailsPage(instructor: liveClass.instructor,));
+                          Get.to(InstructorDetailsPage(instructor: widget.liveClass.instructor,));
                          },
                          child: Row(
                           children: [
                             CircleAvatar(
                                 radius: 16,
-                                backgroundImage: NetworkImage(liveClass.instructor.profilePicture!),
+                                backgroundImage: NetworkImage(widget.liveClass.instructor.profilePicture!),
                               ),
                               SizedBox(width: 10,),
-                            Text("${liveClass.instructor.firstName} ${liveClass.instructor.lastName}", style: Theme.of(context).textTheme.labelMedium,),
+                            Text("${widget.liveClass.instructor.firstName} ${widget.liveClass.instructor.lastName}", style: Theme.of(context).textTheme.labelMedium,),
                                              
                           ],
                                              ),
@@ -138,7 +159,7 @@ class DanceClassDetails extends StatelessWidget {
         
                       SizedBox(height: 20,),
         
-                      Text(liveClass.description,style: Theme.of(context).textTheme.bodyMedium,),
+                      Text(widget.liveClass.description,style: Theme.of(context).textTheme.bodyMedium,),
         
                       SizedBox(height: 100,),
                   ],

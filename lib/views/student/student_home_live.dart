@@ -129,11 +129,7 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
                       ),
                     ),
                   ),
-                  FutureBuilder(
-                    future: Get.find<DanceClassController>().populateUpcomingClasses(),
-                    builder: (context, snapshot) {
-                      if(snapshot.hasData){
-                        print(Get.find<DanceClassController>().upcomingDanceClasses);
+                  Obx((){
                         if(Get.find<DanceClassController>().upcomingDanceClasses.isEmpty){
                           return Text("Empty");
                         }
@@ -146,10 +142,17 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
                             }
                           ),
                         );
-                      }
-                    return Text("loading");
-                    }
-                  ),
+                  })
+                  // FutureBuilder(
+                  //   future: Get.find<DanceClassController>().populateUpcomingClasses(),
+                  //   builder: (context, snapshot) {
+                  //     if(snapshot.hasData){
+                  //       print(Get.find<DanceClassController>().upcomingDanceClasses);
+                        
+                  //     }
+                  //   return Text("loading");
+                  //   }
+                  // ),
                 ],
               )
       ),

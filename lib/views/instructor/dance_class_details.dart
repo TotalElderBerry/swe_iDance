@@ -37,17 +37,37 @@ class DanceClassDetails extends StatelessWidget {
           child: Column(
             children: [
               Center(
-                child: ClipRRect(
+                child: 
+                (liveDance.img == "")?
+                          const ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                                child: SizedBox(
+                                  height: 150,
+                                  width: double.infinity,
+                                  child: DecoratedBox(decoration: BoxDecoration(color: Colors.grey)),
+                                ),
+                                // child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
+                                // fit: BoxFit.contain,
+                                // height: 150,
+                                // ),
+                            ):
+                
+                ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   child: Image.network(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
-                    fit: BoxFit.contain,
+                    liveDance.img!,
+                    fit: BoxFit.cover,
                     height: 150,
+                    width: double.infinity,
                   ),
                 ),
               ),
               const SizedBox(
-                height: 50,
+                height: 25,
+              ),
+              Text(liveDance.danceName,style: Theme.of(context).textTheme.titleLarge,),
+              const SizedBox(
+                height: 25,
               ),
               Column(
                 children: [
@@ -61,7 +81,7 @@ class DanceClassDetails extends StatelessWidget {
                           color: Colors.white,
                         ),
                         label: Text(
-                          'Cupid',
+                          liveDance.danceSong,
                           style: TextStyle(color: Colors.white, fontSize: 11),
       
                         ),
@@ -77,7 +97,7 @@ class DanceClassDetails extends StatelessWidget {
                           color: Colors.white,
                         ),
                         label: Text(
-                          'March 12, 2023',
+                          liveDance.date,
                           style: TextStyle(color: Colors.white, fontSize: 11),
                         ),
                         backgroundColor: Colors.deepPurple,
@@ -116,7 +136,7 @@ class DanceClassDetails extends StatelessWidget {
                           color: Colors.white,
                         ),
                         label: Text(
-                          'UC Main Campus',
+                          liveDance.location,
                           style: TextStyle(color: Colors.white, fontSize: 11),
                         ),
                         backgroundColor: Colors.deepPurple,
@@ -131,7 +151,7 @@ class DanceClassDetails extends StatelessWidget {
                           color: Colors.white,
                         ),
                         label: Text(
-                          '400 Pesos',
+                          "${liveDance.price}",
                           style: TextStyle(color: Colors.white, fontSize: 11),
                         ),
                         backgroundColor: Colors.deepPurple,

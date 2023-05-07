@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:i_dance/constants/api.dart';
+import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/models/instructor.dart';
 import 'package:i_dance/models/student.dart';
 
@@ -89,6 +91,28 @@ class StudentAPI {
     }else{
       throw Exception('Unauthorised ');
     }
+  }
+
+  static Future<bool> rateInstructor(int instructorId,int rating) async{
+    final route = '/rating/instructor/${instructorId}';
+    final response = await http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+     body: jsonEncode(
+        <String, dynamic> {
+          "rating": rating,
+          "student_id": Get.find<AuthController>().currentUser.value!.studentId
+        },
+        
+      ),
+      headers: {
+        "Content-Type": "application/json"
+      },
+    );
+
+    if(response.statusCode == 200){
+      return true;
+    }else{
+      throw Exception('Unauthorised ');
+    }    
   }
 
   static Future<bool> bookDanceClass(int student_id, int dance_class_id,String referenceNumber, int price, String name) async {
