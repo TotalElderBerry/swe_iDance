@@ -80,19 +80,11 @@ class StudentProfilePage extends StatelessWidget {
             Expanded(
               child: TabBarView(
                 children: [
-                  Column(
-                    children: [
-                      StudentClassCard(
-                        fromPage: 'CardUpcoming',
-                      ),
-                    ],
+                  StudentClassCard(
+                    fromPage: 'CardUpcoming',
                   ),
-                  Column(
-                    children: [
-                      StudentClassCard(
-                        fromPage: 'CardPending',
-                      ),
-                    ],
+                  StudentClassCard(
+                    fromPage: 'CardPending',
                   ),
                   Column(
                     children: const [

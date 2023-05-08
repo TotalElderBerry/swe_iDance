@@ -12,7 +12,7 @@ class StudentClassLiveCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.to(
-          DanceClassDetails(
+          DanceClassDetails(danceId: 0,
             fromPage: fromPage,
           ),
         );

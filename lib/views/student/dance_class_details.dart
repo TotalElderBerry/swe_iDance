@@ -6,14 +6,23 @@ import 'package:get/get.dart';
 import 'package:i_dance/models/attendance_model.dart';
 import 'package:i_dance/views/instructor/add_dance_payment_page.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../models/recorded_dance_model.dart';
 
 class DanceClassDetails extends StatelessWidget {
-  DanceClassDetails({super.key, required this.fromPage});
+  DanceClassDetails({super.key, required this.fromPage, required this.danceId});
 
   String fromPage;
+  int danceId;
 
   @override
   Widget build(BuildContext context) {
+    String link = recordedDance[danceId]['link'];
+    RegExp regExp = RegExp(r"(?:(?<=v=)|(?<=be/))[\w-]+");
+    RegExpMatch? match = regExp.firstMatch(link);
+    String? id = match?.group(0);
+
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
@@ -60,7 +69,7 @@ class DanceClassDetails extends StatelessWidget {
                     ? ElevatedButton(
                         onPressed: () => Get.to(AddPaymentPage()),
                         child: const Center(
-                          child: Text('Book Dance Class'),
+                          child: Text('Buy Dance Class'),
                         ),
                       )
                     : ElevatedButton(
@@ -79,7 +88,7 @@ class DanceClassDetails extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
                 child: Image.network(
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
+                  'https://i.ytimg.com/vi/$id/maxresdefault.jpg',
                   fit: BoxFit.contain,
                   height: 200,
                 ),
@@ -95,24 +104,24 @@ class DanceClassDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Run - BTS",
+                          recordedDance[danceId]['song'],
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          size: 24,
-                          Icons.location_on,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        Text(
-                          " UC Main Campus",
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Icon(
+                    //       size: 24,
+                    //       Icons.location_on,
+                    //       color: Theme.of(context).primaryColor,
+                    //     ),
+                    //     Text(
+                    //       " UC Main Campus",
+                    //       style: Theme.of(context).textTheme.labelSmall,
+                    //     ),
+                    //   ],
+                    // ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -162,7 +171,7 @@ class DanceClassDetails extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                 ),
                                 Text(
-                                  "400 Pesos",
+                                  recordedDance[danceId]['price'],
                                   style: Theme.of(context).textTheme.labelSmall,
                                 ),
                               ],
@@ -171,6 +180,25 @@ class DanceClassDetails extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    // Row(
+                    //   children: [
+                    //     const Icon(
+                    //       Icons.link,
+                    //       color: Colors.purple,
+                    //     ),
+                    //     TextButton(
+                    //       onPressed: () => launchUrl(
+                    //         Uri.parse(
+                    //             'https://' + recordedDance[danceId]['link']),
+                    //         mode: LaunchMode.externalApplication,
+                    //       ),
+                    //       child: Text(recordedDance[danceId]['link']),
+                    //     )
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 20,
                     ),
@@ -198,7 +226,7 @@ class DanceClassDetails extends StatelessWidget {
                       height: 20,
                     ),
                     Text(
-                      "Get ready to dance the night away with us! We're excited to announce that our upcoming dance class will be taught by the one and only Dennis Kaldag. Dennis is a talented and experienced dance instructor, and we're thrilled to have him leading our class.",
+                      recordedDance[danceId]['details'],
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     SizedBox(
