@@ -10,6 +10,7 @@ import '../../models/dance_class.dart';
 import '../../models/instructor.dart';
 import '../../models/recorded_dance_model.dart';
 import '../../sources/api/instructor/instructor.dart';
+import '../../sources/api/like/like.dart';
 import '../../sources/firebasestorage/firebase_storage.dart';
 
 import '../../utils/getDaysBetween.dart';
@@ -64,7 +65,8 @@ class InstructorController extends GetxController{
           print(response[i].toString());
           LiveDanceClassModel ldance = LiveDanceClassModel(int.parse(response[i]['live_danceclass_id']), date: response[i]['date'], location: response[i]['location'], studentLimit: int.parse(response[i]['student_limit']), danceClassId: int.parse(response[i]['dance_id']), danceName: response[i]['dance_name'], danceSong: response[i]['dance_song'], danceDifficulty: response[i]['dance_difficulty'], price: int.parse(response[i]['price']), description: response[i]['description'], payment: PaymentDetails.fromJson(response[i]['payment']), instructor: instructor);
           ldance.img = await ImageCloudStorage.getDanceClassPicture(ldance.danceClassId);
-
+           final likesValue = await LikeAPI.getLikesOfDanceClass(ldance.danceClassId);
+          ldance.likes = likesValue['result'];
           instructorDanceClass.add(ldance);
           toShowList.add(ldance);
         }

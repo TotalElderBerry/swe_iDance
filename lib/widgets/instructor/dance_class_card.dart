@@ -93,7 +93,7 @@ class DanceClassCard extends StatelessWidget {
                              Row(
                               children: [
                                 Icon(size: 12, Icons.favorite,color: Colors.red,),
-                                Text(" 88", style: Theme.of(context).textTheme.labelSmall,),
+                                Text("${liveDance.likes}", style: Theme.of(context).textTheme.labelSmall,),
                               ],
                             ),
                           

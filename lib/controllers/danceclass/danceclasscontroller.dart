@@ -50,8 +50,11 @@ class DanceClassController extends GetxController{
 
       for(var upcomingClass in upcoming){
         LiveDanceClassModel upClass = LiveDanceClassModel.fromJson(upcomingClass);
+        final isLikedValue = await LikeAPI.getLikeFromStudent(upClass.danceClassId, Get.find<AuthController>().currentUser.value!.studentId);
         // upClass.likes = await LikeAPI.getLikesOfDanceClass(upClass.danceClassId);
-        // upClass.isLiked = await LikeAPI.getLikeFromStudent(upClass.danceClassId, Get.find<AuthController>().currentUser.value!.studentId);
+        final likesValue = await LikeAPI.getLikesOfDanceClass(upClass.danceClassId);
+        upClass.likes = likesValue['result'];
+        upClass.isLiked = isLikedValue['val'];
         upClass.img = await ImageCloudStorage.getDanceClassPicture(upClass.danceClassId);
         upClass.instructor.img = await ImageCloudStorage.getInstructorPicture(upClass.instructor.userId);
         upClass.instructor.profilePicture = await ImageCloudStorage.getProfilePicture(upClass.instructor.userId);
