@@ -61,7 +61,7 @@ class StudentProfilePage extends StatelessWidget{
                         Get.find<StudentController>().filteredBookingClass.value = Get.find<StudentController>().getPendingClasses();
                         Get.find<StudentController>().isPending.value = true;
                         Get.find<StudentController>().isDone.value = false;
-
+                        print("length is ${Get.find<StudentController>().filteredBookingClass.length}");
                       }else if(indx == 2){
                         Get.find<StudentController>().filteredBookingClass.value = Get.find<StudentController>().getDoneClasses();
                         Get.find<StudentController>().isDone.value = true;
