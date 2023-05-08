@@ -288,37 +288,28 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                   width: (MediaQuery.of(context).size.width),
                   child: ElevatedButton(
                       onPressed: () {
-                        // String difficulty;
-                        // int id;
-                        // if (isEasy == true) {
-                        //   difficulty = "Easy";
-                        // } else if (isMedium == true) {
-                        //   difficulty = "Medium";
-                        // } else {
-                        //   difficulty = "Hard";
-                        // }
-                        // if (recordedDance.isEmpty) {
-                        //   id = 1;
-                        // } else {
-                        //   id = recordedDance.last["id"] + 1;
-                        // }
-                        // recordedDance.add({
-                        //   "id": id,
-                        //   "classname": danceController.text,
-                        //   "song": songController.text,
-                        //   "price": priceController.text,
-                        //   "link": linkController.text,
-                        //   "difficulty": difficulty,
-                        //   "details": detailsController.text,
-                        // });
+                        String difficulty;
+                        int id;
+                        if (isEasy == true) {
+                          difficulty = "Easy";
+                        } else if (isMedium == true) {
+                          difficulty = "Medium";
+                        } else {
+                          difficulty = "Hard";
+                        }
+                        if (recordedDance.isEmpty) {
+                          id = 1;
+                        } else {
+                          id = recordedDance.last["id"] + 1;
+                        }
                         recordedDance.add({
-                          "id": 1,
-                          "classname": "Sample Dance Class",
-                          "song": "Big Boy - Sza",
-                          "price": "200",
-                          "link": "youtube.com/watch?v=MhaH4XkHK5A",
-                          "difficulty": "Easy",
-                          "details": "Lorem Ipsum Dolor Iset",
+                          "id": id,
+                          "classname": danceController.text,
+                          "song": songController.text,
+                          "price": priceController.text,
+                          "link": linkController.text,
+                          "difficulty": difficulty,
+                          "details": detailsController.text,
                         });
                         RecordedDanceClassModel recordedDanceClass = RecordedDanceClassModel(-1, youtubeLink: linkController.text, danceClassId: -1, price: int.parse(priceController.text), danceName: danceController.text, danceSong: songController.text, danceDifficulty: difficult, description: detailsController.text, payment: PaymentDetails(-1,accountName: '', accountNumber: '', modeOfPayment: ''), instructor: Get.find<AuthController>().currentInstructor.value!
                         );
