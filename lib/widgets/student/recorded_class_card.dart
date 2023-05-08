@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../views/student/dance_class_details.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-class StudentClassLiveCard extends StatelessWidget {
-  StudentClassLiveCard({super.key, required this.fromPage, required this.image});
+import '../../views/student/dance_class_details.dart';
+import '../../views/student/student_home_live.dart';
+
+class StudentClassRecordedCard extends StatelessWidget {
+  StudentClassRecordedCard({super.key, required this.fromPage, required this.image});
 
   String fromPage;
   String image;
@@ -56,7 +59,7 @@ class StudentClassLiveCard extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                'Live Class',
+                                'Recorded Class',
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ],

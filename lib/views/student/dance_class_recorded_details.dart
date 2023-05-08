@@ -10,8 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/recorded_dance_model.dart';
 
-class DanceClassDetails extends StatelessWidget {
-  DanceClassDetails({super.key, required this.fromPage, required this.danceId});
+class DanceClassRecordedDetails extends StatelessWidget {
+  DanceClassRecordedDetails({super.key, required this.fromPage, required this.danceId});
 
   String fromPage;
   int danceId;
@@ -30,54 +30,54 @@ class DanceClassDetails extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: fromPage == "CardUpcoming"
             ? ElevatedButton(
-                onPressed: () async {
-                  String COLOR_CODE = '#ffffff';
-                  String CANCEL_BUTTON_TEXT = 'CANCEL';
-                  bool isShowFlashIcon = true;
-                  ScanMode scanMode = ScanMode.DEFAULT;
-                  String qr = await FlutterBarcodeScanner.scanBarcode(
-                    COLOR_CODE,
-                    CANCEL_BUTTON_TEXT,
-                    isShowFlashIcon,
-                    scanMode,
-                  );
-                  attended.add(
-                    {
-                      "Name": "Jose Cruz",
-                      "Date": "2023-04-21 - 05:57",
-                    },
-                  );
-                  // ignore: use_build_context_synchronously
-                  QuickAlert.show(
-                    context: context,
-                    type: QuickAlertType.success,
-                    text: 'Qr Scanned Successfully!',
-                  );
-                },
-                child: const Center(
-                  child: Text('Attendance'),
-                ),
-              )
+          onPressed: () async {
+            String COLOR_CODE = '#ffffff';
+            String CANCEL_BUTTON_TEXT = 'CANCEL';
+            bool isShowFlashIcon = true;
+            ScanMode scanMode = ScanMode.DEFAULT;
+            String qr = await FlutterBarcodeScanner.scanBarcode(
+              COLOR_CODE,
+              CANCEL_BUTTON_TEXT,
+              isShowFlashIcon,
+              scanMode,
+            );
+            attended.add(
+              {
+                "Name": "Jose Cruz",
+                "Date": "2023-04-21 - 05:57",
+              },
+            );
+            // ignore: use_build_context_synchronously
+            QuickAlert.show(
+              context: context,
+              type: QuickAlertType.success,
+              text: 'Qr Scanned Successfully!',
+            );
+          },
+          child: const Center(
+            child: Text('Attendance'),
+          ),
+        )
             : fromPage == "CardPending"
-                ? ElevatedButton(
-                    onPressed: () {},
-                    child: const Center(
-                      child: Text('Cancel'),
-                    ),
-                  )
-                : fromPage == "StudentHomeLive"
-                    ? ElevatedButton(
-                        onPressed: () => Get.to(AddPaymentPage()),
-                        child: const Center(
-                          child: Text('Book Dance Class'),
-                        ),
-                      )
-                    : ElevatedButton(
-                        onPressed: () => Get.to(AddPaymentPage()),
-                        child: const Center(
-                          child: Text('Buy Dance Class'),
-                        ),
-                      ),
+            ? ElevatedButton(
+          onPressed: () {},
+          child: const Center(
+            child: Text('Cancel'),
+          ),
+        )
+            : fromPage == "StudentHomeLive"
+            ? ElevatedButton(
+          onPressed: () => Get.to(AddPaymentPage()),
+          child: const Center(
+            child: Text('Book Dance Class'),
+          ),
+        )
+            : ElevatedButton(
+          onPressed: () => Get.to(AddPaymentPage()),
+          child: const Center(
+            child: Text('Buy Dance Class'),
+          ),
+        ),
       ),
       appBar: AppBar(),
       body: Padding(
@@ -128,50 +128,56 @@ class DanceClassDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Spacer(),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              size: 24,
-                              Icons.calendar_month,
-                              color: Theme.of(context).primaryColor,
+                            Row(
+                              children: [
+                                Icon(
+                                  size: 24,
+                                  Icons.calendar_month,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                Text(
+                                  "March 12,2023",
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                              ],
                             ),
-                            Text(
-                              "March 12,2023",
-                              style: Theme.of(context).textTheme.labelSmall,
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  size: 24,
+                                  Icons.access_time,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                Text(
+                                  "12:00 PM",
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  size: 24,
+                                  Icons.money,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                Text(
+                                  recordedDance[danceId]['price'],
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        Spacer(),
-                        Row(
-                          children: [
-                            Icon(
-                              size: 24,
-                              Icons.access_time,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            Text(
-                              "12:00 PM",
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        Row(
-                          children: [
-                            Icon(
-                              size: 24,
-                              Icons.money,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            Text(
-                              recordedDance[danceId]['price'],
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-
                       ],
                     ),
                     SizedBox(

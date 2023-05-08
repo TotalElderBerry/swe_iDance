@@ -4,6 +4,7 @@ import 'package:i_dance/views/instructor/dance_class_details.dart';
 import 'package:i_dance/views/student/recorded_dance_class_booking.dart';
 import 'package:i_dance/views/student/student_home.dart';
 import 'package:i_dance/views/student/student_home_live.dart';
+import 'package:i_dance/views/student/student_home_recorded.dart';
 import 'package:i_dance/widgets/my_appbar.dart';
 import '../../widgets/student/home_dance_card.dart';
 
@@ -155,7 +156,9 @@ class HomeScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   TextButton(
-                    onPressed: () => Get.to(const StudentHomeLivePage()),
+                    onPressed: () => Get.to(const StudentHomeRecordedPage(
+
+                    )),
                     child: const Text(
                       'View All',
                       style: TextStyle(
