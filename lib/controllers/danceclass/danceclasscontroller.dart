@@ -143,16 +143,17 @@ class DanceClassController extends GetxController{
 
   Future<bool> getRecordedDanceClasses() async {
     bool hasFetched = false;
+    recordedClasses.clear();
     print("in get recorded classes");
     try{
       final recordings = await DanceClassAPI.getRecordedDanceClasses();
       for(var recording in recordings){
         print(recording.toString());
         RecordedDanceClassModel recordedClass = RecordedDanceClassModel.fromJson(recording);
-        
-        recordedClass.instructor.profilePicture = await ImageCloudStorage.getInstructorPicture(recordedClass.instructor.userId);
+        // recordedClass.instructor.profilePicture = await ImageCloudStorage.getProfilePicture(recording.instructor.userId);
         recordedClasses.add(recordedClass);
       }
+      hasFetched = true;
     } catch (e) {
       print("haha err");
       print(e);

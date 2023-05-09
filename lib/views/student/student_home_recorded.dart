@@ -123,7 +123,7 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               child: TextField(
                                 decoration: InputDecoration(
                                   isDense: true,
@@ -140,21 +140,28 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
                         ),
                       ),
                     ),
-                    Column(
-                      children: [
-                        StudentClassRecordedCard(fromPage: "StudentRecordedLive",image: "https://i.ytimg.com/vi/MhaH4XkHK5A/maxresdefault.jpg"),
-                        StudentClassRecordedCard(fromPage: "StudentRecordedLive",image: "https://i.ytimg.com/vi/7eLdG8tRgO4/maxresdefault.jpg")
-                      ],
-                    ),
                     Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(),
-                          ),
-                        ],
-                      ),
-                    ),
+                      child: ListView.builder(
+                        itemCount: Get.find<DanceClassController>().recordedClasses.length,
+                        itemBuilder: (context,index){
+                          return StudentClassRecordedCard(recordedDanceClassModel: Get.find<DanceClassController>().recordedClasses[index]);
+                      }),
+                    )
+                    // Column(
+                    //   children: [
+                    //     
+                    //     StudentClassRecordedCard(fromPage: "StudentRecordedLive",image: "https://i.ytimg.com/vi/7eLdG8tRgO4/maxresdefault.jpg")
+                    //   ],
+                    // ),
+                    // Expanded(
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: Column(),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 );
               }

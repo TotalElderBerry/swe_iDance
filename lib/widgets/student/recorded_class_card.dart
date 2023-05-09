@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:i_dance/models/recorded_dance_model.dart';
 
 import '../../views/student/dance_class_details.dart';
+import '../../views/student/dance_class_recorded_details.dart';
 import '../../views/student/student_home_live.dart';
 
 class StudentClassRecordedCard extends StatelessWidget {
-  StudentClassRecordedCard({super.key, required this.fromPage, required this.image});
-
-  String fromPage;
-  String image;
+  RecordedDanceClassModel recordedDanceClassModel;
+  StudentClassRecordedCard({super.key, required this.recordedDanceClassModel});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Get.to(
-        //   DanceClassDetails(danceId: 0,
-        //     fromPage: fromPage,
-        //   ),
-        // );
+        Get.to(
+          DanceClassRecordedDetails(
+            recordedDanceClassModel: recordedDanceClassModel
+          ),
+        );
       },
       child: Container(
         width: (MediaQuery.of(context).size.width) - 32,
@@ -33,7 +33,9 @@ class StudentClassRecordedCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                   child: Image.network(
-                    image,
+                     "https://img.youtube.com/vi/${
+                    RegExp(r"(?:(?<=v=)|(?<=be/))[\w-]+").firstMatch(recordedDanceClassModel.youtubeLink)!.group(0)!
+                     }/0.jpg",
                     fit: BoxFit.cover,
                     width: 80,
                     height: 80,
@@ -64,10 +66,9 @@ class StudentClassRecordedCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          backgroundColor: Colors.purple,
                         ),
                         Text(
-                          "Run - BTS",
+                          recordedDanceClassModel.danceName,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(
@@ -75,16 +76,16 @@ class StudentClassRecordedCard extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 10,
                               backgroundImage: NetworkImage(
-                                  'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
+                                 recordedDanceClassModel.instructor.profilePicture!),
                             ),
                             const SizedBox(
                               width: 5,
                             ),
                             Text(
-                              "Roger Intong",
+                              "${recordedDanceClassModel.instructor.firstName} ${recordedDanceClassModel.instructor.lastName}",
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ],
@@ -114,18 +115,7 @@ class StudentClassRecordedCard extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        Row(
-                          children: [
-                            const Icon(size: 10, Icons.location_on),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "UC Main Campus",
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                          ],
-                        )
+                       
                       ],
                     )
                   ],

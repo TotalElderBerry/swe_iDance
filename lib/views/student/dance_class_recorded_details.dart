@@ -5,20 +5,19 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/models/attendance_model.dart';
 import 'package:i_dance/views/instructor/add_dance_payment_page.dart';
+import 'package:i_dance/views/student/recorded_class_payment.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/recorded_dance_model.dart';
 
 class DanceClassRecordedDetails extends StatelessWidget {
-  DanceClassRecordedDetails({super.key, required this.fromPage, required this.danceId});
-
-  String fromPage;
-  int danceId;
+  RecordedDanceClassModel recordedDanceClassModel;
+  DanceClassRecordedDetails({super.key,required this.recordedDanceClassModel});
 
   @override
   Widget build(BuildContext context) {
-    String link = recordedDance[danceId]['link'];
+    String link = recordedDanceClassModel.youtubeLink;
     RegExp regExp = RegExp(r"(?:(?<=v=)|(?<=be/))[\w-]+");
     RegExpMatch? match = regExp.firstMatch(link);
     String? id = match?.group(0);
@@ -28,52 +27,10 @@ class DanceClassRecordedDetails extends StatelessWidget {
       floatingActionButton: Container(
         height: 50,
         margin: const EdgeInsets.all(10),
-        child: fromPage == "CardUpcoming"
-            ? ElevatedButton(
-          onPressed: () async {
-            String COLOR_CODE = '#ffffff';
-            String CANCEL_BUTTON_TEXT = 'CANCEL';
-            bool isShowFlashIcon = true;
-            ScanMode scanMode = ScanMode.DEFAULT;
-            String qr = await FlutterBarcodeScanner.scanBarcode(
-              COLOR_CODE,
-              CANCEL_BUTTON_TEXT,
-              isShowFlashIcon,
-              scanMode,
-            );
-            attended.add(
-              {
-                "Name": "Jose Cruz",
-                "Date": "2023-04-21 - 05:57",
-              },
-            );
-            // ignore: use_build_context_synchronously
-            QuickAlert.show(
-              context: context,
-              type: QuickAlertType.success,
-              text: 'Qr Scanned Successfully!',
-            );
+        child: ElevatedButton(
+          onPressed: (){
+            Get.to(RecordedClassPaymentPage(recordedDanceClassModel: recordedDanceClassModel));
           },
-          child: const Center(
-            child: Text('Attendance'),
-          ),
-        )
-            : fromPage == "CardPending"
-            ? ElevatedButton(
-          onPressed: () {},
-          child: const Center(
-            child: Text('Cancel'),
-          ),
-        )
-            : fromPage == "StudentHomeLive"
-            ? const ElevatedButton(
-          onPressed: null,
-          child: Center(
-            child: Text('Book Dance Class'),
-          ),
-        )
-            : const ElevatedButton(
-          onPressed: null,
           child: Center(
             child: Text('Buy Dance Class'),
           ),
@@ -88,9 +45,10 @@ class DanceClassRecordedDetails extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
                 child: Image.network(
-                  'https://i.ytimg.com/vi/$id/maxresdefault.jpg',
-                  fit: BoxFit.contain,
+                  'https://i.ytimg.com/vi/$id/0.jpg',
+                  fit: BoxFit.cover,
                   height: 200,
+                  width: double.infinity,
                 ),
               ),
               SizedBox(
@@ -104,7 +62,7 @@ class DanceClassRecordedDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          recordedDance[danceId]['song'],
+                          recordedDanceClassModel.danceSong,
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ],
@@ -131,38 +89,8 @@ class DanceClassRecordedDetails extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  size: 24,
-                                  Icons.calendar_month,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                Text(
-                                  "March 12,2023",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  size: 24,
-                                  Icons.access_time,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                Text(
-                                  "12:00 PM",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
+                            
+                          
                             Row(
                               children: [
                                 Icon(
@@ -171,7 +99,7 @@ class DanceClassRecordedDetails extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                 ),
                                 Text(
-                                  recordedDance[danceId]['price'],
+                                  "${recordedDanceClassModel.price}",
                                   style: Theme.of(context).textTheme.labelSmall,
                                 ),
                               ],
@@ -211,13 +139,13 @@ class DanceClassRecordedDetails extends StatelessWidget {
                         CircleAvatar(
                           radius: 16,
                           backgroundImage: NetworkImage(
-                              'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
+                              recordedDanceClassModel.instructor.profilePicture!),
                         ),
                         SizedBox(
                           width: 10,
                         ),
                         Text(
-                          "Roger Intong",
+                          "${recordedDanceClassModel.instructor.firstName} ${recordedDanceClassModel.instructor.lastName}",
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
@@ -226,7 +154,7 @@ class DanceClassRecordedDetails extends StatelessWidget {
                       height: 20,
                     ),
                     Text(
-                      recordedDance[danceId]['details'],
+                      recordedDanceClassModel.description,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     SizedBox(
