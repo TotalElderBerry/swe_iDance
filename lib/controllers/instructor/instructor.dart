@@ -86,7 +86,7 @@ class InstructorController extends GetxController{
 
         for(int i = 0; i < response.length; i++){
           print(response[i].toString());
-          RecordedDanceClassModel recordedDanceClassModel = RecordedDanceClassModel(int.parse(response[i]['recorded_danceclass_id']), youtubeLink: response[i]['youtube_link'], danceClassId: int.parse(response[i]['dance_id']), danceName: response[i]['dance_name'], danceSong: response[i]['dance_song'], danceDifficulty: response[i]['dance_difficulty'], price: int.parse(response[i]['price']), description: response[i]['description'], payment: PaymentDetails.fromJson(response[i]['payment']), instructor: instructor);
+          RecordedDanceClassModel recordedDanceClassModel = RecordedDanceClassModel(int.parse(response[i]['recorded_danceclass_id']), youtubeLink: response[i]['youtube_link'], danceClassId: int.parse(response[i]['dance_id']), danceName: response[i]['dance_name'], danceSong: response[i]['dance_song'], danceDifficulty: response[i]['dance_difficulty'], price: int.parse(response[i]['price']), description: response[i]['description'], payment: PaymentDetails.fromJson(response[i]['payment']), instructor: instructor,);
           print(recordedDanceClassModel.toJson().toString());
           instructorRecordedDanceClass.add(recordedDanceClassModel);
         }
