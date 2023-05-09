@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:i_dance/views/student/dance_recorded_page.dart';
 import 'package:i_dance/widgets/student/dance_class_card.dart';
 import 'package:i_dance/widgets/student/pending_class_card.dart';
 import '../../widgets/student/student_class_card.dart';
@@ -15,7 +18,7 @@ class StudentProfilePage extends StatelessWidget {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(32.0),
+              padding: const EdgeInsets.fromLTRB(32, 32, 32, 10),
               child: Row(
                 children: [
                   const SizedBox(
@@ -46,8 +49,32 @@ class StudentProfilePage extends StatelessWidget {
                 ],
               ),
             ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Transform.translate(
+                offset: const Offset(-40, 0),
+                child: DropdownButton(
+                  value: 1,
+                  items: [
+                    DropdownMenuItem(
+                      value: 1,
+                      child: Text("Live Classes"),
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Recorded Classes"),
+                      value: 2,
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (value ==  2) {
+                      Get.to(ClassRecordedPage());
+                    }
+                  },
+                ),
+              ),
+            ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             SizedBox(
               height: 50,

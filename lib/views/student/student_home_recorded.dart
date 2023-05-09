@@ -141,8 +141,8 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
                     ),
                     Column(
                       children: [
-                        StudentClassRecordedCard(fromPage: "StudentRecordedLive",image: "https://i.ytimg.com/vi/MhaH4XkHK5A/maxresdefault.jpg"),
-                        StudentClassRecordedCard(fromPage: "StudentRecordedLive",image: "https://i.ytimg.com/vi/7eLdG8tRgO4/maxresdefault.jpg")
+                        StudentClassRecordedCard(fromPage: "StudentRecordedLive",image: "https://i.ytimg.com/vi/MhaH4XkHK5A/maxresdefault.jpg", id: 0,),
+                        StudentClassRecordedCard(fromPage: "StudentRecordedLive",image: "https://i.ytimg.com/vi/7eLdG8tRgO4/maxresdefault.jpg", id: 1,)
                       ],
                     ),
                     Expanded(

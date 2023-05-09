@@ -7,28 +7,48 @@ import 'package:i_dance/models/attendance_model.dart';
 import 'package:i_dance/views/instructor/add_dance_payment_page.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import '../../models/recorded_dance_model.dart';
 
-class DanceClassRecordedDetails extends StatelessWidget {
-  DanceClassRecordedDetails({super.key, required this.fromPage, required this.danceId});
+
+class DanceClassRecordedDetails extends StatefulWidget {
+   DanceClassRecordedDetails({required this.fromPage, required this.danceId, Key? key}) : super(key: key);
 
   String fromPage;
   int danceId;
 
   @override
+  State<DanceClassRecordedDetails> createState() => _DanceClassRecordedDetailsState();
+}
+
+class _DanceClassRecordedDetailsState extends State<DanceClassRecordedDetails> {
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    _controller = YoutubePlayerController.fromVideoId(
+      videoId: recordedDance[widget.danceId]['link'].toString().split("v=")[1],
+      autoPlay: false,
+      params: const YoutubePlayerParams(showFullscreenButton: true),
+    );
+    super.initState();
+  }
+
+
   Widget build(BuildContext context) {
-    String link = recordedDance[danceId]['link'];
+    String link = recordedDance[widget.danceId]['link'];
     RegExp regExp = RegExp(r"(?:(?<=v=)|(?<=be/))[\w-]+");
     RegExpMatch? match = regExp.firstMatch(link);
     String? id = match?.group(0);
 
     return Scaffold(
+      appBar: AppBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
         height: 50,
         margin: const EdgeInsets.all(10),
-        child: fromPage == "CardUpcoming"
+        child: widget.fromPage == "CardUpcoming"
             ? ElevatedButton(
           onPressed: () async {
             String COLOR_CODE = '#ffffff';
@@ -58,40 +78,44 @@ class DanceClassRecordedDetails extends StatelessWidget {
             child: Text('Attendance'),
           ),
         )
-            : fromPage == "CardPending"
+            : widget.fromPage == "CardPending"
             ? ElevatedButton(
           onPressed: () {},
           child: const Center(
             child: Text('Cancel'),
           ),
         )
-            : fromPage == "StudentHomeLive"
+            : widget.fromPage == "StudentHomeLive"
             ? ElevatedButton(
           onPressed: () => Get.to(AddPaymentPage()),
           child: const Center(
             child: Text('Book Dance Class'),
           ),
-        )
-            : ElevatedButton(
+        ) : widget.fromPage == "StudentRecordedLive" ?
+             ElevatedButton(
           onPressed: () => Get.to(AddPaymentPage()),
           child: const Center(
             child: Text('Buy Dance Class'),
           ),
-        ),
+        ) : SizedBox()
       ),
-      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-                child: Image.network(
-                  'https://i.ytimg.com/vi/$id/maxresdefault.jpg',
-                  fit: BoxFit.contain,
-                  height: 200,
-                ),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  child: widget.fromPage == "StudentRecordedLive" ?
+                  Image.network(
+                    'https://i.ytimg.com/vi/$id/maxresdefault.jpg',
+                    fit: BoxFit.contain,
+                    height: 200,
+                  ) :
+                  YoutubePlayer(
+                    controller: _controller,
+                    aspectRatio: 16 / 9,
+                  )
               ),
               SizedBox(
                 height: 10,
@@ -104,7 +128,7 @@ class DanceClassRecordedDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          recordedDance[danceId]['song'],
+                          recordedDance[widget.danceId]['song'],
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ],
@@ -122,64 +146,63 @@ class DanceClassRecordedDetails extends StatelessWidget {
                     //     ),
                     //   ],
                     // ),
+                    widget.fromPage == "StudentRecordedLive" ?
                     const SizedBox(
                       height: 10,
-                    ),
+                    ) : SizedBox(height: 0,),
+
+
+                    widget.fromPage == "StudentRecordedLive" ?
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Spacer(),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  size: 24,
-                                  Icons.calendar_month,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                Text(
-                                  "March 12,2023",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              ],
+                            Icon(
+                              size: 24,
+                              Icons.calendar_month,
+                              color: Theme.of(context).primaryColor,
                             ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  size: 24,
-                                  Icons.access_time,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                Text(
-                                  "12:00 PM",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  size: 24,
-                                  Icons.money,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                Text(
-                                  recordedDance[danceId]['price'],
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              ],
+                            Text(
+                              "March 12,2023",
+                              style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ],
                         ),
+                        Spacer(),
+                        Row(
+                          children: [
+                            Icon(
+                              size: 24,
+                              Icons.access_time,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            Text(
+                              "12:00 PM",
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Row(
+                          children: [
+                            Icon(
+                              size: 24,
+                              Icons.money,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            Text(
+                              recordedDance[widget.danceId]['price'],
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+
                       ],
-                    ),
+                    ) : SizedBox(height: 0,),
+
                     SizedBox(
                       height: 20,
                     ),
@@ -226,7 +249,7 @@ class DanceClassRecordedDetails extends StatelessWidget {
                       height: 20,
                     ),
                     Text(
-                      recordedDance[danceId]['details'],
+                      recordedDance[widget.danceId]['details'],
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     SizedBox(
@@ -242,3 +265,7 @@ class DanceClassRecordedDetails extends StatelessWidget {
     );
   }
 }
+
+
+
+
