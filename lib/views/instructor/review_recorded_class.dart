@@ -19,11 +19,11 @@ class ReviewRecordedClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String link = recordedDance.last['link'];
+    String link = recordedDanceClass.youtubeLink;
     RegExp regExp = RegExp(r"(?:(?<=v=)|(?<=be/))[\w-]+");
     RegExpMatch? match = regExp.firstMatch(link);
     String? id = match?.group(0);
-
+    print(id!);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
@@ -31,8 +31,9 @@ class ReviewRecordedClass extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: () {
+            print(recordedDanceClass.toJson().toString());
             Get.find<DanceClassController>().addRecordedDanceClass(recordedDanceClass);
-              Get.offAll(InstructorHome());
+            Get.offAll(InstructorHome());
 
           },
           child: const Center(
@@ -50,7 +51,8 @@ class ReviewRecordedClass extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.network(
-                  "https://img.youtube.com/vi/${recordedDanceClass.youtubeLink.split('/')[3]}/0.jpg",
+                  // id!,
+                  "https://img.youtube.com/vi/$id/0.jpg",
                   fit: BoxFit.fill,
                 ),
                 Text(

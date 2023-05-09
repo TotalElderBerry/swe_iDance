@@ -297,23 +297,10 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                         } else {
                           difficulty = "Hard";
                         }
-                        if (recordedDance.isEmpty) {
-                          id = 1;
-                        } else {
-                          id = recordedDance.last["id"] + 1;
-                        }
-                        recordedDance.add({
-                          "id": id,
-                          "classname": danceController.text,
-                          "song": songController.text,
-                          "price": priceController.text,
-                          "link": linkController.text,
-                          "difficulty": difficulty,
-                          "details": detailsController.text,
-                        });
+                      
                         RecordedDanceClassModel recordedDanceClass = RecordedDanceClassModel(-1, youtubeLink: linkController.text, danceClassId: -1, price: int.parse(priceController.text), danceName: danceController.text, danceSong: songController.text, danceDifficulty: difficult, description: detailsController.text, payment: PaymentDetails(-1,accountName: '', accountNumber: '', modeOfPayment: ''), instructor: Get.find<AuthController>().currentInstructor.value!
                         );
-                        print(recordedDance);
+                        print(recordedDanceClass.toJson().toString());
                         Get.to(AddRecordedPaymentPage(recordedDanceClassModel: recordedDanceClass,));
                       },
                       child: Text("Next")),

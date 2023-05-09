@@ -165,7 +165,7 @@ class HomeScreen extends StatelessWidget {
                                     style: Theme.of(context).textTheme.titleMedium,
                                   ),
                                   TextButton(
-                                    onPressed: () => Get.to(const StudentRecordedHomePage()),
+                                    onPressed: () => Get.to(const StudentHomeRecordedPage()),
                                     child: const Text(
                                       'View All',
                                       style: TextStyle(
