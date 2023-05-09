@@ -6,6 +6,7 @@ import 'package:i_dance/views/student/student_home.dart';
 import 'package:i_dance/views/student/student_home_live.dart';
 import 'package:i_dance/views/student/student_home_recorded.dart';
 import 'package:i_dance/widgets/my_appbar.dart';
+import 'package:skeletons/skeletons.dart';
 import '../../controllers/auth/auth_controller.dart';
 import '../../widgets/student/home_dance_card.dart';
 
@@ -164,7 +165,7 @@ class HomeScreen extends StatelessWidget {
                                     style: Theme.of(context).textTheme.titleMedium,
                                   ),
                                   TextButton(
-                                    onPressed: () => Get.to(const StudentRecordedHomePage()),
+                                    onPressed: () => Get.to(const StudentHomeRecordedPage()),
                                     child: const Text(
                                       'View All',
                                       style: TextStyle(
@@ -195,12 +196,210 @@ class HomeScreen extends StatelessWidget {
                         );
                       
                     }
-                    return Text("Loading pa wait");
-                  
+                    // return Text("Loading pa wait");
+                  return 
+                  OverflowBox(
+                    maxHeight: MediaQuery.of(context).size.height,
+                    child: Column(
+                      children: [
+                          SizedBox(height: 100),
+
+                          SkeletonAvatar(
+                            style: SkeletonAvatarStyle(
+                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                              width: double.infinity,
+                              height: 200
+                            ),
+                          ),
+                          SizedBox(height: 36),
+                          // 
+                          Row(
+                            children: const [
+                              Padding(
+                                      padding:  EdgeInsets.only(right: 8.0),
+                                      child:  SkeletonAvatar(
+                                        style: SkeletonAvatarStyle(
+                                            shape: BoxShape.circle, width: 50, height: 50),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.only(right: 8.0),
+                                      child:  SkeletonAvatar(
+                                        style: SkeletonAvatarStyle(
+                                            shape: BoxShape.circle, width: 50, height: 50),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.only(right: 8.0),
+                                      child:  SkeletonAvatar(
+                                        style: SkeletonAvatarStyle(
+                                            shape: BoxShape.circle, width: 50, height: 50),
+                                      ),
+                                    ),
+                            ],
+                          ),
+                          SizedBox(height: 36),
+
+                          
+                          FittedBox(
+                            child: ClipRect(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                   SkeletonAvatar(
+                                    style: SkeletonAvatarStyle(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                            
+                                      width:MediaQuery.of(context).size.width / 2,
+                                      height: 150
+                                    ),
+                                  ),
+                                  SizedBox(width: 20,),
+                                   SkeletonAvatar(
+                                    style: SkeletonAvatarStyle(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      width:MediaQuery.of(context).size.width / 2,
+                                      height: 150
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 24),
+                          FittedBox(
+                            child: ClipRect(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                   SkeletonAvatar(
+                                    style: SkeletonAvatarStyle(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                            
+                                      width:MediaQuery.of(context).size.width / 2,
+                                      height: 150
+                                    ),
+                                  ),
+                                  SizedBox(width: 20,),
+                            
+                                   SkeletonAvatar(
+                                    style: SkeletonAvatarStyle(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                            
+                                      width:MediaQuery.of(context).size.width / 2,
+                                      height: 150
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                      ],
+                    ),
+                  );
                 }));
 
               }
-              return Text("Loading pa");
+              return  OverflowBox(
+                    maxHeight: MediaQuery.of(context).size.height,
+                    child: Column(
+                      children: [
+                          SizedBox(height: 100),
+
+                          SkeletonAvatar(
+                            style: SkeletonAvatarStyle(
+                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                              width: double.infinity,
+                              height: 200
+                            ),
+                          ),
+                          SizedBox(height: 36),
+                          // 
+                          Row(
+                            children: const [
+                              Padding(
+                                      padding:  EdgeInsets.only(right: 8.0),
+                                      child:  SkeletonAvatar(
+                                        style: SkeletonAvatarStyle(
+                                            shape: BoxShape.circle, width: 50, height: 50),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.only(right: 8.0),
+                                      child:  SkeletonAvatar(
+                                        style: SkeletonAvatarStyle(
+                                            shape: BoxShape.circle, width: 50, height: 50),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.only(right: 8.0),
+                                      child:  SkeletonAvatar(
+                                        style: SkeletonAvatarStyle(
+                                            shape: BoxShape.circle, width: 50, height: 50),
+                                      ),
+                                    ),
+                            ],
+                          ),
+                          SizedBox(height: 36),
+
+                          
+                          FittedBox(
+                            child: ClipRect(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                   SkeletonAvatar(
+                                    style: SkeletonAvatarStyle(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                            
+                                      width:MediaQuery.of(context).size.width / 2,
+                                      height: 150
+                                    ),
+                                  ),
+                                  SizedBox(width: 20,),
+                                   SkeletonAvatar(
+                                    style: SkeletonAvatarStyle(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      width:MediaQuery.of(context).size.width / 2,
+                                      height: 150
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 24),
+                          FittedBox(
+                            child: ClipRect(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                   SkeletonAvatar(
+                                    style: SkeletonAvatarStyle(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                            
+                                      width:MediaQuery.of(context).size.width / 2,
+                                      height: 150
+                                    ),
+                                  ),
+                                  SizedBox(width: 20,),
+                            
+                                   SkeletonAvatar(
+                                    style: SkeletonAvatarStyle(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                            
+                                      width:MediaQuery.of(context).size.width / 2,
+                                      height: 150
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                      ],
+                    ),
+                  );
+
 
             }
         ),

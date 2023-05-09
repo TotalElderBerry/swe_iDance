@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/views/instructor/add_class_landing.dart';
+import 'package:i_dance/widgets/student/recorded_class_card.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../../controllers/instructor/instructor.dart';
@@ -268,8 +269,20 @@ class InstructorHome extends StatelessWidget {
                                   // DanceClassCard(),
                                 ],
                               );
+                            }else{
+                              final arr = Get.find<InstructorController>().instructorRecordedDanceClass;
+                                print("hi ${arr.length}");
+                               return ListView.builder(
+                                 physics: NeverScrollableScrollPhysics(),
+                                 shrinkWrap: true,
+                                 itemCount: Get.find<InstructorController>().instructorRecordedDanceClass.length,
+                                 itemBuilder: (context,index){
+                                     print(Get.find<InstructorController>().instructorRecordedDanceClass[index].recordedClassId);
+                                     Text(Get.find<InstructorController>().instructorRecordedDanceClass[index].youtubeLink);
+                                    //  return SizedBox( width: ((MediaQuery.of(context).size.width / 2)-25), child: StudentClassRecordedCard(recordedDanceClassModel: Get.find<InstructorController>().instructorRecordedDanceClass[index]));
+                                 }
+                               );
                             }
-                            return Text("Recording classes");
                           }),
                          
                         ],

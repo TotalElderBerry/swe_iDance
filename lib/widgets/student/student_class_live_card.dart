@@ -3,17 +3,18 @@ import 'package:get/get.dart';
 import '../../views/student/dance_class_details.dart';
 
 class StudentClassLiveCard extends StatelessWidget {
-  StudentClassLiveCard({super.key, required this.fromPage});
+  StudentClassLiveCard({super.key, required this.fromPage, required this.image});
 
   String fromPage;
+  String image;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         // Get.to(
-        //   DanceClassDetails(
-            
+        //   DanceClassDetails(danceId: 0,
+        //     fromPage: fromPage,
         //   ),
         // );
       },
@@ -29,7 +30,7 @@ class StudentClassLiveCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                   child: Image.network(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
+                    image,
                     fit: BoxFit.cover,
                     width: 80,
                     height: 80,

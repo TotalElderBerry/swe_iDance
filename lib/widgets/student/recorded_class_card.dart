@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:i_dance/models/live_dance_class.dart';
-import '../../views/student/dance_class_details.dart';
-import '../../views/student/students_class_details.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:i_dance/models/recorded_dance_model.dart';
 
-class StudentClassCard extends StatelessWidget {
-  LiveDanceClassModel liveDance;
-  bool isPending;
-  StudentClassCard({super.key, required this.isPending, required this.liveDance});
+import '../../views/student/dance_class_details.dart';
+import '../../views/student/dance_class_recorded_details.dart';
+import '../../views/student/student_home_live.dart';
+
+class StudentClassRecordedCard extends StatelessWidget {
+  RecordedDanceClassModel recordedDanceClassModel;
+  StudentClassRecordedCard({super.key, required this.recordedDanceClassModel});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Get.to(
-          StudentDanceClassDetails(
-            liveDance: liveDance,
-            isPending: isPending,
+          DanceClassRecordedDetails(
+            recordedDanceClassModel: recordedDanceClassModel
           ),
         );
       },
       child: Container(
-        width: (MediaQuery.of(context).size.width) - 52,
+        width: (MediaQuery.of(context).size.width) - 32,
         child: Card(
           color: Theme.of(context).colorScheme.onSecondary,
           elevation: 2,
@@ -30,23 +31,18 @@ class StudentClassCard extends StatelessWidget {
             child: Row(
               children: [
                 ClipRRect(
-                          borderRadius:const  BorderRadius.all(Radius.circular(8)),
-                            child:
-                            (liveDance.img == "")?
-                            const SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: DecoratedBox(decoration: BoxDecoration(color: Colors.grey)),
-                                ): 
-                            Image.network(
-                                liveDance.img!,
-                                fit: BoxFit.cover,
-                                width: 80,
-                                height: 80,
-                            ),
-                        ),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  child: Image.network(
+                     "https://img.youtube.com/vi/${
+                    RegExp(r"(?:(?<=v=)|(?<=be/))[\w-]+").firstMatch(recordedDanceClassModel.youtubeLink)!.group(0)!
+                     }/0.jpg",
+                    fit: BoxFit.cover,
+                    width: 80,
+                    height: 80,
+                  ),
+                ),
                 const SizedBox(
-                  width: 10,
+                  width: 20,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,10 +66,9 @@ class StudentClassCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          backgroundColor: Colors.purple,
                         ),
                         Text(
-                          liveDance.danceName,
+                          recordedDanceClassModel.danceName,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(
@@ -81,16 +76,16 @@ class StudentClassCard extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                             CircleAvatar(
+                            CircleAvatar(
                               radius: 10,
                               backgroundImage: NetworkImage(
-                                  liveDance.instructor.profilePicture!),
+                                 recordedDanceClassModel.instructor.profilePicture!),
                             ),
                             const SizedBox(
                               width: 5,
                             ),
                             Text(
-                              '${liveDance.instructor.firstName} ${liveDance.instructor.lastName}',
+                              "${recordedDanceClassModel.instructor.firstName} ${recordedDanceClassModel.instructor.lastName}",
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ],
@@ -109,10 +104,10 @@ class StudentClassCard extends StatelessWidget {
                           children: [
                             const Icon(size: 10, Icons.calendar_month),
                             const SizedBox(
-                              width: 2,
+                              width: 5,
                             ),
                             Text(
-                              liveDance.date,
+                              "March 12,2023",
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ],
@@ -120,18 +115,7 @@ class StudentClassCard extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        Row(
-                          children: [
-                            const Icon(size: 10, Icons.location_on),
-                            const SizedBox(
-                              width: 2,
-                            ),
-                            Text(
-                              liveDance.location,
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                          ],
-                        )
+                       
                       ],
                     )
                   ],

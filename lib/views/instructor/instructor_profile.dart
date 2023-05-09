@@ -150,89 +150,42 @@ class _InstructorProfilePageState extends State<InstructorProfilePage> {
                       (index) => Chip(
                         label: Text(
                           tagList.elementAt(index),
-                          style: Theme.of(context).textTheme.labelMedium,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
                         ),
-                        backgroundColor: Colors.grey[300],
+                        backgroundColor: Colors.purple,
                       ),
                     ),
                     GestureDetector(
                       onTap: addTag,
                       child: Chip(
                         label: Row(
-                          children: [
-                            const Icon(
+                          children: const [
+                            Icon(
                               Icons.add,
                               size: 15,
+                              color: Colors.white,
                             ),
-                            const SizedBox(
+                            SizedBox(
                               width: 5,
                             ),
                             Text(
                               'Add tag',
-                              style: Theme.of(context).textTheme.labelMedium,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                         ),
-                        backgroundColor: Colors.grey[300],
+                        backgroundColor: Colors.purple,
                       ),
                     ),
                   ],
                 ),
               ),
-              // SizedBox(
-              //   height: 200,
-              //   width: double.infinity,
-              //   child: GridView.builder(
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 3,
-              //       childAspectRatio: 2.5,
-              //     ),
-              //     itemCount: tagList.length,
-              //     itemBuilder: (context, index) {
-              //       return Chip(
-              //         label: Text(
-              //           tagList.elementAt(index),
-              //           style: Theme.of(context).textTheme.labelMedium,
-              //         ),
-              //         backgroundColor: Colors.grey[300],
-              //       );
-              //     },
-              //   ),
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Chip(
-              //       label: Text(
-              //         'K-pop',
-              //         style: Theme.of(context).textTheme.labelMedium,
-              //       ),
-              //       backgroundColor: Colors.grey[300],
-              //     ),
-              //     Chip(
-              //       label: Text(
-              //         'Contemporary',
-              //         style: Theme.of(context).textTheme.labelMedium,
-              //       ),
-              //       backgroundColor: Colors.grey[300],
-              //     ),
-              //     Chip(
-              //       label: Text(
-              //         'HipHop',
-              //         style: Theme.of(context).textTheme.labelMedium,
-              //       ),
-              //       backgroundColor: Colors.grey[300],
-              //     ),
-              //     Chip(
-              //       label: Text(
-              //         'Video',
-              //         style: Theme.of(context).textTheme.labelMedium,
-              //       ),
-              //       backgroundColor: Colors.grey[300],
-              //     ),
-              //   ],
-              // ),
-
               const SizedBox(
                 height: 12,
               ),

@@ -72,6 +72,7 @@ class AddRecordedPaymentPage extends StatelessWidget {
                     recordedDanceClassModel.payment.accountName = fullNameController.text;
                     recordedDanceClassModel.payment.accountNumber = referenceNumberController.text;
                     recordedDanceClassModel.payment.modeOfPayment = "Paypal";
+                    print(recordedDanceClassModel.toJson().toString());
                    Get.to(ReviewRecordedClass(recordedDanceClass: recordedDanceClassModel,));
                   // Get.to(ReviewDanceClassPage(danceClass: danceClass));
                   }

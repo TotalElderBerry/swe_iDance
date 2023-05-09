@@ -27,28 +27,24 @@ class StudentController extends GetxController{
 
   //to fix
   List<DanceBooking> getBookedClasses(){
-    print("called get booked dance classes");
+    
      return studentBookingClasses.where((element) => element.dateApproved != 'PENDING').toList();
 
   }
 
   List<DanceBooking> getPendingClasses(){
-    print("called get pedning dance classes ${studentBookingClasses.length}");
 
     return studentBookingClasses.where((element) => element.dateApproved == 'PENDING').toList();
   }
 
   List<DanceBooking> getDoneClasses(){
-    print("called get done dance classes ${studentDone.length} and done ${Get.find<DanceClassController>().doneDanceClasses.length}");
     List<DanceBooking> temp = [];
     for(int i = 0; i < Get.find<DanceClassController>().doneDanceClasses.length;i++){
       final t = studentDone.where((element) => element.danceClassId == Get.find<DanceClassController>().doneDanceClasses[i].danceClassId).toList();
       if(t.isNotEmpty){
-        print(t[0].danceBookingId);
         temp.add(t[0]);
       }
     }
-    print("temp length ${temp.length}");
     return temp;
   }
 

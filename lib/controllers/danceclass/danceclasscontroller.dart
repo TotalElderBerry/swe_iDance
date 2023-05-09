@@ -50,8 +50,11 @@ class DanceClassController extends GetxController{
 
       for(var upcomingClass in upcoming){
         LiveDanceClassModel upClass = LiveDanceClassModel.fromJson(upcomingClass);
+        final isLikedValue = await LikeAPI.getLikeFromStudent(upClass.danceClassId, Get.find<AuthController>().currentUser.value!.studentId);
         // upClass.likes = await LikeAPI.getLikesOfDanceClass(upClass.danceClassId);
-        // upClass.isLiked = await LikeAPI.getLikeFromStudent(upClass.danceClassId, Get.find<AuthController>().currentUser.value!.studentId);
+        final likesValue = await LikeAPI.getLikesOfDanceClass(upClass.danceClassId);
+        upClass.likes = likesValue['result'];
+        upClass.isLiked = isLikedValue['val'];
         upClass.img = await ImageCloudStorage.getDanceClassPicture(upClass.danceClassId);
         upClass.instructor.img = await ImageCloudStorage.getInstructorPicture(upClass.instructor.userId);
         upClass.instructor.profilePicture = await ImageCloudStorage.getProfilePicture(upClass.instructor.userId);
@@ -140,16 +143,17 @@ class DanceClassController extends GetxController{
 
   Future<bool> getRecordedDanceClasses() async {
     bool hasFetched = false;
+    recordedClasses.clear();
     print("in get recorded classes");
     try{
       final recordings = await DanceClassAPI.getRecordedDanceClasses();
       for(var recording in recordings){
         print(recording.toString());
         RecordedDanceClassModel recordedClass = RecordedDanceClassModel.fromJson(recording);
-        
-        recordedClass.instructor.profilePicture = await ImageCloudStorage.getInstructorPicture(recordedClass.instructor.userId);
+        // recordedClass.instructor.profilePicture = await ImageCloudStorage.getProfilePicture(recording.instructor.userId);
         recordedClasses.add(recordedClass);
       }
+      hasFetched = true;
     } catch (e) {
       print("haha err");
       print(e);
