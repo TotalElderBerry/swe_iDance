@@ -9,15 +9,21 @@ import 'package:i_dance/views/student/recorded_class_payment.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../controllers/student/student.dart';
 import '../../models/recorded_dance_model.dart';
 
-class DanceClassRecordedDetails extends StatelessWidget {
+class DanceClassRecordedDetails extends StatefulWidget {
   RecordedDanceClassModel recordedDanceClassModel;
   DanceClassRecordedDetails({super.key,required this.recordedDanceClassModel});
 
   @override
+  State<DanceClassRecordedDetails> createState() => _DanceClassRecordedDetailsState();
+}
+
+class _DanceClassRecordedDetailsState extends State<DanceClassRecordedDetails> {
+  @override
   Widget build(BuildContext context) {
-    String link = recordedDanceClassModel.youtubeLink;
+    String link = widget.recordedDanceClassModel.youtubeLink;
     RegExp regExp = RegExp(r"(?:(?<=v=)|(?<=be/))[\w-]+");
     RegExpMatch? match = regExp.firstMatch(link);
     String? id = match?.group(0);
@@ -29,7 +35,7 @@ class DanceClassRecordedDetails extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: (){
-            Get.to(RecordedClassPaymentPage(recordedDanceClassModel: recordedDanceClassModel));
+            Get.to(RecordedClassPaymentPage(recordedDanceClassModel: widget.recordedDanceClassModel));
           },
           child: Center(
             child: Text('Buy Dance Class'),
@@ -62,7 +68,7 @@ class DanceClassRecordedDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          recordedDanceClassModel.danceSong,
+                          widget.recordedDanceClassModel.danceSong,
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ],
@@ -86,26 +92,40 @@ class DanceClassRecordedDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        
+                      
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            
-                          
-                            Row(
-                              children: [
-                                Icon(
-                                  size: 24,
-                                  Icons.money,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                Text(
-                                  "${recordedDanceClassModel.price}",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              ],
+                            Icon(
+                              size: 24,
+                              Icons.money,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            Text(
+                              "${widget.recordedDanceClassModel.price}",
+                              style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ],
                         ),
+                            IconButton(onPressed: ()async{
+                                setState(() {
+                                  if(widget.recordedDanceClassModel.isLiked == 0){
+                                    widget.recordedDanceClassModel.isLiked = 1;
+                                    // Get.find<StudentController>().likedClasses.add(widget.recordedDanceClassModel);
+                                  }else{
+                                    // Get.find<StudentController>().likedClasses.remove(widget.recordedDanceClassModel);
+                                    widget.recordedDanceClassModel.isLiked = 0;
+                                  }
+                                //  widget.recordedDanceClassModel.isLiked = !widget.recordedDanceClassModel.isLiked; 
+                                });
+
+                                  await Get.find<StudentController>().likeDanceClass(widget.recordedDanceClassModel.danceClassId);
+                              }, icon: 
+                              (widget.recordedDanceClassModel.isLiked == 0)?
+                              Icon(Icons.favorite_outline, color: Colors.red,)
+                              :
+                              Icon(Icons.favorite, color: Colors.red,)
+                              )
                       ],
                     ),
                     SizedBox(
@@ -139,13 +159,13 @@ class DanceClassRecordedDetails extends StatelessWidget {
                         CircleAvatar(
                           radius: 16,
                           backgroundImage: NetworkImage(
-                              recordedDanceClassModel.instructor.profilePicture!),
+                              widget.recordedDanceClassModel.instructor.profilePicture!),
                         ),
                         SizedBox(
                           width: 10,
                         ),
                         Text(
-                          "${recordedDanceClassModel.instructor.firstName} ${recordedDanceClassModel.instructor.lastName}",
+                          "${widget.recordedDanceClassModel.instructor.firstName} ${widget.recordedDanceClassModel.instructor.lastName}",
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
@@ -154,7 +174,7 @@ class DanceClassRecordedDetails extends StatelessWidget {
                       height: 20,
                     ),
                     Text(
-                      recordedDanceClassModel.description,
+                      widget.recordedDanceClassModel.description,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     SizedBox(

@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/models/live_dance_class.dart';
+import 'package:i_dance/widgets/student/recorded_class_card.dart';
 
 import '../../controllers/instructor/instructor.dart';
 import '../../models/instructor.dart';
@@ -146,7 +147,7 @@ class InstructorDetailsPage extends StatelessWidget {
                                   return Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      
+                                      StudentClassRecordedCard(recordedDanceClassModel: Get.find<InstructorController>().instructorRecordedDanceClass[index])
                                       // Text(Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!.danceName)
                                       // DanceClassCard(),
                                     ],

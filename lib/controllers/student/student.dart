@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
@@ -12,6 +14,7 @@ import 'package:i_dance/widgets/instructor/dance_class_card.dart';
 import '../../models/dance_booking.dart';
 import '../../models/dance_class.dart';
 import '../../models/live_dance_class.dart';
+import '../../models/recorded_dance_model.dart';
 import '../../sources/api/like/like.dart';
 
 class StudentController extends GetxController{
@@ -22,6 +25,7 @@ class StudentController extends GetxController{
   RxList<DanceBooking> filteredRecordedBookingClass = <DanceBooking>[].obs;
 
   RxList<LiveDanceClassModel> likedClasses = <LiveDanceClassModel>[].obs;
+  RxList<RecordedDanceClassModel> likedRecordedClasses = <RecordedDanceClassModel>[].obs;
   RxBool isPending = false.obs;
   RxBool isDone = false.obs;
   RxBool isLiked = false.obs;
@@ -76,10 +80,17 @@ class StudentController extends GetxController{
       studentBookingClasses.clear();
       likedClasses.clear();
       List<LiveDanceClassModel> listtemp = Get.find<DanceClassController>().upcomingDanceClasses;
+      List<RecordedDanceClassModel> recordtemp = Get.find<DanceClassController>().recordedClasses;
 
       for(int i = 0; i < listtemp.length; i++){
         if(listtemp[i].isLiked == 1){
           likedClasses.add(listtemp[i]);
+        }
+      }
+
+      for(int i = 0; i < recordtemp.length; i++){
+        if(recordtemp[i].isLiked == 1){
+          likedRecordedClasses.add(recordtemp[i]);
         }
       }
 
@@ -89,7 +100,7 @@ class StudentController extends GetxController{
         for(int j = 0;j < response.length;j++){
           if(response[j]['dance_class_id'] == Get.find<DanceClassController>().recordedClasses[i].danceClassId){
             print("GET STUDSENT record");
-            print(response[j].toString());
+            // print(response[j].toString());
             DanceBooking danceBooking = DanceBooking();
             danceBooking.liveDanceClass = null;
             danceBooking.recordedDanceClass = Get.find<DanceClassController>().recordedClasses[i];
@@ -98,6 +109,7 @@ class StudentController extends GetxController{
             Payment p = Payment.fromJson(response[j]['payment']);
             danceBooking.payment = p;
             studentBookingClasses.add(danceBooking);
+            // Get.find<DanceClassController>().recordedClasses.remove(Get.find<DanceClassController>().recordedClasses[i]);
           }
         }
       }

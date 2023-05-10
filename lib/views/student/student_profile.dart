@@ -235,8 +235,20 @@ class StudentProfilePage extends StatelessWidget{
           Expanded(
             child:  Obx((){
               print("inside obx sa recorded ${Get.find<StudentController>().filteredRecordedBookingClass.length}");
-              if(Get.find<StudentController>().isLiked.value == true){
-
+              if(Get.find<StudentController>().isRecordingLiked.value == true){
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: Get.find<StudentController>().likedRecordedClasses.length,
+                    itemBuilder: (context,index){
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              StudentRecordedClassCard(isPending: Get.find<StudentController>().isPending.value, recordedDanceClassModel: Get.find<StudentController>().likedRecordedClasses[index])
+                            ],
+                          );
+                
+                  }),
+                );
               }
               if(Get.find<StudentController>().filteredRecordedBookingClass.isEmpty){
                 return Text("Empty");

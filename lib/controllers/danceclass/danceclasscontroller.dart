@@ -175,7 +175,13 @@ class DanceClassController extends GetxController{
       for(var recording in recordings){
         print(recording.toString());
         RecordedDanceClassModel recordedClass = RecordedDanceClassModel.fromJson(recording);
+        final isLikedValue = await LikeAPI.getLikeFromStudent(recordedClass.danceClassId, Get.find<AuthController>().currentUser.value!.studentId);
+        final likesValue = await LikeAPI.getLikesOfDanceClass(recordedClass.danceClassId);
+        recordedClass.likes = likesValue['result'];
+        recordedClass.isLiked = isLikedValue['val'];
         // recordedClass.instructor.profilePicture = await ImageCloudStorage.getProfilePicture(recording.instructor.userId);
+        // recordedClass.instructor.img = await ImageCloudStorage.getInstructorPicture(recordedClass.instructor.userId);
+
         recordedClasses.add(recordedClass);
       }
       hasFetched = true;

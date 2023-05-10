@@ -78,11 +78,14 @@ class _DanceClassDetailsState extends State<DanceClassDetails> {
                           setState(() {
                             if(widget.liveClass.isLiked == 0){
                               widget.liveClass.isLiked = 1;
+                              Get.find<StudentController>().likedClasses.add(widget.liveClass);
                             }else{
+                              Get.find<StudentController>().likedClasses.remove(widget.liveClass);
                               widget.liveClass.isLiked = 0;
                             }
                           //  widget.liveClass.isLiked = !widget.liveClass.isLiked; 
                           });
+
                             await Get.find<StudentController>().likeDanceClass(widget.liveClass.danceClassId);
                         }, icon: 
                         (widget.liveClass.isLiked == 0)?
