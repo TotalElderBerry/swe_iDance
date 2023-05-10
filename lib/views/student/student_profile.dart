@@ -117,15 +117,15 @@ class StudentProfilePage extends StatelessWidget{
                                   print("inside obx");
                                   return Expanded(
                                     child: ListView.builder(itemCount: Get.find<StudentController>().filteredBookingClass.length ,itemBuilder: (context, index) {
-                                        print("dance class ${Get.find<StudentController>().filteredBookingClass[index].payment!.referenceNumber}");
-                                        print(Get.find<StudentController>().filteredBookingClass[index].dateApproved);
-                                        return Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            StudentClassCard(isPending: Get.find<StudentController>().isPending.value, liveDance: Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!)
-                                           
-                                          ],
-                                        );
+                                        // if(Get.find<StudentController>().filteredBookingClass[index].liveDanceClass != null){
+                                          return Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              StudentClassCard(isPending: Get.find<StudentController>().isPending.value, liveDance: Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!)
+                                            
+                                            ],
+                                          );
+                                        // }
                                     }),
                                   );
                                 }),

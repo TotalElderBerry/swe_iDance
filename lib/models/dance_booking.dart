@@ -1,7 +1,10 @@
+import 'package:i_dance/models/recorded_dance_model.dart';
+
 import 'live_dance_class.dart';
 
 class DanceBooking {
 	LiveDanceClassModel? liveDanceClass;
+  RecordedDanceClassModel? recordedDanceClass;
 	int? danceBookingId;
 	int? paymentId;
 	int? studentId;

@@ -22,6 +22,7 @@ class DanceClassController extends GetxController{
   RxList<StudentModel> studentsApproved = <StudentModel>[].obs;
   RxList<StudentModel> studentsPending = <StudentModel>[].obs;
   RxList<StudentModel> studentsAttendance = <StudentModel>[].obs;
+  
   RxList<RecordedDanceClassModel> recordedClasses = <RecordedDanceClassModel>[].obs;
 
   void filterList(String query){

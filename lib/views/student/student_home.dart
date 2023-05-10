@@ -53,7 +53,6 @@ class StudentHomePage extends StatelessWidget {
                           child: ListView.builder(
                             itemCount: Get.find<DanceClassController>().upcomingDanceClasses.length,
                             itemBuilder: (context, idx){
-                              print(Get.find<StudentController>().isBookedClasses(Get.find<DanceClassController>().upcomingDanceClasses[idx].danceClassId));
                                 return DanceClassCard(liveClass: Get.find<DanceClassController>().upcomingDanceClasses.elementAt(idx));
                             }
                           ),

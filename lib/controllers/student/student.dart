@@ -30,14 +30,11 @@ class StudentController extends GetxController{
 
   //to fix
   List<DanceBooking> getBookedClasses(){
-    
      return studentBookingClasses.where((element) => element.dateApproved != 'PENDING').toList();
-
   }
 
   List<DanceBooking> getPendingClasses(){
-
-    return studentBookingClasses.where((element) => element.dateApproved == 'PENDING').toList();
+    return studentBookingClasses.where((element) => element.dateApproved == 'PENDING' && element.liveDanceClass != null).toList();
   }
 
   List<DanceBooking> getDoneClasses(){
@@ -70,8 +67,24 @@ class StudentController extends GetxController{
       }
 
       final response = await StudentAPI.getStudentDanceClasses(Get.find<AuthController>().currentUser.value!.studentId);
+      
+      for(int i = 0; i < Get.find<DanceClassController>().recordedClasses.length;i++){
+        for(int j = 0;j < response.length;j++){
+          if(response[j]['dance_class_id'] == Get.find<DanceClassController>().recordedClasses[i].danceClassId){
+            print("GET STUDSENT record");
+            print(response[j].toString());
+            DanceBooking danceBooking = DanceBooking();
+            danceBooking.recordedDanceClass = Get.find<DanceClassController>().recordedClasses[i];
+            danceBooking.dateApproved = response[j]['date_approved'];
+            danceBooking.danceClassId = response[j]['dance_class_id'];
+            Payment p = Payment.fromJson(response[j]['payment']);
+            danceBooking.payment = p;
+            studentBookingClasses.add(danceBooking);
+          }
+        }
+      }
+      
       for(int i = 0; i < Get.find<DanceClassController>().upcomingDanceClasses.length;i++){
-          
         for(int j = 0; j < response.length;j++){
           print(response.length);
           if(response[j]['dance_class_id'] == Get.find<DanceClassController>().upcomingDanceClasses[i].danceClassId){
@@ -103,7 +116,9 @@ class StudentController extends GetxController{
           }
 
         }
+        
     }
+
       
       return true;
     } catch (e) {
@@ -124,8 +139,8 @@ class StudentController extends GetxController{
     return true;
   }
 
-  Future<bool> bookDanceClass(int dance_class_id, String referenceNumber, int price){
-    return StudentAPI.bookDanceClass(Get.find<AuthController>().currentUser.value!.studentId, dance_class_id, referenceNumber, price,Get.find<AuthController>().currentUser.value!.firstName +" "+Get.find<AuthController>().currentUser.value!.lastName);
+  Future<bool> bookDanceClass(int dance_class_id, String referenceNumber, int price) async {
+    return await StudentAPI.bookDanceClass(Get.find<AuthController>().currentUser.value!.studentId, dance_class_id, referenceNumber, price,Get.find<AuthController>().currentUser.value!.firstName +" "+Get.find<AuthController>().currentUser.value!.lastName);
   }
 
 
