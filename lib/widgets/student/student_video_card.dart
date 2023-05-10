@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../views/student/dance_class_details.dart';
-import '../../views/student/student_home_live.dart';
+import '../../views/student/dance_class_recorded_video.dart';
 
-class StudentClassRecordedCard extends StatelessWidget {
-  StudentClassRecordedCard({super.key, required this.fromPage, required this.image, required this.id});
+
+class StudentVideoCard extends StatelessWidget {
+  StudentVideoCard({super.key, required this.fromPage, required this.image, required this.id});
 
   String fromPage;
   String image;
@@ -17,7 +17,7 @@ class StudentClassRecordedCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.to(
-          DanceClassDetails(danceId: id,
+          DanceClassRecordedVideo(danceId: id,
             fromPage: fromPage,
           ),
         );
