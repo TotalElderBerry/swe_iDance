@@ -254,9 +254,7 @@ class InstructorHome extends StatelessWidget {
                             if(Get.find<InstructorController>().toShowLive.value <= 1){
                               return Wrap(
                                 children: [
-                                  // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[0]),
-                                  // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[0]),
-                                  // DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[1]),
+                                  
                                   ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
@@ -271,16 +269,20 @@ class InstructorHome extends StatelessWidget {
                               );
                             }else{
                               final arr = Get.find<InstructorController>().instructorRecordedDanceClass;
-                                print("hi ${arr.length}");
-                               return ListView.builder(
-                                 physics: NeverScrollableScrollPhysics(),
-                                 shrinkWrap: true,
-                                 itemCount: Get.find<InstructorController>().instructorRecordedDanceClass.length,
-                                 itemBuilder: (context,index){
-                                     print(Get.find<InstructorController>().instructorRecordedDanceClass[index].recordedClassId);
-                                     Text(Get.find<InstructorController>().instructorRecordedDanceClass[index].youtubeLink);
-                                    //  return SizedBox( width: ((MediaQuery.of(context).size.width / 2)-25), child: StudentClassRecordedCard(recordedDanceClassModel: Get.find<InstructorController>().instructorRecordedDanceClass[index]));
-                                 }
+                                print("hi ${arr[0].youtubeLink}");
+                               return Wrap(
+                                 children: [
+                                   ListView.builder(
+                                     physics: NeverScrollableScrollPhysics(),
+                                     shrinkWrap: true,
+                                     itemCount: arr.length,
+                                     itemBuilder: (context,index){
+                                         print(arr[index].recordedClassId);
+                                        //  Text(arr[index].youtubeLink);
+                                         return SizedBox( width: ((MediaQuery.of(context).size.width / 2)-25), child: StudentClassRecordedCard(recordedDanceClassModel: Get.find<InstructorController>().instructorRecordedDanceClass[index]));
+                                     }
+                                   ),
+                                 ],
                                );
                             }
                           }),

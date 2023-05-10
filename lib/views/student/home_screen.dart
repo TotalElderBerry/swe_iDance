@@ -9,6 +9,7 @@ import 'package:i_dance/widgets/my_appbar.dart';
 import 'package:skeletons/skeletons.dart';
 import '../../controllers/auth/auth_controller.dart';
 import '../../widgets/student/home_dance_card.dart';
+import '../../widgets/student/home_recorded_dance_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -148,15 +149,27 @@ class HomeScreen extends StatelessWidget {
                               const SizedBox(
                                 height: 12,
                               ),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: const [
-                                    HomeDanceCard(),
-                                    HomeDanceCard(),
-                                  ],
-                                ),
+                              SizedBox(
+                                height: 280,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: Get.find<DanceClassController>().upcomingDanceClasses.length,
+                                  itemBuilder: (context,index){
+                                    return HomeDanceCard(liveDance: Get.find<DanceClassController>().upcomingDanceClasses[index],);
+                                }),
                               ),
+
+                            
+                              // SingleChildScrollView(
+                              //   scrollDirection: Axis.horizontal,
+                              //   child: Row(
+                              //     children: const [
+                              //       HomeDanceCard(),
+                              //       HomeDanceCard(),
+                              //     ],
+                              //   ),
+                              // ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -179,15 +192,18 @@ class HomeScreen extends StatelessWidget {
                               const SizedBox(
                                 height: 12,
                               ),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: const [
-                                    HomeDanceCard(),
-                                    HomeDanceCard(),
-                                  ],
-                                ),
+
+                                SizedBox(
+                                height: 270,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: Get.find<DanceClassController>().recordedClasses.length,
+                                  itemBuilder: (context,index){
+                                    return HomeRecordedDanceCard(recordedClass: Get.find<DanceClassController>().recordedClasses[index],);
+                                }),
                               ),
+                              
                             ],
                           ),
                                 

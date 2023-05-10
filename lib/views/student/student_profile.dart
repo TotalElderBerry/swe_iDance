@@ -56,16 +56,20 @@ class StudentProfilePage extends StatelessWidget{
                          Get.find<StudentController>().filteredBookingClass.value =  Get.find<StudentController>().getBookedClasses();
                          Get.find<StudentController>().isPending.value = false;
                         Get.find<StudentController>().isDone.value = false;
-
+                        Get.find<StudentController>().isLiked.value = false;
                       }else if(indx == 1){
+                        Get.find<StudentController>().isLiked.value = false;
                         Get.find<StudentController>().filteredBookingClass.value = Get.find<StudentController>().getPendingClasses();
                         Get.find<StudentController>().isPending.value = true;
                         Get.find<StudentController>().isDone.value = false;
                         print("length is ${Get.find<StudentController>().filteredBookingClass.length}");
                       }else if(indx == 2){
+                        Get.find<StudentController>().isLiked.value = false;
                         Get.find<StudentController>().filteredBookingClass.value = Get.find<StudentController>().getDoneClasses();
                         Get.find<StudentController>().isDone.value = true;
                       }else{
+                        Get.find<StudentController>().isLiked.value = true;
+
                         Get.find<StudentController>().filteredBookingClass.clear();
                       }
                   },
@@ -88,54 +92,25 @@ class StudentProfilePage extends StatelessWidget{
                   SizedBox(height: 30,),
                 
                   const SizedBox(height: 10,),
-                // Row(
-                //   children: [
-                //     TextField(
-                //       decoration: InputDecoration(
-                //         hintText: "Search"
-                //       ),
-                //     ),
-                //     IconButton(onPressed: null, icon: Icon(Icons.filter))
-                //   ],
-                // ),
-                      // Expanded(
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.all(24.0),
-                      //       child: Column(
-                      //                 crossAxisAlignment: CrossAxisAlignment.center,
-                      //                 mainAxisAlignment: MainAxisAlignment.center,
-                      //                 children: [
-                      //                   Obx((){
-                      //                     if(Get.find<StudentController>().filteredBookingClass.isEmpty){
-                      //                       return Text("Empty");
-                      //                     }
-                      //                     print("inside obx");
-                      //                     return Expanded(
-                      //                       child: ListView.builder(itemCount: Get.find<StudentController>().filteredBookingClass.length ,itemBuilder: (context, index) {
-                      //                           return Row(
-                      //                             mainAxisAlignment: MainAxisAlignment.center,
-                      //                             children: [
-                      //                               StudentClassCard(isPending: Get.find<StudentController>().isPending.value, liveDance: Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!)
-                      //                               // DanceClassCard(
-                      //                               //   liveClass:
-                      //                               //   Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!
-                      //                               // ),
-                      //                               // Text(Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!.danceName)
-                      //                               // DanceClassCard(),
-                      //                             ],
-                      //                           );
-                      //                       }),
-                      //                     );
-                      //                   }),
-                      //                 ],
-                      //               )
-                      //     ),
-                      //   ),
+                
     
                       Expanded(
                         child: TabBarView(children: [
                               Expanded(
                                 child:  Obx((){
+                                  if(Get.find<StudentController>().isLiked.value == true){
+                                    return Expanded(
+                                    child: ListView.builder(itemCount: Get.find<StudentController>().likedClasses.length ,itemBuilder: (context, index) {
+                                        return Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            StudentClassCard(isPending: Get.find<StudentController>().isPending.value, liveDance: Get.find<StudentController>().likedClasses[index])
+                                          //  Text(Get.find<StudentController>().likedClasses[index].danceClassId.toString())
+                                          ],
+                                        );
+                                    }),
+                                  );
+                                  }
                                   if(Get.find<StudentController>().filteredBookingClass.isEmpty){
                                     return Text("Empty");
                                   }
@@ -155,86 +130,10 @@ class StudentProfilePage extends StatelessWidget{
                                   );
                                 }),
                               ),
-                              // Text("A"),
-                              // Text("b"),
-                              // Text("c"),
-                              // Text("d"),
-                             
-                              // StudentClassCard(isPending: Get.find<StudentController>().isPending.value, liveDance: Get.find<StudentController>().filteredBookingClass[0].liveDanceClass!),
-                              // StudentClassCard(isPending: Get.find<StudentController>().isPending.value, liveDance: Get.find<StudentController>().filteredBookingClass[0].liveDanceClass!),
-                              // StudentClassCard(isPending: Get.find<StudentController>().isPending.value, liveDance: Get.find<StudentController>().filteredBookingClass[0].liveDanceClass!),
+                              
                         ]),
                       ),
-      
-                  // TabBarView(children: [
-                  //       Expanded(
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.all(24.0),
-                  //           child: Column(
-                  //                     crossAxisAlignment: CrossAxisAlignment.center,
-                  //                     mainAxisAlignment: MainAxisAlignment.center,
-                  //                     children: [
-                  //                       Obx((){
-                  //                         if(Get.find<StudentController>().filteredBookingClass.isEmpty){
-                  //                           return Text("Empty");
-                  //                         }
-                  //                         print("inside obx");
-                  //                         return Expanded(
-                  //                           child: ListView.builder(itemCount: Get.find<StudentController>().filteredBookingClass.length ,itemBuilder: (context, index) {
-                  //                               return Row(
-                  //                                 mainAxisAlignment: MainAxisAlignment.center,
-                  //                                 children: [
-                  //                                   DanceClassCard(
-                  //                                     liveClass:
-                  //                                     Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!
-                  //                                   ),
-                  //                                   // Text(Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!.danceName)
-                  //                                   // DanceClassCard(),
-                  //                                 ],
-                  //                               );
-                  //                           }),
-                  //                         );
-                  //                       }),
-                  //                     ],
-                  //                   )
-                  //         ),
-                  //       ),
-                  //       Expanded(
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.all(24.0),
-                  //           child: Column(
-                  //                     crossAxisAlignment: CrossAxisAlignment.center,
-                  //                     mainAxisAlignment: MainAxisAlignment.center,
-                  //                     children: [
-                  //                       Obx((){
-                  //                         if(Get.find<StudentController>().filteredBookingClass.isEmpty){
-                  //                           return Text("Empty");
-                  //                         }
-                  //                         print("inside obx");
-                  //                         return Expanded(
-                  //                           child: ListView.builder(itemCount: Get.find<StudentController>().filteredBookingClass.length ,itemBuilder: (context, index) {
-                  //                               return Row(
-                  //                                 mainAxisAlignment: MainAxisAlignment.center,
-                  //                                 children: [
-                  //                                   DanceClassCard(
-                  //                                     liveClass:
-                  //                                     Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!
-                  //                                   ),
-                  //                                   // Text(Get.find<StudentController>().filteredBookingClass[index].liveDanceClass!.danceName)
-                  //                                   // DanceClassCard(),
-                  //                                 ],
-                  //                               );
-                  //                           }),
-                  //                         );
-                  //                       }),
-                  //                     ],
-                  //                   )
-                  //         ),
-                  //       ),
-                  //       Text("Done"),
-                  //       Text("Likes"),
-                  // ])
-                  ],
+                    ],
       
             ),
           );

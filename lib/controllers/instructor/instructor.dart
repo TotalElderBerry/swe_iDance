@@ -79,7 +79,7 @@ class InstructorController extends GetxController{
 
     Future<bool> getRecordedClassesOfInstructorbyId(InstructorModel instructor) async {
       print("get instructor");
-      // instructorDanceClass.clear();
+      instructorRecordedDanceClass.clear();
       try {
         final response = await InstructorAPI.getRecordedDanceClassesOfInstructor(instructor.instructorId);
         // LiveDanceClassModel ldance =LiveDanceClassModel.fromJson(response[0]);

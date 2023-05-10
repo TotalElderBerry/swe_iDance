@@ -110,12 +110,7 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
       appBar: MyAppBar(context),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: FutureBuilder(
-            future: Get.find<DanceClassController>().getRecordedDanceClasses(),
-            builder: (context, snapshot) {
-              print(snapshot.data);
-              if (snapshot.hasData) {
-                return Column(
+        child: Column(
                   children: [
                     Container(
                       color: Colors.white,
@@ -163,10 +158,7 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
                     //   ),
                     // ),
                   ],
-                );
-              }
-              return Text("Loading pa");
-            }),
+                ),
       ),
     );
   }

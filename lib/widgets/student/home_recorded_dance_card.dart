@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:i_dance/views/student/recorded_dance_class_booking.dart';
 
 import '../../models/live_dance_class.dart';
+import '../../models/recorded_dance_model.dart';
 
-class HomeDanceCard extends StatelessWidget {
-  LiveDanceClassModel liveDance;
-  HomeDanceCard({
+class HomeRecordedDanceCard extends StatelessWidget {
+  RecordedDanceClassModel recordedClass;
+  HomeRecordedDanceCard({
     super.key,
-    required this.liveDance
+    required this.recordedClass
   });
 
   @override
@@ -26,20 +28,16 @@ class HomeDanceCard extends StatelessWidget {
                 ),
                 child: 
                 ClipRRect(
-                          borderRadius:const  BorderRadius.all(Radius.circular(8)),
-                            child:
-                            (liveDance.img == "")?
-                            const SizedBox(
-                              
-                                  width: double.infinity,
-                                  child: DecoratedBox(decoration: BoxDecoration(color: Colors.grey)),
-                                ): 
-                            Image.network(
-                                liveDance.img!,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                            ),
-                        ),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  child: Image.network(
+                     "https://img.youtube.com/vi/${
+                    RegExp(r"(?:(?<=v=)|(?<=be/))[\w-]+").firstMatch(recordedClass.youtubeLink)!.group(0)!
+                     }/0.jpg",
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    // height: 80,
+                  ),
+                ),
                 
                 // Image.network(
                 //   'https://images.unsplash.com/photo-1483884105135-c06ea81a7a80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y292ZXIlMjBnaXJsfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
@@ -56,7 +54,7 @@ class HomeDanceCard extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         backgroundImage: NetworkImage(
-                          liveDance.instructor.profilePicture!,
+                          recordedClass.instructor.profilePicture!,
                         ),
                         radius: 15,
                       ),
@@ -64,7 +62,7 @@ class HomeDanceCard extends StatelessWidget {
                         width: 6,
                       ),
                       Text(
-                        "${liveDance.instructor.firstName} ${liveDance.instructor.lastName}",
+                        "${recordedClass.instructor.firstName} ${recordedClass.instructor.lastName}",
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ],
@@ -82,7 +80,7 @@ class HomeDanceCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    liveDance.danceName,
+                    recordedClass.danceName,
                     style: TextStyle(
                       color: Colors.blue,
                     ),
@@ -91,44 +89,6 @@ class HomeDanceCard extends StatelessWidget {
               ),
               const SizedBox(
                 height: 6,
-              ),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.date_range_rounded,
-                        color: Colors.orange,
-                      ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Text(
-                        liveDance.date,
-                        style: Theme.of(context).textTheme.labelMedium,
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on_rounded,
-                        color: Colors.orange,
-                      ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Text(
-                        liveDance.location,
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                    ],
-                  )
-                ],
               ),
               const SizedBox(
                 height: 6,

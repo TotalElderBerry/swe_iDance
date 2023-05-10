@@ -98,26 +98,7 @@ class StudentClassRecordedCard extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(size: 10, Icons.calendar_month),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "March 12,2023",
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                       
-                      ],
-                    )
+                   
                   ],
                 ),
                 const SizedBox(

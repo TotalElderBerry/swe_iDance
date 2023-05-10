@@ -10,6 +10,7 @@ import 'package:i_dance/sources/localstorage/localstorage.dart';
 import 'package:i_dance/widgets/instructor/dance_class_card.dart';
 
 import '../../models/dance_booking.dart';
+import '../../models/dance_class.dart';
 import '../../models/live_dance_class.dart';
 import '../../sources/api/like/like.dart';
 
@@ -18,8 +19,10 @@ class StudentController extends GetxController{
   RxList<DanceBooking> studentBookingClasses = <DanceBooking>[].obs;
   RxList<DanceBooking> studentDone = <DanceBooking>[].obs;
   RxList<DanceBooking> filteredBookingClass = <DanceBooking>[].obs;
+  RxList<LiveDanceClassModel> likedClasses = <LiveDanceClassModel>[].obs;
   RxBool isPending = false.obs;
   RxBool isDone = false.obs;
+  RxBool isLiked = false.obs;
   void getStudentbyId(){
     
   }
@@ -48,14 +51,27 @@ class StudentController extends GetxController{
     return temp;
   }
 
+  List<DanceClassModel> getLikedClasses(){
+    return likedClasses;
+  }
+
 
   //FIX HEREEE!!!
   Future<bool> getStudentDanceClass()async{
     try {
       studentBookingClasses.clear();
+      likedClasses.clear();
       List<LiveDanceClassModel> listtemp = Get.find<DanceClassController>().upcomingDanceClasses;
+
+      for(int i = 0; i < listtemp.length; i++){
+        if(listtemp[i].isLiked == 1){
+          likedClasses.add(listtemp[i]);
+        }
+      }
+
       final response = await StudentAPI.getStudentDanceClasses(Get.find<AuthController>().currentUser.value!.studentId);
       for(int i = 0; i < Get.find<DanceClassController>().upcomingDanceClasses.length;i++){
+          
         for(int j = 0; j < response.length;j++){
           print(response.length);
           if(response[j]['dance_class_id'] == Get.find<DanceClassController>().upcomingDanceClasses[i].danceClassId){

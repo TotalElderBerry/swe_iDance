@@ -74,6 +74,7 @@ class DanceClassController extends GetxController{
       hasFetched = true;
       await Get.find<StudentController>().getStudentDanceClass();
       await Get.find<InstructorController>().getInstructors();
+      await getRecordedDanceClasses();
     } catch (e) {
       print("haha err");
       print(e);
