@@ -19,10 +19,18 @@ class StudentController extends GetxController{
   RxList<DanceBooking> studentBookingClasses = <DanceBooking>[].obs;
   RxList<DanceBooking> studentDone = <DanceBooking>[].obs;
   RxList<DanceBooking> filteredBookingClass = <DanceBooking>[].obs;
+  RxList<DanceBooking> filteredRecordedBookingClass = <DanceBooking>[].obs;
+
   RxList<LiveDanceClassModel> likedClasses = <LiveDanceClassModel>[].obs;
   RxBool isPending = false.obs;
   RxBool isDone = false.obs;
   RxBool isLiked = false.obs;
+
+  RxBool isRecordingPending = false.obs;
+  RxBool isRecordingBooked = false.obs;
+  RxBool isRecordingLiked = false.obs;
+
+  RxBool isLivePanel = true.obs;
   void getStudentbyId(){
     
   }
@@ -30,11 +38,20 @@ class StudentController extends GetxController{
 
   //to fix
   List<DanceBooking> getBookedClasses(){
-     return studentBookingClasses.where((element) => element.dateApproved != 'PENDING').toList();
+     return studentBookingClasses.where((element) => element.dateApproved != 'PENDING' && element.liveDanceClass != null).toList();
   }
 
   List<DanceBooking> getPendingClasses(){
     return studentBookingClasses.where((element) => element.dateApproved == 'PENDING' && element.liveDanceClass != null).toList();
+  }
+
+  List<DanceBooking> getPendingRecordedClasses(){
+    print("i am called");
+    return studentBookingClasses.where((element) => element.dateApproved == 'PENDING' && element.recordedDanceClass != null).toList();
+  }
+
+  List<DanceBooking> getBookedRecordingClasses(){
+     return studentBookingClasses.where((element) => element.dateApproved != 'PENDING' && element.recordedDanceClass != null).toList();
   }
 
   List<DanceBooking> getDoneClasses(){
@@ -74,6 +91,7 @@ class StudentController extends GetxController{
             print("GET STUDSENT record");
             print(response[j].toString());
             DanceBooking danceBooking = DanceBooking();
+            danceBooking.liveDanceClass = null;
             danceBooking.recordedDanceClass = Get.find<DanceClassController>().recordedClasses[i];
             danceBooking.dateApproved = response[j]['date_approved'];
             danceBooking.danceClassId = response[j]['dance_class_id'];
@@ -118,7 +136,6 @@ class StudentController extends GetxController{
         }
         
     }
-
       
       return true;
     } catch (e) {

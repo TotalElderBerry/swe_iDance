@@ -14,7 +14,6 @@ class DanceClassCard extends StatelessWidget {
     return GestureDetector(
       onTap: (){
         Get.to(DanceClassDetails(liveDance: liveDance,));
-        print("object");
       },
       child: SizedBox(
         width: ((MediaQuery.of(context).size.width / 2)-25),

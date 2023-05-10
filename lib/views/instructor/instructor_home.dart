@@ -7,6 +7,7 @@ import '../../controllers/auth/auth_controller.dart';
 import '../../controllers/instructor/instructor.dart';
 import '../../models/live_dance_class.dart';
 import '../../widgets/instructor/dance_class_card.dart';
+import '../../widgets/instructor/recordedclass_card.dart';
 import '../../widgets/instructor_appbar.dart';
 
 import '../../utils/getDaysBetween.dart';
@@ -269,7 +270,6 @@ class InstructorHome extends StatelessWidget {
                               );
                             }else{
                               final arr = Get.find<InstructorController>().instructorRecordedDanceClass;
-                                print("hi ${arr[0].youtubeLink}");
                                return Wrap(
                                  children: [
                                    ListView.builder(
@@ -279,7 +279,7 @@ class InstructorHome extends StatelessWidget {
                                      itemBuilder: (context,index){
                                          print(arr[index].recordedClassId);
                                         //  Text(arr[index].youtubeLink);
-                                         return SizedBox( width: ((MediaQuery.of(context).size.width / 2)-25), child: StudentClassRecordedCard(recordedDanceClassModel: Get.find<InstructorController>().instructorRecordedDanceClass[index]));
+                                         return SizedBox( width: ((MediaQuery.of(context).size.width / 2)-25), child: InstructorRecordedClassCard(recordedDanceClassModel: Get.find<InstructorController>().instructorRecordedDanceClass[index]));
                                      }
                                    ),
                                  ],

@@ -73,9 +73,9 @@ class DanceClassController extends GetxController{
         doneDanceClasses.add(doneTemp);
       }
       hasFetched = true;
+      await getRecordedDanceClasses();
       await Get.find<StudentController>().getStudentDanceClass();
       await Get.find<InstructorController>().getInstructors();
-      await getRecordedDanceClasses();
     } catch (e) {
       print("haha err");
       print(e);
@@ -88,6 +88,29 @@ class DanceClassController extends GetxController{
     studentsPending.clear();
     try {
       final response = await DanceClassAPI.getLiveDanceClassStudents(live_danceclass_id);
+      for(var booked in response){
+        // print(response['student']);
+        print(booked);
+          StudentModel studentModel = StudentModel.fromJson(booked['student']);
+          studentModel.profilePicture =  await ImageCloudStorage.getProfilePicture(studentModel.userId);
+        if(booked['date_approved'] == 'PENDING'){
+          studentsPending.add(studentModel);
+        }else{
+          studentsApproved.add(studentModel);
+        }
+      }
+    } catch (e) {
+      print("fooked");
+      print(e);
+    }
+    return true;
+  }
+
+  Future<bool> getRecordedDanceClassStudents(int class_id) async {
+    studentsApproved.clear();
+    studentsPending.clear();
+    try {
+      final response = await DanceClassAPI.getLiveDanceClassStudents(class_id);
       for(var booked in response){
         // print(response['student']);
         print(booked);
