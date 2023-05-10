@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../views/student/dance_class_details.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:i_dance/views/student/dance_class_recorded_details.dart';
 
-class StudentClassLiveCard extends StatelessWidget {
-  StudentClassLiveCard({super.key, required this.fromPage, required this.image});
+import '../../views/student/dance_class_details.dart';
+import '../../views/student/student_home_live.dart';
+
+class StudentClassRecordedCard extends StatelessWidget {
+  StudentClassRecordedCard({super.key, required this.fromPage, required this.image, required this.id});
 
   String fromPage;
   String image;
+  int id;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Get.to(
-          DanceClassDetails(danceId: 0,
+          DanceClassRecordedDetails(danceId: id,
             fromPage: fromPage,
           ),
         );
@@ -56,7 +61,7 @@ class StudentClassLiveCard extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                'Live Class',
+                                'Recorded Class',
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ],

@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:i_dance/controllers/auth/auth_controller.dart';
-import 'package:i_dance/controllers/student/student.dart';
-import 'package:i_dance/models/instructor.dart';
-import 'package:i_dance/views/instructor/instructor_home.dart';
-import 'package:i_dance/views/student/dance_class_details.dart';
-import 'package:i_dance/widgets/student/dance_class_card.dart';
-import 'package:i_dance/widgets/my_appbar.dart';
-import 'package:i_dance/widgets/student/student_class_card.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../../controllers/auth/auth_controller.dart';
+import '../../widgets/my_appbar.dart';
+import '../../widgets/student/recorded_class_card.dart';
 
-import '../../widgets/student/student_class_live_card.dart';
-
-class StudentHomeLivePage extends StatefulWidget {
-  const StudentHomeLivePage({Key? key}) : super(key: key);
-
+class StudentHomeRecordedPage extends StatefulWidget {
+  const StudentHomeRecordedPage({Key? key}) : super(key: key);
 
   @override
-  _StudentHomeLivePageState createState() => _StudentHomeLivePageState();
+  State<StudentHomeRecordedPage> createState() => _StudentHomeRecordedPageState();
 }
 
-class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
+class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
   List<String> items = [
     'Hello World',
     'Flutter',
@@ -148,15 +141,8 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
                     ),
                     Column(
                       children: [
-                        StudentClassLiveCard(
-                          fromPage: 'StudentHomeLive',
-                          image: "https://i.ytimg.com/vi/MhaH4XkHK5A/maxresdefault.jpg",
-
-                        ),
-                        StudentClassLiveCard(
-                          fromPage: 'StudentHomeLive',
-                          image: "https://i.ytimg.com/vi/7eLdG8tRgO4/maxresdefault.jpg",
-                        ),
+                        StudentClassRecordedCard(fromPage: "StudentRecordedLive",image: "https://i.ytimg.com/vi/MhaH4XkHK5A/maxresdefault.jpg", id: 0,),
+                        StudentClassRecordedCard(fromPage: "StudentRecordedLive",image: "https://i.ytimg.com/vi/7eLdG8tRgO4/maxresdefault.jpg", id: 1,)
                       ],
                     ),
                     Expanded(

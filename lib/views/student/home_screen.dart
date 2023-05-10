@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/views/instructor/dance_class_details.dart';
+import 'package:i_dance/views/student/recorded_dance_class_booking.dart';
 import 'package:i_dance/views/student/student_home.dart';
 import 'package:i_dance/views/student/student_home_live.dart';
+import 'package:i_dance/views/student/student_home_recorded.dart';
 import 'package:i_dance/widgets/my_appbar.dart';
 import '../../widgets/student/home_dance_card.dart';
 
@@ -11,7 +14,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context,isStudent: true,),
+      appBar: MyAppBar(
+        context,
+        isStudent: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: SingleChildScrollView(
@@ -64,34 +70,54 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: const [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+                      ),
+                      radius: 40,
                     ),
-                    radius: 40,
-                  ),
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+                    SizedBox(
+                      width: 12,
                     ),
-                    radius: 40,
-                  ),
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+                      ),
+                      radius: 40,
                     ),
-                    radius: 40,
-                  ),
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+                    SizedBox(
+                      width: 12,
                     ),
-                    radius: 40,
-                  ),
-                ],
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+                      ),
+                      radius: 40,
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+                      ),
+                      radius: 40,
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+                      ),
+                      radius: 40,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 12,
@@ -118,14 +144,9 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: const [
-                    HomeDanceCard(),
-                    HomeDanceCard(),
-                  ],
-                ),
+              const SizedBox(
+                height: 306,
+                child: HomeDanceCard(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,7 +156,9 @@ class HomeScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   TextButton(
-                    onPressed: () => Get.to(const StudentHomePage()),
+                    onPressed: () => Get.to(const StudentHomeRecordedPage(
+
+                    )),
                     child: const Text(
                       'View All',
                       style: TextStyle(
@@ -149,14 +172,9 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: const [
-                    HomeDanceCard(),
-                    HomeDanceCard(),
-                  ],
-                ),
+              const SizedBox(
+                height: 306,
+                child: HomeDanceCard(),
               ),
             ],
           ),

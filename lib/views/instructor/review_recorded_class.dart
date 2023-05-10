@@ -8,7 +8,7 @@ class ReviewRecordedClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String link = recordedDance.last['link'];
-    RegExp regExp = RegExp(r"(?<=v=)[\w-]+");
+    RegExp regExp = RegExp(r"(?:(?<=v=)|(?<=be/))[\w-]+");
     RegExpMatch? match = regExp.firstMatch(link);
     String? id = match?.group(0);
 

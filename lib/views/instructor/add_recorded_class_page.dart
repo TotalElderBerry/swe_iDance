@@ -278,38 +278,38 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                   width: (MediaQuery.of(context).size.width),
                   child: ElevatedButton(
                       onPressed: () {
-                        // String difficulty;
-                        // int id;
-                        // if (isEasy == true) {
-                        //   difficulty = "Easy";
-                        // } else if (isMedium == true) {
-                        //   difficulty = "Medium";
-                        // } else {
-                        //   difficulty = "Hard";
-                        // }
-                        // if (recordedDance.isEmpty) {
-                        //   id = 1;
-                        // } else {
-                        //   id = recordedDance.last["id"] + 1;
-                        // }
-                        // recordedDance.add({
-                        //   "id": id,
-                        //   "classname": danceController.text,
-                        //   "song": songController.text,
-                        //   "price": priceController.text,
-                        //   "link": linkController.text,
-                        //   "difficulty": difficulty,
-                        //   "details": detailsController.text,
-                        // });
+                        String difficulty;
+                        int id;
+                        if (isEasy == true) {
+                          difficulty = "Easy";
+                        } else if (isMedium == true) {
+                          difficulty = "Medium";
+                        } else {
+                          difficulty = "Hard";
+                        }
+                        if (recordedDance.isEmpty) {
+                          id = 1;
+                        } else {
+                          id = recordedDance.last["id"] + 1;
+                        }
                         recordedDance.add({
-                          "id": 1,
-                          "classname": "Sample Dance Class",
-                          "song": "Big Boy - Sza",
-                          "price": "200",
-                          "link": "youtube.com/watch?v=MhaH4XkHK5A",
-                          "difficulty": "Easy",
-                          "details": "Lorem Ipsum Dolor Iset",
+                          "id": id,
+                          "classname": danceController.text,
+                          "song": songController.text,
+                          "price": priceController.text,
+                          "link": linkController.text,
+                          "difficulty": difficulty,
+                          "details": detailsController.text,
                         });
+                        // recordedDance.add({
+                        //   "id": 1,
+                        //   "classname": "Sample Dance Class",
+                        //   "song": "Big Boy - Sza",
+                        //   "price": "200",
+                        //   "link": "youtube.com/watch?v=MhaH4XkHK5A",
+                        //   "difficulty": "Easy",
+                        //   "details": "Lorem Ipsum Dolor Iset",
+                        // });
                         print(recordedDance);
                         Get.to(AddPaymentPage());
                       },
