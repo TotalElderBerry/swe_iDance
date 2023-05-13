@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:i_dance/views/student/student_profile.dart';
+import 'package:i_dance/widgets/student/student_video_card.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../../widgets/student/recorded_class_card.dart';
@@ -44,8 +45,8 @@ class ClassRecordedPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            StudentClassRecordedCard(fromPage: "",image: "https://i.ytimg.com/vi/MhaH4XkHK5A/maxresdefault.jpg", id: 0),
-            StudentClassRecordedCard(fromPage: "",image: "https://i.ytimg.com/vi/7eLdG8tRgO4/maxresdefault.jpg", id: 1)
+            StudentVideoCard(fromPage: "",image: "https://i.ytimg.com/vi/MhaH4XkHK5A/maxresdefault.jpg", id: 0),
+            StudentVideoCard(fromPage: "",image: "https://i.ytimg.com/vi/7eLdG8tRgO4/maxresdefault.jpg", id: 1)
           ],
         ),
       ),
