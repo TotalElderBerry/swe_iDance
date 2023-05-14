@@ -7,6 +7,7 @@ import 'package:i_dance/controllers/student/student.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../../widgets/student/dance_class_card.dart';
+import '../../widgets/student/student_bookedrecordedclass_card.dart';
 import '../../widgets/student/student_class_card.dart';
 import '../../widgets/student/student_recordedclass_card.dart';
 
@@ -257,7 +258,7 @@ class StudentProfilePage extends StatelessWidget{
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        StudentRecordedClassCard(isPending: Get.find<StudentController>().isRecordingPending.value, recordedDanceClassModel: Get.find<StudentController>().filteredRecordedBookingClass[index].recordedDanceClass!)
+                        StudentBookedRecordedClassCard(recordedDanceClassModel: Get.find<StudentController>().filteredRecordedBookingClass[index].recordedDanceClass!)
                       ],
                     );
                   // }

@@ -94,7 +94,7 @@ class AttendanceScreen extends StatelessWidget {
                     return Expanded(
                         child: TabBarView(children: [
                           AttendedWidget(),
-                          FullListWidget(),
+                          FullListWidget(liveClassId: liveDance.danceClassId),
                         ]),
                       );
                   }

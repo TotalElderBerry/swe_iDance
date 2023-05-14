@@ -1,27 +1,65 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:i_dance/views/instructor/add_dance_payment_page.dart';
-import 'package:latlong2/latlong.dart';
 
 import '../../controllers/image/imagecontroller.dart';
 import '../../widgets/map.dart';
 import '../../widgets/my_appbar.dart';
-
+import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
+import 'package:google_api_headers/google_api_headers.dart';
+import 'package:google_maps_webservice/places.dart';
 //10.3156992 , 123.88543660000005
 
-class AddLiveDanceClassPage extends StatelessWidget {
-  TextEditingController dateController = TextEditingController();
-  TextEditingController danceNameController = TextEditingController();
-  TextEditingController timeController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
-  TextEditingController maxStudentsController = TextEditingController();
+class AddLiveDanceClassPage extends StatefulWidget {
 
   AddLiveDanceClassPage({super.key});
+
+  @override
+  State<AddLiveDanceClassPage> createState() => _AddLiveDanceClassPageState();
+}
+
+class _AddLiveDanceClassPageState extends State<AddLiveDanceClassPage> {
+  GoogleMapController? mapController; 
+ //contrller for Google map
+  Set<Marker> markers = Set(); 
+ //markers for google map
+  LatLng showLocation = LatLng(10.3156992, 123.88543660000005);  
+  String location = "Search Location"; 
+  CameraPosition? cameraPosition;
+  TextEditingController dateController = TextEditingController();
+
+  TextEditingController danceNameController = TextEditingController();
+
+  TextEditingController timeController = TextEditingController();
+
+  TextEditingController priceController = TextEditingController();
+
+  TextEditingController locationController = TextEditingController();
+
+  TextEditingController maxStudentsController = TextEditingController();
+
+  @override
+  void initState() {
+      markers.add(Marker( //add marker on google map
+          markerId: MarkerId(showLocation.toString()),
+          position: showLocation, //position of marker
+          infoWindow: InfoWindow( //popup info 
+            title: 'My Custom Title ',
+            snippet: 'My Custom Subtitle',
+          ),
+          icon: BitmapDescriptor.defaultMarker, //Icon for Marker
+      ));
+
+      //you can add more markers here
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,14 +202,90 @@ class AddLiveDanceClassPage extends StatelessWidget {
                               constraints: BoxConstraints(maxHeight: 350),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    TextField(),
-                                    const SizedBox(height: 10,),
-                                    Expanded(
-                                      child: MapWidget()
+                                child: Expanded(
+                                  child: Column(
+                                    children: [
+                                      InkWell(
+                                        child: Card(
+                                          child: Container(
+                                              padding: EdgeInsets.all(0),
+                                              width: MediaQuery.of(context).size.width - 40,
+                                              child: ListTile(
+                                                  title:Text(location, style: TextStyle(fontSize: 18),),
+                                                  trailing: Icon(Icons.search),
+                                                  dense: true,
+                                              )
+                                          ),
+                                        ),
+                                        onTap: () async {
+                                          print("tapped");
+                                           var place = await PlacesAutocomplete.show(
+                                          context: context,
+                                          apiKey: "AIzaSyCIdsfsa5nCcAnbTNDhVdyoBhw-dPnLWwU",
+                                          mode: Mode.overlay,
+                                          types: [],
+                                          strictbounds: false,
+                                          components: [Component(Component.country, 'np')],
+                                                      //google_map_webservice package
+                                          onError: (err){
+                                            print("eror");
+                                            print(err.toJson().toString());
+                                          }
+                                      );
+                                      if(place !=null){
+                                        setState(() {
+                                          location = place.description.toString();
+                                        });
+                                      }
+                                      print(place);
+                                      final plist = GoogleMapsPlaces(apiKey:"AIzaSyCIdsfsa5nCcAnbTNDhVdyoBhw-dPnLWwU",
+                                      apiHeaders: await const GoogleApiHeaders().getHeaders(),
+                                                //from google_api_headers packager
+                                );
+                                String placeid = place!.placeId ?? "0";
+                                final detail = await plist.getDetailsByPlaceId(placeid);
+                                final geometry = detail.result.geometry!;
+                                final lat = geometry.location.lat;
+                                final lang = geometry.location.lng;
+                                var newlatlang = LatLng(lat, lang);
+                                
+
+                                //move map camera to selected place with animation
+                                mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
+
+                                      },
                                     ),
-                                  ],
+                                      const SizedBox(height: 10,),
+                                      Expanded(
+                                        child: GoogleMap( //Map widget from google_maps_flutter package
+                                          zoomGesturesEnabled: true, //enable Zoom in, out on map
+                                          initialCameraPosition: CameraPosition( //innital position in map
+                                            target: showLocation, //initial position
+                                            zoom: 14.0, //initial zoom level
+                                          ),
+                                          markers: markers, //markers to show on map
+                                          mapType: MapType.normal, //map type
+                                          onMapCreated: (controller) { //method called when map is created
+                                            setState(() {
+                                              mapController = controller; 
+                                            });
+                                          },
+                                          onCameraMove: (CameraPosition cameraPositiontemp){
+                                            cameraPosition = cameraPositiontemp;
+                                          },
+                                          onCameraIdle: () async{
+                                            List<Placemark> placemarks = await placemarkFromCoordinates(cameraPosition!.target.latitude,cameraPosition!.target.latitude);
+                                            setState(() => {
+                                              location = placemarks.first.administrativeArea.toString() + ", "+ placemarks.first.street.toString(),
+
+                                              showLocation = LatLng(cameraPosition!.target.latitude,cameraPosition!.target.latitude)
+                                            });
+                                          print(location);
+                                          }
+                                        ),                                    
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             )

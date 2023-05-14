@@ -41,22 +41,28 @@ class PendingWidget extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () {
-                          // setState(() {
-                          //   DateTime now = DateTime.now();
-                          //   String dateFormat =
-                          //       DateFormat('yyyy-MM-dd - hh:mm').format(now);
-                          //   approvedAttend.add({
-                          //     "Name": pendingAttend.elementAt(index).toString(),
-                          //     "Date": dateFormat,
-                          //   });
-                          //   pendingAttend.removeAt(index);
-                          // });
-                          Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentsPending[index].studentId, liveDance.danceClassId);
-                          StudentModel temp = Get.find<DanceClassController>().studentsPending[index];
-
-                          Get.find<DanceClassController>().studentsPending.removeAt(index);
-                          Get.find<DanceClassController>().studentsApproved.add(temp);
                           
+                          
+                          showDialog(context: context, builder: (BuildContext context){
+                            return AlertDialog(
+                              title: Text("Accept Student?"),
+                              content: Text("Do you wish to accept the payment of ${Get.find<DanceClassController>().studentsPending[index].firstName} ${Get.find<DanceClassController>().studentsPending[index].lastName}"),
+                              actions: [
+                                TextButton(onPressed: (){
+                                  Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentsPending[index].studentId, liveDance.danceClassId);
+                                  StudentModel temp = Get.find<DanceClassController>().studentsPending[index];
+
+                                  Get.find<DanceClassController>().studentsPending.removeAt(index);
+                                  Get.find<DanceClassController>().studentsApproved.add(temp);
+                                  Navigator.of(context).pop();
+
+                                }, child: Text("Yes")),
+                                TextButton(onPressed: (){
+                                  Navigator.of(context).pop();
+                                }, child: Text("No")),
+                              ],
+                            );
+                          });
                         },
                         icon: const Icon(
                           Icons.check,
@@ -65,6 +71,21 @@ class PendingWidget extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
+                          showDialog(context: context, builder: (BuildContext context){
+                            return AlertDialog(
+                              title: Text("Delete Student?"),
+                              content: Text("Do you wish to remove the booking of ${Get.find<DanceClassController>().studentsPending[index].firstName} ${Get.find<DanceClassController>().studentsPending[index].lastName}"),
+                              actions: [
+                                TextButton(onPressed: (){
+                                  Navigator.of(context).pop();
+
+                                }, child: Text("Yes")),
+                                TextButton(onPressed: (){
+                                  Navigator.of(context).pop();
+                                }, child: Text("No")),
+                              ],
+                            );
+                          });
                           // setState(() {
                           //   //here
                           //   pendingAttend.removeAt(index);

@@ -21,7 +21,7 @@ class LiveDanceClassDaysBetween {
 class InstructorHome extends StatelessWidget {
   final isEmpty = false;
 
-  const InstructorHome({super.key});
+  InstructorHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -80,11 +80,11 @@ class InstructorHome extends StatelessWidget {
                         liveDances.add(tempDance);
                       }
                       // wa pa na test nga algo
-                      // Get.find<InstructorController>().instructorDanceClass.sort((a,b){
-                      //   int aDaysBetween = getDaysBetweenFromToday(a.date);
-                      //   int bDaysBetween = getDaysBetweenFromToday(b.date);
-                      //   return aDaysBetween.compareTo(bDaysBetween);
-                      // });
+                      Get.find<InstructorController>().instructorDanceClass.sort((a,b){
+                        int aDaysBetween = getDaysBetweenFromToday(a.date);
+                        int bDaysBetween = getDaysBetweenFromToday(b.date);
+                        return bDaysBetween.compareTo(aDaysBetween);
+                      });
             
                       if(Get.find<InstructorController>().instructorDanceClass.isEmpty){
                           return Text("Empty Data");
@@ -96,12 +96,35 @@ class InstructorHome extends StatelessWidget {
                               padding: const EdgeInsets.all(12.0),
                               child: Column(
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                                      child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
-                                      fit: BoxFit.contain,
-                                      ),
-                                  ),
+                                  // ClipRRect(
+                                  //   borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  //     child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
+                                  //     fit: BoxFit.contain,
+                                  //     ),
+                                  // ),
+                                  (Get.find<InstructorController>().instructorDanceClass[0].img == "")?
+                                  const ClipRRect(
+                                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                                        child: SizedBox(
+                                          height: 150,
+                                          width: double.infinity,
+                                          child: DecoratedBox(decoration: BoxDecoration(color: Colors.grey)),
+                                        ),
+                                        // child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr73f8IH4ehZ5zKLQiX8-Svlaj3IEt8dU5LA&usqp=CAU',
+                                        // fit: BoxFit.contain,
+                                        // height: 150,
+                                        // ),
+                                    ):
+                        
+                        ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          child: Image.network(
+                            Get.find<InstructorController>().instructorDanceClass[0].img!,
+                            fit: BoxFit.cover,
+                            height: 150,
+                            width: double.infinity,
+                          ),
+                        ),
                                 const SizedBox(height:5,),
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
@@ -134,7 +157,7 @@ class InstructorHome extends StatelessWidget {
                                       Row(
                                           children: [
                                             Icon(size: 14, Icons.location_on,color: Theme.of(context).primaryColor,),
-                                            Text(" UC Main Campus", style: Theme.of(context).textTheme.labelSmall,),
+                                            Text(Get.find<InstructorController>().instructorDanceClass[0].location, style: Theme.of(context).textTheme.labelSmall,),
                                           ],
                                       ),
                                     ],
@@ -148,7 +171,7 @@ class InstructorHome extends StatelessWidget {
                                       Row(
                                         children: [
                                           Icon(size: 12, Icons.favorite,color: Colors.red,),
-                                          Text(" 88", style: Theme.of(context).textTheme.labelSmall,),
+                                          Text("${Get.find<InstructorController>().instructorDanceClass[0].likes}", style: Theme.of(context).textTheme.labelSmall,),
                                         ],
                                       ),
                                       Row(

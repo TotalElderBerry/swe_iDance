@@ -52,11 +52,27 @@ class RecordedPendingWidget extends StatelessWidget {
                           //   });
                           //   pendingAttend.removeAt(index);
                           // });
-                          Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentsPending[index].studentId, recordedClass.danceClassId);
-                          StudentModel temp = Get.find<DanceClassController>().studentsPending[index];
 
-                          Get.find<DanceClassController>().studentsPending.removeAt(index);
-                          Get.find<DanceClassController>().studentsApproved.add(temp);
+                          showDialog(context: context, builder: (BuildContext context){
+                            return AlertDialog(
+                              title: Text("Accepy Student?"),
+                              content: Text("Do you wish to accept the payment of ${Get.find<DanceClassController>().studentsPending[index].firstName} ${Get.find<DanceClassController>().studentsPending[index].lastName}"),
+                              actions: [
+                                TextButton(onPressed: (){
+                                  Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentsPending[index].studentId, recordedClass.danceClassId);
+                                  StudentModel temp = Get.find<DanceClassController>().studentsPending[index];
+
+                                  Get.find<DanceClassController>().studentsPending.removeAt(index);
+                                  Get.find<DanceClassController>().studentsApproved.add(temp);
+                                  Navigator.of(context).pop();
+
+                                }, child: Text("Yes")),
+                                TextButton(onPressed: (){
+                                  Navigator.of(context).pop();
+                                }, child: Text("No")),
+                              ],
+                            );
+                          });
                           
                         },
                         icon: const Icon(
