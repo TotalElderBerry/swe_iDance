@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
+import 'package:i_dance/models/recorded_dance_model.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../../widgets/my_appbar.dart';
@@ -15,6 +16,7 @@ class StudentHomeRecordedPage extends StatefulWidget {
 }
 
 class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
+  TextEditingController searchController = TextEditingController();
   List<String> items = [
     'Hello World',
     'Flutter',
@@ -80,17 +82,21 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
 
   void filterItems(String query) {
     if (query.isNotEmpty) {
+      List<RecordedDanceClassModel> recordedClasses = [];
+      final arr = Get.find<DanceClassController>().recordedClasses;
       List<String> tempList = [];
-      items.forEach((item) {
-        if (item.toLowerCase().contains(query.toLowerCase())) {
-          tempList.add(item);
+      arr.forEach((item) {
+        if (item.danceName.toLowerCase().contains(query.toLowerCase())) {
+          // tempList.add(item);
+          recordedClasses.add(item);
         }
       });
-      setState(() {
-        filteredItems.clear();
-        filteredItems.addAll(tempList);
-      });
+      Get.find<DanceClassController>().searchedRecordedDanceClasses.clear();
+      Get.find<DanceClassController>().searchedRecordedDanceClasses.addAll(recordedClasses);
       return;
+    }else{
+       Get.find<DanceClassController>().searchedRecordedDanceClasses.clear();
+       Get.find<DanceClassController>().searchedRecordedDanceClasses.addAll(Get.find<DanceClassController>().recordedClasses);
     }
     setState(() {
       filteredItems.clear();
@@ -118,8 +124,11 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            const Expanded(
+                            Expanded(
                               child: TextField(
+                                onChanged: (value) {
+                                  filterItems(value);
+                                },
                                 decoration: InputDecoration(
                                   isDense: true,
                                   prefixIcon: Icon(Icons.search),
@@ -135,13 +144,19 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: Get.find<DanceClassController>().recordedClasses.length,
-                        itemBuilder: (context,index){
-                          return StudentClassRecordedCard(recordedDanceClassModel: Get.find<DanceClassController>().recordedClasses[index]);
-                      }),
-                    )
+                    
+                      Expanded(
+                        child: 
+                        Obx((){
+                          return ListView.builder(
+                            itemCount: Get.find<DanceClassController>().searchedRecordedDanceClasses.length,
+                            itemBuilder: (context,index){
+                              return StudentClassRecordedCard(recordedDanceClassModel: Get.find<DanceClassController>().searchedRecordedDanceClasses[index]);
+                          });
+
+                        })
+                      ),
+
                     // Column(
                     //   children: [
                     //     

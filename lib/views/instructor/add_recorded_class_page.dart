@@ -31,6 +31,32 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        height: 50,
+        margin: const EdgeInsets.all(10),
+        child: ElevatedButton(
+          onPressed: (){
+            String difficulty;
+            int id;
+            if (isEasy == true) {
+              difficulty = "Easy";
+            } else if (isMedium == true) {
+              difficulty = "Medium";
+            } else {
+              difficulty = "Hard";
+            }
+          
+            RecordedDanceClassModel recordedDanceClass = RecordedDanceClassModel(-1, youtubeLink: linkController.text, danceClassId: -1, price: int.parse(priceController.text), danceName: danceController.text, danceSong: songController.text, danceDifficulty: difficult, description: detailsController.text, payment: PaymentDetails(-1,accountName: '', accountNumber: '', modeOfPayment: ''), instructor: Get.find<AuthController>().currentInstructor.value!
+            );
+            print(recordedDanceClass.toJson().toString());
+            Get.to(AddRecordedPaymentPage(recordedDanceClassModel: recordedDanceClass,));
+          },
+          child: const Center(
+            child: Text('Next'),
+          ),
+        ),
+      ),
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Container(
@@ -284,27 +310,7 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                   ],
                 ),
                 const Spacer(),
-                Container(
-                  width: (MediaQuery.of(context).size.width),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        String difficulty;
-                        int id;
-                        if (isEasy == true) {
-                          difficulty = "Easy";
-                        } else if (isMedium == true) {
-                          difficulty = "Medium";
-                        } else {
-                          difficulty = "Hard";
-                        }
-                      
-                        RecordedDanceClassModel recordedDanceClass = RecordedDanceClassModel(-1, youtubeLink: linkController.text, danceClassId: -1, price: int.parse(priceController.text), danceName: danceController.text, danceSong: songController.text, danceDifficulty: difficult, description: detailsController.text, payment: PaymentDetails(-1,accountName: '', accountNumber: '', modeOfPayment: ''), instructor: Get.find<AuthController>().currentInstructor.value!
-                        );
-                        print(recordedDanceClass.toJson().toString());
-                        Get.to(AddRecordedPaymentPage(recordedDanceClassModel: recordedDanceClass,));
-                      },
-                      child: Text("Next")),
-                )
+                
               ],
             ),
           ),
