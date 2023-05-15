@@ -26,13 +26,13 @@ class _ApprovedWidgetState extends State<ApprovedWidget> {
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
                          (
-                            Get.find<DanceClassController>().studentsApproved[index].profilePicture == "")?
+                            Get.find<DanceClassController>().studentsApproved[index].student.profilePicture == "")?
                             'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'
                             :
-                            Get.find<DanceClassController>().studentsApproved[index].profilePicture!
+                            Get.find<DanceClassController>().studentsApproved[index].student.profilePicture!
                         ),
                   ),
-                  title: Text("${Get.find<DanceClassController>().studentsApproved[index].firstName} ${Get.find<DanceClassController>().studentsApproved[index].lastName}"),
+                  title: Text("${Get.find<DanceClassController>().studentsApproved[index].student.firstName} ${Get.find<DanceClassController>().studentsApproved[index].student.lastName}"),
                 ),
               );
             },

@@ -95,7 +95,12 @@ class DanceClassCard extends StatelessWidget {
                                 Text("${liveDance.likes}", style: Theme.of(context).textTheme.labelSmall,),
                               ],
                             ),
-                          
+                          Row(
+                              children: [
+                                Icon(size: 12, Icons.pending,color: Colors.yellow,),
+                                Text("Pending students ${liveDance.numOfPending!}", style: Theme.of(context).textTheme.labelSmall,),
+                              ],
+                            ),
                           ],
                           
                         ),

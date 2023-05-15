@@ -51,7 +51,7 @@ class PendingWidget extends StatelessWidget {
                               actions: [
                                 TextButton(onPressed: (){
                                   Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentsPending[index].student.studentId, liveDance.danceClassId);
-                                  StudentModel temp = Get.find<DanceClassController>().studentsPending[index].student;
+                                  PaymentStudent temp = Get.find<DanceClassController>().studentsPending[index];
 
                                   Get.find<DanceClassController>().studentsPending.removeAt(index);
                                   Get.find<DanceClassController>().studentsApproved.add(temp);

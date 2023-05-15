@@ -9,11 +9,13 @@ import 'package:i_dance/sources/localstorage/localstorage.dart';
 import '../../models/dance_class.dart';
 import '../../models/instructor.dart';
 import '../../models/recorded_dance_model.dart';
+import '../../sources/api/dance-class/dance-class.dart';
 import '../../sources/api/instructor/instructor.dart';
 import '../../sources/api/like/like.dart';
 import '../../sources/firebasestorage/firebase_storage.dart';
 
 import '../../utils/getDaysBetween.dart';
+import '../danceclass/danceclasscontroller.dart';
 class InstructorController extends GetxController{
   RxList<LiveDanceClassModel> instructorDanceClass = <LiveDanceClassModel>[].obs;
   RxList<RecordedDanceClassModel> instructorRecordedDanceClass = <RecordedDanceClassModel>[].obs;
@@ -68,6 +70,15 @@ class InstructorController extends GetxController{
           ldance.img = await ImageCloudStorage.getDanceClassPicture(ldance.danceClassId);
            final likesValue = await LikeAPI.getLikesOfDanceClass(ldance.danceClassId);
           ldance.likes = likesValue['result'];
+          int ctr = 0;
+          final resp = await DanceClassAPI.getLiveDanceClassStudents(ldance.danceClassId);
+          for(var booked in resp){
+        // print(response['student']);
+            if(booked['date_approved'] == 'PENDING'){
+              ctr++;
+            }
+          }
+          ldance.numOfPending = ctr;
           instructorDanceClass.add(ldance);
           toShowList.add(ldance);
         }

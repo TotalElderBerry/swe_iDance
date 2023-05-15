@@ -9,6 +9,7 @@ class LiveDanceClassModel extends DanceClassModel{
   String date;
   String location;
   int studentLimit;
+  int? numOfPending;
   // LiveDanceClassModel(this.liveClassId, {required this.date, required this.location, required this.studentLimit,required super.instructorId, required super.danceName, required super.danceSong, required super.danceDifficulty, required super.price, required super.description, required super.isAcceptingPayment}) : super(0, 0, instructorId: 0, danceName: '', danceSong: '', danceDifficulty: '', price: 0, description: '', isAcceptingPayment: false);
 
   LiveDanceClassModel(

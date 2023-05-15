@@ -126,6 +126,7 @@ class StudentController extends GetxController{
               danceBooking.payment = p;
               studentBookingClasses.add(danceBooking);
               Get.find<DanceClassController>().upcomingDanceClasses.remove(Get.find<DanceClassController>().upcomingDanceClasses[i]);
+              Get.find<DanceClassController>().searchedLiveDanceClasses.remove(Get.find<DanceClassController>().searchedLiveDanceClasses[i]);
               // listtemp.removeAt(i);
           }
         }

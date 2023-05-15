@@ -10,6 +10,25 @@ class StudentListScreen extends StatelessWidget {
   StudentListScreen({super.key, required this.initIndex, required this.liveDance});
   final int initIndex;
 
+  void filterItems(String query) {
+    if (query.isNotEmpty) {
+      List<PaymentStudent> students = [];
+      final arr = Get.find<DanceClassController>().studentsApproved;
+      // arr.forEach((item) {
+        // if (item.student.firstName.toLowerCase().contains(query.toLowerCase())) {
+          // tempList.add(item);
+          // students.add(item);
+        // }
+      // });
+      // Get.find<DanceClassController>().studentSearched.clear();
+      // Get.find<DanceClassController>().studentSearched.addAll(students);
+      return;
+    }else{
+      //  Get.find<DanceClassController>().studentSearched.clear();
+      //  Get.find<DanceClassController>().studentSearched.addAll(Get.find<DanceClassController>().studentsPending);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -24,9 +43,13 @@ class StudentListScreen extends StatelessWidget {
           child: Column(
             children: [
               Row(
-                children: const [
+                children: [
                   Expanded(
                     child: TextField(
+                      onChanged: (val){
+                        // TOFIXXXXX!!!
+                        // filterItems(val);
+                      },
                       decoration: InputDecoration(
                         isDense: true,
                         prefixIcon: Icon(Icons.search),

@@ -26,8 +26,9 @@ class DanceClassController extends GetxController{
   List classes = ["Name1", "Name2"];
   RxList<LiveDanceClassModel> upcomingDanceClasses = <LiveDanceClassModel>[].obs;
   RxList<LiveDanceClassModel> doneDanceClasses = <LiveDanceClassModel>[].obs;
-  RxList<StudentModel> studentsApproved = <StudentModel>[].obs;
+  RxList<PaymentStudent> studentsApproved = <PaymentStudent>[].obs;
   RxList<PaymentStudent> studentsPending = <PaymentStudent>[].obs;
+  RxList<PaymentStudent> studentSearched = <PaymentStudent>[].obs;
   RxList<StudentModel> studentsAttendance = <StudentModel>[].obs;
   RxList<LiveDanceClassModel> searchedLiveDanceClasses = <LiveDanceClassModel>[].obs;
   RxList<RecordedDanceClassModel> searchedRecordedDanceClasses = <RecordedDanceClassModel>[].obs;
@@ -72,6 +73,7 @@ class DanceClassController extends GetxController{
         upClass.instructor.profilePicture = await ImageCloudStorage.getProfilePicture(upClass.instructor.userId);
         print("rating  is ${upClass.instructor.rating}");
         upcomingDanceClasses.add(upClass);
+        searchedLiveDanceClasses.add(upClass);
       }
 
       for(var doneClass in done){
@@ -107,8 +109,11 @@ class DanceClassController extends GetxController{
         if(booked['date_approved'] == 'PENDING'){
           PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
           studentsPending.add(paymentStudent);
+          studentSearched.add(paymentStudent);
         }else{
-          studentsApproved.add(studentModel);
+          PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
+          studentsApproved.add(paymentStudent);
+          studentSearched.add(paymentStudent);
         }
       }
     } catch (e) {
@@ -131,8 +136,13 @@ class DanceClassController extends GetxController{
         if(booked['date_approved'] == 'PENDING'){
            PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
             studentsPending.add(paymentStudent);
+          studentSearched.add(paymentStudent);
+
         }else{
-          studentsApproved.add(studentModel);
+           PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
+          studentsApproved.add(paymentStudent);
+          studentSearched.add(paymentStudent);
+
         }
       }
     } catch (e) {

@@ -40,7 +40,8 @@ class StudentDanceClassDetails extends StatelessWidget {
                   );
                   print(qr);
                   
-                    await Get.find<StudentController>().attendDanceClass(Get.find<AuthController>().currentUser.value!.studentId, int.parse(qr)).then((res) => {
+                    await Get.find<StudentController>().attendDanceClass(Get.find<AuthController>().currentUser.value!.studentId, 
+                    int.parse(qr)).then((res) => {
                         // print(res);
                         if(res == true){
                           QuickAlert.show(

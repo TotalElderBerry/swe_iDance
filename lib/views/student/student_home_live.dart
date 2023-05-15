@@ -4,6 +4,7 @@ import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
 import 'package:i_dance/controllers/student/student.dart';
 import 'package:i_dance/models/instructor.dart';
+import 'package:i_dance/models/live_dance_class.dart';
 import 'package:i_dance/views/instructor/instructor_home.dart';
 import 'package:i_dance/views/student/dance_class_details.dart';
 import 'package:i_dance/widgets/student/dance_class_card.dart';
@@ -84,17 +85,21 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
 
   void filterItems(String query) {
     if (query.isNotEmpty) {
+      List<LiveDanceClassModel> liveClasses = [];
+      final arr = Get.find<DanceClassController>().upcomingDanceClasses;
       List<String> tempList = [];
-      items.forEach((item) {
-        if (item.toLowerCase().contains(query.toLowerCase())) {
-          tempList.add(item);
+      arr.forEach((item) {
+        if (item.danceName.toLowerCase().contains(query.toLowerCase())) {
+          // tempList.add(item);
+          liveClasses.add(item);
         }
       });
-      setState(() {
-        filteredItems.clear();
-        filteredItems.addAll(tempList);
-      });
+      Get.find<DanceClassController>().searchedLiveDanceClasses.clear();
+      Get.find<DanceClassController>().searchedLiveDanceClasses.addAll(liveClasses);
       return;
+    }else{
+       Get.find<DanceClassController>().searchedLiveDanceClasses.clear();
+       Get.find<DanceClassController>().searchedLiveDanceClasses.addAll(Get.find<DanceClassController>().upcomingDanceClasses);
     }
     setState(() {
       filteredItems.clear();
@@ -134,6 +139,9 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
                           children: [
                             Expanded(
                               child: TextField(
+                                onChanged: (value){
+                                  filterItems(value);
+                                },
                                 controller: searchController,
                                 decoration: const InputDecoration(
                                   isDense: true,
@@ -153,13 +161,17 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
                           return Text("Empty");
                         }
                         return Expanded(
-                          child: ListView.builder(
-                            itemCount: Get.find<DanceClassController>().upcomingDanceClasses.length,
-                            itemBuilder: (context, idx){
-                              print(Get.find<StudentController>().isBookedClasses(Get.find<DanceClassController>().upcomingDanceClasses[idx].danceClassId));
-                                return DanceClassCard(liveClass: Get.find<DanceClassController>().upcomingDanceClasses.elementAt(idx));
-                            }
-                          ),
+                          child: 
+                          Obx((){
+                            return ListView.builder(
+                              itemCount: Get.find<DanceClassController>().searchedLiveDanceClasses.length,
+                              itemBuilder: (context, idx){
+                                print(Get.find<StudentController>().isBookedClasses(Get.find<DanceClassController>().searchedLiveDanceClasses[idx].danceClassId));
+                                  return DanceClassCard(liveClass: Get.find<DanceClassController>().searchedLiveDanceClasses.elementAt(idx));
+                              }
+                            );
+
+                          })
                         );
                   })
                   // FutureBuilder(

@@ -23,7 +23,7 @@ class _FullListWidgetState extends State<FullListWidget> {
             itemBuilder: (context, index) {
               bool isTrue = false;
               for(int i = 0; i < Get.find<DanceClassController>().studentsAttendance.length; i++){
-                  if(Get.find<DanceClassController>().studentsAttendance[i].studentId == Get.find<DanceClassController>().studentsApproved[index].studentId){
+                  if(Get.find<DanceClassController>().studentsAttendance[i].studentId == Get.find<DanceClassController>().studentsApproved[index].student.studentId){
                     isTrue = true;
                     break;
                   }
@@ -35,13 +35,13 @@ class _FullListWidgetState extends State<FullListWidget> {
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(
                          (
-                            Get.find<DanceClassController>().studentsApproved[index].profilePicture == "")?
+                            Get.find<DanceClassController>().studentsApproved[index].student.profilePicture == "")?
                             'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'
                             :
-                            Get.find<DanceClassController>().studentsApproved[index].profilePicture!
+                            Get.find<DanceClassController>().studentsApproved[index].student.profilePicture!
                         ),
                     ),
-                    title: Text("${Get.find<DanceClassController>().studentsApproved[index].firstName} ${Get.find<DanceClassController>().studentsApproved[index].lastName}"),
+                    title: Text("${Get.find<DanceClassController>().studentsApproved[index].student.firstName} ${Get.find<DanceClassController>().studentsApproved[index].student.lastName}"),
                     trailing: 
                     (isTrue == true)?
                     Text("Attended"):
@@ -50,12 +50,12 @@ class _FullListWidgetState extends State<FullListWidget> {
                         showDialog(context: context, builder: (BuildContext context){
                             return AlertDialog(
                               title: Text("Attend Student?"),
-                              content: Text("Do you wish to attend ${Get.find<DanceClassController>().studentsApproved[index].firstName} ${Get.find<DanceClassController>().studentsApproved[index].lastName}"),
+                              content: Text("Do you wish to attend ${Get.find<DanceClassController>().studentsApproved[index].student.firstName} ${Get.find<DanceClassController>().studentsApproved[index].student.lastName}"),
                               actions: [
                                 TextButton(onPressed: ()async{
-                                  await Get.find<StudentController>().attendDanceClass(Get.find<DanceClassController>().studentsApproved[index].studentId, widget.liveClassId);
+                                  await Get.find<StudentController>().attendDanceClass(Get.find<DanceClassController>().studentsApproved[index].student.studentId, widget.liveClassId);
                                   Navigator.of(context).pop();
-                                  Get.find<DanceClassController>().studentsAttendance.add(Get.find<DanceClassController>().studentsApproved[index]);
+                                  Get.find<DanceClassController>().studentsAttendance.add(Get.find<DanceClassController>().studentsApproved[index].student);
                                 }, child: Text("Yes")),
                                 TextButton(onPressed: (){
                                   Navigator.of(context).pop();
