@@ -21,6 +21,26 @@ class AddRecordedPaymentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        height: 50,
+        margin: const EdgeInsets.all(10),
+        child: ElevatedButton(
+          onPressed: (){
+            if(Get.find<AuthController>().currentInstructor.value != null){
+                    recordedDanceClassModel.payment.accountName = fullNameController.text;
+                    recordedDanceClassModel.payment.accountNumber = referenceNumberController.text;
+                    recordedDanceClassModel.payment.modeOfPayment = "Paypal";
+                    print(recordedDanceClassModel.toJson().toString());
+                   Get.to(ReviewRecordedClass(recordedDanceClass: recordedDanceClassModel,));
+                  // Get.to(ReviewDanceClassPage(danceClass: danceClass));
+            }
+          },
+          child: const Center(
+            child: Text('Next'),
+          ),
+        ),
+      ),
       appBar: AppBar(),
       body: Container(
         child: Padding(
@@ -65,19 +85,7 @@ class AddRecordedPaymentPage extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Container(
-                width: (MediaQuery.of(context).size.width),
-                child: ElevatedButton(onPressed: (){
-                  if(Get.find<AuthController>().currentInstructor.value != null){
-                    recordedDanceClassModel.payment.accountName = fullNameController.text;
-                    recordedDanceClassModel.payment.accountNumber = referenceNumberController.text;
-                    recordedDanceClassModel.payment.modeOfPayment = "Paypal";
-                    print(recordedDanceClassModel.toJson().toString());
-                   Get.to(ReviewRecordedClass(recordedDanceClass: recordedDanceClassModel,));
-                  // Get.to(ReviewDanceClassPage(danceClass: danceClass));
-                  }
-                },child: Text("Next")),
-              )
+              
             ],
           ),
         ),

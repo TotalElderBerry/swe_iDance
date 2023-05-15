@@ -18,6 +18,7 @@ class StudentHomeLivePage extends StatefulWidget {
 }
 
 class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
+  TextEditingController searchController = TextEditingController();
   List<String> items = [
     'Hello World',
     'Flutter',
@@ -129,6 +130,24 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
                       ),
                     ),
                   ),
+                  Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: searchController,
+                                decoration: const InputDecoration(
+                                  isDense: true,
+                                  prefixIcon: Icon(Icons.search),
+                                  hintText: 'Search...',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.filter_2_rounded))
+                          ],
+                        ),
                   Obx((){
                         if(Get.find<DanceClassController>().upcomingDanceClasses.isEmpty){
                           return Text("Empty");

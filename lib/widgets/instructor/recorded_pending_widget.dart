@@ -30,13 +30,14 @@ class RecordedPendingWidget extends StatelessWidget {
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
                          (
-                            Get.find<DanceClassController>().studentsPending[index].profilePicture == "")?
+                            Get.find<DanceClassController>().studentsPending[index].student.profilePicture == "")?
                             'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'
                             :
-                            Get.find<DanceClassController>().studentsPending[index].profilePicture!
+                            Get.find<DanceClassController>().studentsPending[index].student.profilePicture!
                         ),
                   ),
-                  title: Text("${Get.find<DanceClassController>().studentsPending[index].firstName} ${Get.find<DanceClassController>().studentsPending[index].lastName}"),
+                  title: Text("${Get.find<DanceClassController>().studentsPending[index].student.firstName} ${Get.find<DanceClassController>().studentsPending[index].student.lastName}"),
+                  subtitle: Text(Get.find<DanceClassController>().studentsPending[index].referenceModel),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -56,11 +57,11 @@ class RecordedPendingWidget extends StatelessWidget {
                           showDialog(context: context, builder: (BuildContext context){
                             return AlertDialog(
                               title: Text("Accepy Student?"),
-                              content: Text("Do you wish to accept the payment of ${Get.find<DanceClassController>().studentsPending[index].firstName} ${Get.find<DanceClassController>().studentsPending[index].lastName}"),
+                              content: Text("Do you wish to accept the payment of ${Get.find<DanceClassController>().studentsPending[index].student.firstName} ${Get.find<DanceClassController>().studentsPending[index].student.lastName}"),
                               actions: [
                                 TextButton(onPressed: (){
-                                  Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentsPending[index].studentId, recordedClass.danceClassId);
-                                  StudentModel temp = Get.find<DanceClassController>().studentsPending[index];
+                                  Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentsPending[index].student.studentId, recordedClass.danceClassId);
+                                  StudentModel temp = Get.find<DanceClassController>().studentsPending[index].student;
 
                                   Get.find<DanceClassController>().studentsPending.removeAt(index);
                                   Get.find<DanceClassController>().studentsApproved.add(temp);

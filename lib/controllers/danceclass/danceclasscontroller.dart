@@ -15,15 +15,26 @@ import '../../sources/firebasestorage/firebase_storage.dart';
 import '../instructor/instructor.dart';
 import '../student/student.dart';
 
+class PaymentStudent{
+  StudentModel student;
+  String referenceModel;
+
+  PaymentStudent({required this.student, required this.referenceModel});
+}
+
 class DanceClassController extends GetxController{
   List classes = ["Name1", "Name2"];
   RxList<LiveDanceClassModel> upcomingDanceClasses = <LiveDanceClassModel>[].obs;
   RxList<LiveDanceClassModel> doneDanceClasses = <LiveDanceClassModel>[].obs;
   RxList<StudentModel> studentsApproved = <StudentModel>[].obs;
-  RxList<StudentModel> studentsPending = <StudentModel>[].obs;
+  RxList<PaymentStudent> studentsPending = <PaymentStudent>[].obs;
   RxList<StudentModel> studentsAttendance = <StudentModel>[].obs;
+  RxList<LiveDanceClassModel> searchedLiveDanceClasses = <LiveDanceClassModel>[].obs;
+  RxList<RecordedDanceClassModel> searchedRecordedDanceClasses = <RecordedDanceClassModel>[].obs;
+
   
   RxList<RecordedDanceClassModel> recordedClasses = <RecordedDanceClassModel>[].obs;
+
 
   void filterList(String query){
 
@@ -94,7 +105,8 @@ class DanceClassController extends GetxController{
           StudentModel studentModel = StudentModel.fromJson(booked['student']);
           studentModel.profilePicture =  await ImageCloudStorage.getProfilePicture(studentModel.userId);
         if(booked['date_approved'] == 'PENDING'){
-          studentsPending.add(studentModel);
+          PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
+          studentsPending.add(paymentStudent);
         }else{
           studentsApproved.add(studentModel);
         }
@@ -117,7 +129,8 @@ class DanceClassController extends GetxController{
           StudentModel studentModel = StudentModel.fromJson(booked['student']);
           studentModel.profilePicture =  await ImageCloudStorage.getProfilePicture(studentModel.userId);
         if(booked['date_approved'] == 'PENDING'){
-          studentsPending.add(studentModel);
+           PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
+            studentsPending.add(paymentStudent);
         }else{
           studentsApproved.add(studentModel);
         }
@@ -183,6 +196,7 @@ class DanceClassController extends GetxController{
         // recordedClass.instructor.img = await ImageCloudStorage.getInstructorPicture(recordedClass.instructor.userId);
 
         recordedClasses.add(recordedClass);
+        searchedRecordedDanceClasses.add(recordedClass);
       }
       hasFetched = true;
     } catch (e) {

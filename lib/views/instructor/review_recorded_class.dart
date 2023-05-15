@@ -34,7 +34,6 @@ class ReviewRecordedClass extends StatelessWidget {
             print(recordedDanceClass.toJson().toString());
             Get.find<DanceClassController>().addRecordedDanceClass(recordedDanceClass);
             Get.offAll(InstructorHome());
-
           },
           child: const Center(
             child: Text('Create Dance'),
@@ -111,7 +110,7 @@ class ReviewRecordedClass extends StatelessWidget {
                             Uri.parse(recordedDanceClass.youtubeLink),
                             mode: LaunchMode.externalApplication,
                           ),
-                          child: Text(recordedDanceClass.youtubeLink),
+                          child: Text(recordedDanceClass.youtubeLink, overflow: TextOverflow.fade,softWrap: false,maxLines: 2,),
                         )
                       ],
                     ),
@@ -138,6 +137,9 @@ class ReviewRecordedClass extends StatelessWidget {
                   ),
                   title: Text("PayMaya"),
                 ),
+                
+                
+                
                 ListTile(
                   leading: Text('Full Name'),
                   title: Text(recordedDanceClass.payment.accountName),
@@ -146,9 +148,7 @@ class ReviewRecordedClass extends StatelessWidget {
                   leading: Text('Reference Number'),
                   title: Text(recordedDanceClass.payment.accountNumber),
                 ),
-                const SizedBox(
-                  height: 24,
-                ),
+                
                 const Divider(),
                 const SizedBox(
                   height: 24,
