@@ -235,7 +235,6 @@ class StudentProfilePage extends StatelessWidget{
       
           Expanded(
             child:  Obx((){
-              print("inside obx sa recorded ${Get.find<StudentController>().filteredRecordedBookingClass.length}");
               if(Get.find<StudentController>().isRecordingLiked.value == true){
                 return Expanded(
                   child: ListView.builder(
@@ -258,7 +257,7 @@ class StudentProfilePage extends StatelessWidget{
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        StudentBookedRecordedClassCard(recordedDanceClassModel: Get.find<StudentController>().filteredRecordedBookingClass[index].recordedDanceClass!)
+                        StudentBookedRecordedClassCard(isPending: Get.find<StudentController>().isRecordingPending.value,recordedDanceClassModel: Get.find<StudentController>().filteredRecordedBookingClass[index].recordedDanceClass!)
                       ],
                     );
                   // }

@@ -8,17 +8,22 @@ import '../../views/student/students_class_details.dart';
 
 class StudentBookedRecordedClassCard extends StatelessWidget {
   RecordedDanceClassModel recordedDanceClassModel;
-  StudentBookedRecordedClassCard({super.key, required this.recordedDanceClassModel});
+  bool isPending;
+  StudentBookedRecordedClassCard({super.key, required this.isPending,required this.recordedDanceClassModel});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(
-          DanceClassRecordedVideo(
-            recordedDanceClassModel: recordedDanceClassModel
-          ),
-        );
+        if(isPending){
+
+        }else{
+          Get.to(
+            DanceClassRecordedVideo(
+              recordedDanceClassModel: recordedDanceClassModel
+            ),
+          );
+        }
       },
       child: Container(
         width: (MediaQuery.of(context).size.width) - 52,

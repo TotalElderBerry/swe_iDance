@@ -13,8 +13,8 @@ import '../views/student/student_profile.dart';
  
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   BuildContext parentContext;
-
-  MyAppBar(this.parentContext,{super.key});
+  String? title;
+  MyAppBar(this.parentContext,this.title,{super.key});
 
    void _showBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -85,9 +85,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      title: Text(title!),
       scrolledUnderElevation: 0,
       elevation: 0,
-      leadingWidth: 76.0,
+      // leadingWidth: 8.0,
       leading: IconButton(
           onPressed: () {
             _showBottomSheet(context);

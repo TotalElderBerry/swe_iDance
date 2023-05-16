@@ -113,7 +113,7 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context),
+      appBar: MyAppBar(context, "Recorded Classes"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

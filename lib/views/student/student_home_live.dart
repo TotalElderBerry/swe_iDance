@@ -116,7 +116,7 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context),
+      appBar: MyAppBar(context, "Live Classes"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child:  Column(

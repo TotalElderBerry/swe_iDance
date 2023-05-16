@@ -28,7 +28,8 @@ class DanceClassController extends GetxController{
   RxList<LiveDanceClassModel> doneDanceClasses = <LiveDanceClassModel>[].obs;
   RxList<PaymentStudent> studentsApproved = <PaymentStudent>[].obs;
   RxList<PaymentStudent> studentsPending = <PaymentStudent>[].obs;
-  RxList<PaymentStudent> studentSearched = <PaymentStudent>[].obs;
+  RxList<PaymentStudent> studentPendingSearched = <PaymentStudent>[].obs;
+  RxList<PaymentStudent> studentApprovedSearched = <PaymentStudent>[].obs;
   RxList<StudentModel> studentsAttendance = <StudentModel>[].obs;
   RxList<LiveDanceClassModel> searchedLiveDanceClasses = <LiveDanceClassModel>[].obs;
   RxList<RecordedDanceClassModel> searchedRecordedDanceClasses = <RecordedDanceClassModel>[].obs;
@@ -109,11 +110,11 @@ class DanceClassController extends GetxController{
         if(booked['date_approved'] == 'PENDING'){
           PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
           studentsPending.add(paymentStudent);
-          studentSearched.add(paymentStudent);
+          studentPendingSearched.add(paymentStudent);
         }else{
           PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
           studentsApproved.add(paymentStudent);
-          studentSearched.add(paymentStudent);
+          studentApprovedSearched.add(paymentStudent);
         }
       }
     } catch (e) {
@@ -136,12 +137,12 @@ class DanceClassController extends GetxController{
         if(booked['date_approved'] == 'PENDING'){
            PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
             studentsPending.add(paymentStudent);
-          studentSearched.add(paymentStudent);
+          studentPendingSearched.add(paymentStudent);
 
         }else{
            PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
           studentsApproved.add(paymentStudent);
-          studentSearched.add(paymentStudent);
+          studentApprovedSearched.add(paymentStudent);
 
         }
       }

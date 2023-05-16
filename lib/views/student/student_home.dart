@@ -16,7 +16,7 @@ class StudentHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context),
+      appBar: MyAppBar(context,""),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FutureBuilder(
