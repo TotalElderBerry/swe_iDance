@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/models/live_dance_class.dart';
+import 'package:skeletons/skeletons.dart';
 import '../../controllers/danceclass/danceclasscontroller.dart';
 import '../../widgets/instructor/approved_widget.dart';
 import '../../widgets/instructor/pending_widget.dart';
@@ -108,7 +109,7 @@ class StudentListScreen extends StatelessWidget {
                       ),
                     );
                   }
-                  return Text("Loading");
+                  return Expanded(child: SkeletonListView());
                   
               })),
             ],

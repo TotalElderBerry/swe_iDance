@@ -14,7 +14,7 @@ class _AttendedWidgetState extends State<AttendedWidget> {
   @override
   Widget build(BuildContext context) {
     return Get.find<DanceClassController>().studentsAttendance.isEmpty
-        ? Text('No data available.')
+        ? Center(child: Text('No data available.'))
         : ListView.builder(
             itemCount: Get.find<DanceClassController>().studentsAttendance.length,
             itemBuilder: (context, index) {

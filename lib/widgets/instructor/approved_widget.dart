@@ -16,7 +16,7 @@ class _ApprovedWidgetState extends State<ApprovedWidget> {
   Widget build(BuildContext context) {
     return Obx((){
         return Get.find<DanceClassController>().studentsApproved.isEmpty
-        ? const Text('No data available.')
+        ? Center(child: const Text('No data available.'))
         : ListView.builder(
             itemCount: Get.find<DanceClassController>().studentsApproved.length,
             itemBuilder: (context, index) {

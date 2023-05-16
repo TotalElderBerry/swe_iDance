@@ -19,7 +19,7 @@ class PendingWidget extends StatelessWidget {
     return 
       Obx((){
         return Get.find<DanceClassController>().studentsPending.isEmpty
-        ? const Text('No data available.')
+        ? Center(child: const Text('No data available.'))
         : ListView.builder(
             itemCount: Get.find<DanceClassController>().studentsPending.length,
             itemBuilder: (context, index) {

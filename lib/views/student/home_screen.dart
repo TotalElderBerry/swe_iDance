@@ -33,20 +33,6 @@ class HomeScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Row(
-                              children: const [
-                                Expanded(
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      prefixIcon: Icon(Icons.search),
-                                      hintText: 'Search...',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                             const SizedBox(
                               height: 12,
                             ),

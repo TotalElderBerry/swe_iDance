@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/views/instructor/add_class_landing.dart';
 import 'package:i_dance/widgets/student/recorded_class_card.dart';
+import 'package:skeletons/skeletons.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../../controllers/instructor/instructor.dart';
@@ -258,22 +259,7 @@ class InstructorHome extends StatelessWidget {
                           )),
                           const SizedBox(height:10,),
                       
-                          //OBX here
-                      
-                          // Column(
-                          //   children: [
-                          //     Wrap(
-                          //       children: [
-                          //         ListView.builder(
-                          //           shrinkWrap: true,
-                          //           itemCount: Get.find<InstructorController>().instructorDanceClass.length,
-                          //           itemBuilder: (context,index){
-                          //              return DanceClassCard(liveDance: Get.find<InstructorController>().instructorDanceClass[index]);
-                          //         }),
-                          //       ],
-                          //     ),
-                          //   ],
-                          // )
+                          
                           Obx((){
                             if(Get.find<InstructorController>().toShowLive.value <= 1){
                               return Wrap(
@@ -314,7 +300,60 @@ class InstructorHome extends StatelessWidget {
                       );
             
                     }
-                    return Text("Wait");
+                    return Column(
+                      children: [
+                        SkeletonAvatar(
+                          style: SkeletonAvatarStyle(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            width: double.infinity,
+                            minHeight: MediaQuery.of(context).size.height / 4,
+                            maxHeight: MediaQuery.of(context).size.height / 3,
+                          ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 32.0),
+                          child: DefaultTabController(length: 3, child: Container(
+                              child: TabBar(
+                                onTap: (idx){},
+                                tabs: [
+                                Tab(
+                                  icon: Text("Upcoming", style: Theme.of(context).textTheme.bodyMedium),
+                                ),
+                                Tab(
+                                  icon: Text("Done", style: Theme.of(context).textTheme.bodyMedium),
+                                ),
+                                Tab(
+                                  icon: Text("Recorded", style: Theme.of(context).textTheme.bodyMedium),
+                                )
+                              ])         
+                            )),
+                        ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SkeletonAvatar(
+                            style: SkeletonAvatarStyle(
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              width: double.infinity,
+                              minHeight: MediaQuery.of(context).size.height / 10,
+                              maxHeight: MediaQuery.of(context).size.height / 3,
+                            ),
+                                                  ),
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SkeletonAvatar(
+                            style: SkeletonAvatarStyle(
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              width: double.infinity,
+                              minHeight: MediaQuery.of(context).size.height / 10,
+                              maxHeight: MediaQuery.of(context).size.height / 3,
+                            ),
+                          ),
+                        ),
+                        
+                      ],
+                    );
                   }
                 ),
             

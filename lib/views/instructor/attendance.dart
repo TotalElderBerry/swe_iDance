@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:skeletons/skeletons.dart';
 
 import '../../models/live_dance_class.dart';
 import '../../widgets/instructor/attended_widget.dart';
@@ -98,7 +99,8 @@ class AttendanceScreen extends StatelessWidget {
                         ]),
                       );
                   }
-                  return Text("Loading");
+                  return Expanded(child: SkeletonListView());
+
                   
               })),
               // const Expanded(
