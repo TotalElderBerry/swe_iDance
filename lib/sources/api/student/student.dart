@@ -10,9 +10,30 @@ import 'package:http/http.dart' as http;
 import 'package:i_dance/sources/localstorage/localstorage.dart';
 
 class StudentAPI {
+
+  static Future<void> updateStudent(StudentModel student) async {
+    
+    final route = '/student/${student.studentId}';
+    final respone = await http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+    body: jsonEncode(
+      <String,String> {
+        "user_id": student.userId,
+        "firstName": student.firstName,
+        "lastName": student.lastName,
+        "gender": student.gender,
+        "contactNumber" : student.contactNumber,
+        "dateOfBirth": student.contactNumber,
+        "level": student.level
+      }
+    ),
+    headers: {
+        "Content-Type": "application/json"
+      },
+    );
+  }
+
   static Future addStudent(StudentModel newUser) async {
     const route = "/student/add";
-    print(newUser.firstName);
 
     final response = await  http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
     body: jsonEncode(

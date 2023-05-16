@@ -7,6 +7,23 @@ import 'package:i_dance/models/instructor.dart';
 import 'package:http/http.dart' as http;
 
 class InstructorAPI {
+
+  static Future<void> updateStudent(InstructorModel instructor) async {
+    
+    final route = '/instructor/${instructor.instructorId}';
+    final respone = await http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+    body: jsonEncode(
+      <String,String> {
+        "user_id": instructor.userId,
+        "description": instructor.description
+      }
+    ),
+    headers: {
+        "Content-Type": "application/json"
+      },
+    );
+  }
+
   static Future<String> addInstructor(InstructorModel newInstructor) async {
     const route = '/instructor/add';
     final response = await http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),

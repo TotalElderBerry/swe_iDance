@@ -65,6 +65,8 @@ class LiveDanceClassModel extends DanceClassModel{
   Map<dynamic, dynamic> toJson() {
     final Map<dynamic, dynamic> data = <dynamic, dynamic>{};
     data['instructor_id'] = '${instructor.instructorId}';
+    data['danceclass_id'] = danceClassId;
+    data['live_danceclass_id'] = liveClassId;
     data['dance_name'] = danceName;
     data['dance_song'] = danceSong;
     data['dance_difficulty'] = danceDifficulty;

@@ -24,4 +24,6 @@ class StudentModel extends UserModel{
       newStudent.profilePicture = (json['profile_picture'] != null)?json['profile_picture']:'';
       return newStudent;
     }
+
+    
 }
