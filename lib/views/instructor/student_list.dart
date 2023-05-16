@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/models/live_dance_class.dart';
+import 'package:skeletons/skeletons.dart';
 import '../../controllers/danceclass/danceclasscontroller.dart';
 import '../../widgets/instructor/approved_widget.dart';
 import '../../widgets/instructor/pending_widget.dart';
@@ -13,19 +14,33 @@ class StudentListScreen extends StatelessWidget {
   void filterItems(String query) {
     if (query.isNotEmpty) {
       List<PaymentStudent> students = [];
-      final arr = Get.find<DanceClassController>().studentsApproved;
-      // arr.forEach((item) {
-        // if (item.student.firstName.toLowerCase().contains(query.toLowerCase())) {
+      List<PaymentStudent> students2 = [];
+      final arr = Get.find<DanceClassController>().studentsPending;
+      final arr2 = Get.find<DanceClassController>().studentsApproved;
+      arr.forEach((item) {
+        if (item.student.firstName.toLowerCase().contains(query.toLowerCase())) {
           // tempList.add(item);
-          // students.add(item);
-        // }
-      // });
-      // Get.find<DanceClassController>().studentSearched.clear();
-      // Get.find<DanceClassController>().studentSearched.addAll(students);
+          students.add(item);
+        }
+      });
+      Get.find<DanceClassController>().studentPendingSearched.clear();
+      Get.find<DanceClassController>().studentPendingSearched.addAll(students);
+
+      arr2.forEach((item) {
+        if (item.student.firstName.toLowerCase().contains(query.toLowerCase())) {
+          // tempList.add(item);
+          students2.add(item);
+        }
+      });
+      Get.find<DanceClassController>().studentApprovedSearched.clear();
+      Get.find<DanceClassController>().studentApprovedSearched.addAll(students2);
+
       return;
     }else{
-      //  Get.find<DanceClassController>().studentSearched.clear();
-      //  Get.find<DanceClassController>().studentSearched.addAll(Get.find<DanceClassController>().studentsPending);
+       Get.find<DanceClassController>().studentPendingSearched.clear();
+       Get.find<DanceClassController>().studentPendingSearched.addAll(Get.find<DanceClassController>().studentsPending);
+       Get.find<DanceClassController>().studentApprovedSearched.clear();
+       Get.find<DanceClassController>().studentApprovedSearched.addAll(Get.find<DanceClassController>().studentsApproved);
     }
   }
 
@@ -48,7 +63,7 @@ class StudentListScreen extends StatelessWidget {
                     child: TextField(
                       onChanged: (val){
                         // TOFIXXXXX!!!
-                        // filterItems(val);
+                        filterItems(val);
                       },
                       decoration: InputDecoration(
                         isDense: true,
@@ -108,7 +123,7 @@ class StudentListScreen extends StatelessWidget {
                       ),
                     );
                   }
-                  return Text("Loading");
+                  return Expanded(child: SkeletonListView());
                   
               })),
             ],

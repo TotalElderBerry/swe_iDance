@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
 import 'package:i_dance/controllers/instructor/instructor.dart';
+import 'package:i_dance/views/student/instructor_details_page.dart';
 import 'package:i_dance/views/student/student_home.dart';
 import 'package:i_dance/views/student/student_home_live.dart';
 import 'package:i_dance/views/student/student_home_recorded.dart';
@@ -17,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context),
+      appBar: MyAppBar(context,""),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
         child: FutureBuilder<Object>(
@@ -33,20 +34,6 @@ class HomeScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Row(
-                              children: const [
-                                Expanded(
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      prefixIcon: Icon(Icons.search),
-                                      hintText: 'Search...',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                             const SizedBox(
                               height: 12,
                             ),
@@ -97,7 +84,7 @@ class HomeScreen extends StatelessWidget {
 
 
                             SizedBox(
-                              height: 50,
+                              height: 60,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
@@ -105,12 +92,36 @@ class HomeScreen extends StatelessWidget {
                                 itemBuilder: (context,index){
                                   return Padding(
                                 padding: const EdgeInsets.only(right: 8.0, left: 8),
-                                child: CircleAvatar(
-                                        backgroundImage: NetworkImage(
-                                          Get.find<InstructorController>().instructors[index].profilePicture!,
-                                        ),
-                                        radius: 25,
+                                child: GestureDetector(
+                                  onTap: (){
+                                    print(Get.find<InstructorController>().instructors[index].profilePicture);
+
+                                    Get.to(InstructorDetailsPage(instructor: Get.find<InstructorController>().instructors[index],));
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right:8.0),
+                                        child: CircleAvatar(
+                                                backgroundImage: NetworkImage(
+                                                  Get.find<InstructorController>().instructors[index].profilePicture!,
+                                                ),
+                                                radius: 25,
+                                              ),
                                       ),
+                                      Positioned(
+                                        left: 30,
+                                        top: 30,
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.yellow,
+                                          radius: 12,
+                                          child: Text(Get.find<InstructorController>().instructors[index].rating.toString()),
+                                         
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               );
                               }),
                             ),

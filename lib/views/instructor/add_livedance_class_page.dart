@@ -218,42 +218,7 @@ class _AddLiveDanceClassPageState extends State<AddLiveDanceClassPage> {
                                           ),
                                         ),
                                         onTap: () async {
-                                          print("tapped");
-                                           var place = await PlacesAutocomplete.show(
-                                          context: context,
-                                          apiKey: "AIzaSyCIdsfsa5nCcAnbTNDhVdyoBhw-dPnLWwU",
-                                          mode: Mode.overlay,
-                                          types: [],
-                                          strictbounds: false,
-                                          components: [Component(Component.country, 'np')],
-                                                      //google_map_webservice package
-                                          onError: (err){
-                                            print("eror");
-                                            print(err.toJson().toString());
-                                          }
-                                      );
-                                      if(place !=null){
-                                        setState(() {
-                                          location = place.description.toString();
-                                        });
-                                      }
-                                      print(place);
-                                      final plist = GoogleMapsPlaces(apiKey:"AIzaSyCIdsfsa5nCcAnbTNDhVdyoBhw-dPnLWwU",
-                                      apiHeaders: await const GoogleApiHeaders().getHeaders(),
-                                                //from google_api_headers packager
-                                );
-                                String placeid = place!.placeId ?? "0";
-                                final detail = await plist.getDetailsByPlaceId(placeid);
-                                final geometry = detail.result.geometry!;
-                                final lat = geometry.location.lat;
-                                final lang = geometry.location.lng;
-                                var newlatlang = LatLng(lat, lang);
-                                
-
-                                //move map camera to selected place with animation
-                                mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
-
-                                      },
+                                        },
                                     ),
                                       const SizedBox(height: 10,),
                                       Expanded(
@@ -280,7 +245,6 @@ class _AddLiveDanceClassPageState extends State<AddLiveDanceClassPage> {
 
                                               showLocation = LatLng(cameraPosition!.target.latitude,cameraPosition!.target.latitude)
                                             });
-                                          print(location);
                                           }
                                         ),                                    
                                       ),

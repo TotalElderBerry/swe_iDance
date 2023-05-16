@@ -32,7 +32,7 @@ class InstructorDetailsPage extends StatelessWidget {
                       height: 200,
                       child: Stack(
                         children: [
-                          (instructor.img == "")?
+                          (instructor.img == "" || instructor.img == null)?
                           ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(12)),
                                 child: SizedBox(

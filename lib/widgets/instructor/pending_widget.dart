@@ -18,10 +18,10 @@ class PendingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return 
       Obx((){
-        return Get.find<DanceClassController>().studentsPending.isEmpty
-        ? const Text('No data available.')
+        return Get.find<DanceClassController>().studentPendingSearched.isEmpty
+        ? Center(child: const Text('No data available.'))
         : ListView.builder(
-            itemCount: Get.find<DanceClassController>().studentsPending.length,
+            itemCount: Get.find<DanceClassController>().studentPendingSearched.length,
             itemBuilder: (context, index) {
             
               return Card(
@@ -29,14 +29,14 @@ class PendingWidget extends StatelessWidget {
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
                          (
-                            Get.find<DanceClassController>().studentsPending[index].student.profilePicture == "")?
+                            Get.find<DanceClassController>().studentPendingSearched[index].student.profilePicture == "")?
                             'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'
                             :
-                            Get.find<DanceClassController>().studentsPending[index].student.profilePicture!
+                            Get.find<DanceClassController>().studentPendingSearched[index].student.profilePicture!
                         ),
                   ),
-                  title: Text("${Get.find<DanceClassController>().studentsPending[index].student.firstName} ${Get.find<DanceClassController>().studentsPending[index].student.lastName}"),
-                  subtitle: Text(Get.find<DanceClassController>().studentsPending[index].referenceModel),
+                  title: Text("${Get.find<DanceClassController>().studentPendingSearched[index].student.firstName} ${Get.find<DanceClassController>().studentPendingSearched[index].student.lastName}"),
+                  subtitle: Text(Get.find<DanceClassController>().studentPendingSearched[index].referenceModel),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -47,13 +47,13 @@ class PendingWidget extends StatelessWidget {
                           showDialog(context: context, builder: (BuildContext context){
                             return AlertDialog(
                               title: Text("Accept Student?"),
-                              content: Text("Do you wish to accept the payment of ${Get.find<DanceClassController>().studentsPending[index].student.firstName} ${Get.find<DanceClassController>().studentsPending[index].student.lastName}"),
+                              content: Text("Do you wish to accept the payment of ${Get.find<DanceClassController>().studentPendingSearched[index].student.firstName} ${Get.find<DanceClassController>().studentPendingSearched[index].student.lastName}"),
                               actions: [
                                 TextButton(onPressed: (){
-                                  Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentsPending[index].student.studentId, liveDance.danceClassId);
-                                  PaymentStudent temp = Get.find<DanceClassController>().studentsPending[index];
+                                  Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentPendingSearched[index].student.studentId, liveDance.danceClassId);
+                                  PaymentStudent temp = Get.find<DanceClassController>().studentPendingSearched[index];
 
-                                  Get.find<DanceClassController>().studentsPending.removeAt(index);
+                                  Get.find<DanceClassController>().studentPendingSearched.removeAt(index);
                                   Get.find<DanceClassController>().studentsApproved.add(temp);
                                   Navigator.of(context).pop();
 

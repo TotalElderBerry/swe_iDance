@@ -17,7 +17,7 @@ class _FullListWidgetState extends State<FullListWidget> {
   @override
   Widget build(BuildContext context) {
     return attended.isEmpty
-        ? Text('No data available.')
+        ? Center(child: Text('No data available.'))
         : ListView.builder(
             itemCount: Get.find<DanceClassController>().studentsApproved.length,
             itemBuilder: (context, index) {

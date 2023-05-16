@@ -18,7 +18,7 @@ class DanceClassCard extends StatelessWidget {
         Get.to(DanceClassDetails(liveClass: liveClass,));
       },
       child: Container(
-        width: (MediaQuery.of(context).size.width)-32,
+        width: (MediaQuery.of(context).size.width)-70,
         child: Card(
           color: Theme.of(context).colorScheme.onSecondary,
           elevation: 2,
