@@ -38,6 +38,8 @@ class DanceClassController extends GetxController{
   RxList<RecordedDanceClassModel> recordedClasses = <RecordedDanceClassModel>[].obs;
 
 
+
+
   void filterList(String query){
 
   }
@@ -53,6 +55,7 @@ class DanceClassController extends GetxController{
   }
 
   Future<bool> populateUpcomingClasses() async {
+
     bool hasFetched = false;
     print("in populate classes");
     upcomingDanceClasses.clear();

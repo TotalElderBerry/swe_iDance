@@ -15,6 +15,7 @@ import '../../models/dance_booking.dart';
 import '../../models/dance_class.dart';
 import '../../models/live_dance_class.dart';
 import '../../models/recorded_dance_model.dart';
+import '../../socket/socket.dart';
 import '../../sources/api/like/like.dart';
 
 class StudentController extends GetxController{
@@ -170,7 +171,15 @@ class StudentController extends GetxController{
   }
 
   Future<bool> bookDanceClass(int dance_class_id, String referenceNumber, int price) async {
-    return await StudentAPI.bookDanceClass(Get.find<AuthController>().currentUser.value!.studentId, dance_class_id, referenceNumber, price,Get.find<AuthController>().currentUser.value!.firstName +" "+Get.find<AuthController>().currentUser.value!.lastName);
+    final currentUser = Get.find<AuthController>().currentUser.value!;
+
+    bool result = await StudentAPI.bookDanceClass(currentUser.studentId, dance_class_id, referenceNumber, price,"${currentUser.firstName} ${currentUser.lastName}");
+
+    if (IDanceSocket.socket != null) {
+      IDanceSocket.socket!.emit("add_dance_booking", "${currentUser.firstName} ${currentUser.lastName}");
+    }
+
+    return result;
   }
 
 
