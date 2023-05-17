@@ -3,8 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:i_dance/constants/api.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/controllers/image/imagecontroller.dart';
+import 'package:i_dance/socket/socket.dart';
 import 'package:i_dance/theme/theme.dart';
 import 'package:i_dance/views/auth/login_page.dart';
 import 'package:i_dance/views/auth/register_page.dart';
@@ -14,14 +16,35 @@ import 'package:i_dance/views/instructor/instructor_home.dart';
 import 'package:i_dance/views/student/home_screen.dart';
 import 'package:i_dance/views/student/payment_success.dart';
 import 'package:i_dance/views/student/student_home.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'controllers/danceclass/danceclasscontroller.dart';
 import 'controllers/instructor/instructor.dart';
+import 'controllers/notification/notifcontroller.dart';
 import 'controllers/student/student.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
+  
+  // Dart client
+  IDanceSocket.socket = IO.io('http://172.19.130.154:8002', <String, dynamic>{
+      'transports': ['websocket'],
+  });
+
+  print("Connecting...");
+
+  IDanceSocket.socket!.onConnect((_) {
+    print('connect');
+    IDanceSocket.socket!.emit('msg', 'test');
+
+    
+  });
+
+  IDanceSocket.socket!.on("connect_error", (error) {
+    print("SOCKET ERROR: $error");
+  });
+
   runApp(const MyApp());
 }
 
@@ -35,6 +58,7 @@ class MyApp extends StatelessWidget {
     final DanceClassController danceClassController = Get.put(DanceClassController());
     final ImagePickerController imagePickerController = Get.put(ImagePickerController());
     final InstructorController instructorController = Get.put(InstructorController());
+    final NotificationController notificationController = Get.put(NotificationController());
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
         theme: ThemeData(

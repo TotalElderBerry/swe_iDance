@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:i_dance/controllers/notification/notifcontroller.dart';
 import 'package:i_dance/views/instructor/instructor_profile.dart';
  
 import '../controllers/auth/auth_controller.dart';
@@ -84,6 +85,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
  
   @override
   Widget build(BuildContext context) {
+    MenuController menuController = MenuController();
+
     return AppBar(
       title: Text(title!),
       scrolledUnderElevation: 0,
@@ -94,6 +97,30 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             _showBottomSheet(context);
         }, icon: const Icon(Icons.menu)),
         actions: [
+          Obx(() => MenuAnchor(
+            child: Padding(
+                padding: const EdgeInsets.only(right:8.0),
+                child: IconButton(onPressed: (){
+                  menuController.open();
+                }, icon: Icon(Icons.notifications)),
+              ),
+            controller: menuController,
+            menuChildren: Get.find<NotificationController>().notifs.map(
+              (element) => MenuItemButton(child: Text(element))
+            ).toList(),
+            // menuChildren: [
+            //   // ListView.builder(
+            //   //   itemCount: Get.find<NotificationController>().notifs.length,
+            //   //   itemBuilder: (context,index){
+            //   //     return MenuItemButton(child: Text(Get.find<NotificationController>().notifs[index]));
+            //   // })
+
+            //   // for (int i = 0; i < Get.find<NotificationController>().notifs.length; i++) {
+            //   //   MenuItemButton(child: Text(Get.find<NotificationController>().notifs[index]));
+            //   // }
+
+            // ], 
+          )),
           GestureDetector(
             onTap: () {
               Get.to(StudentProfilePage());
