@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
 import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
+import 'package:i_dance/controllers/notification/notifcontroller.dart';
 import 'package:i_dance/models/instructor.dart';
 import 'package:i_dance/models/student.dart';
 import 'package:i_dance/sources/api/attendance/attendance.dart';
@@ -175,11 +176,15 @@ class StudentController extends GetxController{
 
     bool result = await StudentAPI.bookDanceClass(currentUser.studentId, dance_class_id, referenceNumber, price,"${currentUser.firstName} ${currentUser.lastName}");
 
-    if (IDanceSocket.socket != null) {
-      IDanceSocket.socket!.emit("add_dance_booking", "${currentUser.firstName} ${currentUser.lastName}");
-    }
-
     return result;
+  }
+
+  void socketBookDanceClass(LiveDanceClassModel liveClass){
+    final currentUser = Get.find<AuthController>().currentUser.value!;
+
+    if (IDanceSocket.socket != null) {
+      IDanceSocket.socket!.emit("add_dance_booking", {'name': "${currentUser.firstName} ${currentUser.lastName}", 'user_id': liveClass.instructor.userId, 'dance_class_name': liveClass.danceName});
+    }
   }
 
 

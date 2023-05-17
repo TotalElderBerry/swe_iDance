@@ -8,6 +8,9 @@ class NotificationController extends GetxController{
 
 
   void listenNotifications(){
-    IDanceSocket.socket!.on("send-notification", (data) => notifs.add(data + " added a new booking"));
+    IDanceSocket.socket!.on("send-notification", (data) { 
+      print("received a socker ${data.toString()}");
+      notifs.add(" added a new booking");
+    });
   }
 }

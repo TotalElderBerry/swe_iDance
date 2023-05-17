@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:i_dance/controllers/student/student.dart';
 import 'package:i_dance/views/student/pay_page.dart';
 
+import '../../controllers/notification/notifcontroller.dart';
 import '../../models/live_dance_class.dart';
 import '../../utils/generateRefNumber.dart';
 class JoinDanceClassPage extends StatelessWidget {
@@ -54,8 +55,11 @@ class JoinDanceClassPage extends StatelessWidget {
 
             if(response.statusCode == 200){
               final res = jsonDecode(response.body);
-              await Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
-              Get.to(PaymentPage(url: res['redirectUrl'],));
+              // await Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
+              Get.find<StudentController>().socketBookDanceClass(liveClass);
+              Get.find<NotificationController>().listenNotifications();
+
+              // Get.to(PaymentPage(url: res['redirectUrl'],));
               // print("hello");
               // print(liveClass.liveClassId);
             }

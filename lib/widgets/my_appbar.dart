@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/controllers/notification/notifcontroller.dart';
+import 'package:i_dance/socket/socket.dart';
 import 'package:i_dance/views/instructor/instructor_profile.dart';
  
 import '../controllers/auth/auth_controller.dart';
@@ -15,6 +16,7 @@ import '../views/student/student_profile.dart';
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   BuildContext parentContext;
   String? title;
+  
   MyAppBar(this.parentContext,this.title,{super.key});
 
    void _showBottomSheet(BuildContext context) {
@@ -85,6 +87,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
  
   @override
   Widget build(BuildContext context) {
+
     MenuController menuController = MenuController();
 
     return AppBar(
@@ -97,7 +100,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             _showBottomSheet(context);
         }, icon: const Icon(Icons.menu)),
         actions: [
-          Obx(() => MenuAnchor(
+          Obx((){ 
+            IDanceSocket.socket!.on('send-notification', (data) => {
+              Get.find<NotificationController>().notifs.add("new notif")
+            });
+            return MenuAnchor(
             child: Padding(
                 padding: const EdgeInsets.only(right:8.0),
                 child: IconButton(onPressed: (){
@@ -120,7 +127,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             //   // }
 
             // ], 
-          )),
+          );
+          }),
+
           GestureDetector(
             onTap: () {
               Get.to(StudentProfilePage());
