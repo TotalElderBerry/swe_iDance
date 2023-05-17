@@ -101,9 +101,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         }, icon: const Icon(Icons.menu)),
         actions: [
           Obx((){ 
-            IDanceSocket.socket!.on('send-notification', (data) => {
-              Get.find<NotificationController>().notifs.add("new notif")
-            });
             return MenuAnchor(
             child: Padding(
                 padding: const EdgeInsets.only(right:8.0),
