@@ -100,8 +100,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             _showBottomSheet(context);
         }, icon: const Icon(Icons.menu)),
         actions: [
-          Obx((){ 
-            return MenuAnchor(
+             MenuAnchor(
             child: Padding(
                 padding: const EdgeInsets.only(right:8.0),
                 child: IconButton(onPressed: (){
@@ -109,9 +108,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 }, icon: Icon(Icons.notifications)),
               ),
             controller: menuController,
-            menuChildren: Get.find<NotificationController>().notifs.map(
-              (element) => MenuItemButton(child: Text(element))
-            ).toList(),
+            menuChildren:[ MenuItemButton(child: Text("Hello"))],
             // menuChildren: [
             //   // ListView.builder(
             //   //   itemCount: Get.find<NotificationController>().notifs.length,
@@ -124,8 +121,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             //   // }
 
             // ], 
-          );
-          }),
+          ),
+          
 
           GestureDetector(
             onTap: () {

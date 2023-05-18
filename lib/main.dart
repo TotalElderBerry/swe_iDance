@@ -28,7 +28,7 @@ void main() async {
   await GetStorage.init();
   
   // Dart client
-  IDanceSocket.socket = IO.io('http://192.168.43.107:8002', <String, dynamic>{
+  IDanceSocket.socket = IO.io('http://192.168.43.46:8002', <String, dynamic>{
       'transports': ['websocket'],
   });
 
