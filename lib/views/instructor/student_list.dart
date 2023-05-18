@@ -49,84 +49,89 @@ class StudentListScreen extends StatelessWidget {
     return DefaultTabController(
       initialIndex: initIndex,
       length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          actions: [],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      onChanged: (val){
-                        // TOFIXXXXX!!!
-                        filterItems(val);
-                      },
-                      decoration: InputDecoration(
-                        isDense: true,
-                        prefixIcon: Icon(Icons.search),
-                        hintText: 'Search...',
-                        border: OutlineInputBorder(),
+      child: RefreshIndicator(
+        onRefresh: ()async{
+              Get.find<DanceClassController>().getLiveDanceClassStudents(liveDance.danceClassId);
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            actions: [],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        onChanged: (val){
+                          // TOFIXXXXX!!!
+                          filterItems(val);
+                        },
+                        decoration: InputDecoration(
+                          isDense: true,
+                          prefixIcon: Icon(Icons.search),
+                          hintText: 'Search...',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              SizedBox(
-                height: 50,
-                child: AppBar(
-                  bottom: TabBar(
-                    tabs: [
-                      Tab(
-                        icon: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.pending_outlined),
-                            Text("Pending",
-                                style: Theme.of(context).textTheme.bodyMedium),
-                          ],
+                  ],
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                SizedBox(
+                  height: 50,
+                  child: AppBar(
+                    bottom: TabBar(
+                      tabs: [
+                        Tab(
+                          icon: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.pending_outlined),
+                              Text("Pending",
+                                  style: Theme.of(context).textTheme.bodyMedium),
+                            ],
+                          ),
                         ),
-                      ),
-                      Tab(
-                        icon: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.approval),
-                            Text("Approved",
-                                style: Theme.of(context).textTheme.bodyMedium),
-                          ],
+                        Tab(
+                          icon: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.approval),
+                              Text("Approved",
+                                  style: Theme.of(context).textTheme.bodyMedium),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20,),
-
-              FutureBuilder(
-                future: Get.find<DanceClassController>().getLiveDanceClassStudents(liveDance.danceClassId),
-                builder: ((context, snapshot) {
-                  if(snapshot.hasData){
-
-                    return Expanded(
-                      child: TabBarView(
-                        children: [
-                          PendingWidget(liveDance: liveDance),
-                          ApprovedWidget(),
-                        ],
-                      ),
-                    );
-                  }
-                  return Expanded(child: SkeletonListView());
-                  
-              })),
-            ],
+                const SizedBox(height: 20,),
+      
+                FutureBuilder(
+                  future: Get.find<DanceClassController>().getLiveDanceClassStudents(liveDance.danceClassId),
+                  builder: ((context, snapshot) {
+                    if(snapshot.hasData){
+      
+                      return Expanded(
+                        child: TabBarView(
+                          children: [
+                            PendingWidget(liveDance: liveDance),
+                            ApprovedWidget(),
+                          ],
+                        ),
+                      );
+                    }
+                    return Expanded(child: SkeletonListView());
+                    
+                })),
+              ],
+            ),
           ),
         ),
       ),

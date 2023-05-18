@@ -94,7 +94,7 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
               ),
             controller: menuController,
             menuChildren: Get.find<NotificationController>().notifs.map(
-              (element) => MenuItemButton(child: Text(element))
+              (element) => MenuItemButton(onPressed: (){}, child: Text(element), leadingIcon: Icon(Icons.book_rounded),)
             ).toList(),
             // menuChildren: [
             //   // ListView.builder(
