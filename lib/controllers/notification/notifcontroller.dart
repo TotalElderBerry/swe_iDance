@@ -1,16 +1,35 @@
 import 'package:get/get.dart';
-import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../socket/socket.dart';
+import '../../sources/api/notification/notification.dart';
 
 class NotificationController extends GetxController{
-  RxList<String> notifs = ['Notif 1', 'Notif 2', ' Notif 3'].obs;
+  RxList<String> notifs = <String>[].obs;
+  RxList<String> instructorNotifs = <String>[].obs;
 
 
   void listenNotifications(){
     IDanceSocket.socket!.on("send-notification", (data) { 
       print("received a socker ${data.toString()}");
-      notifs.add(" `${data['name']}` added a new booking");
+      notifs.insert(0,"${data['name']} added a new booking");
     });
   }
+
+  Future<bool> getNotificationsOfUser(String id, int type) async {
+    notifs.clear();
+    try {
+      final response = await NotificationAPI.getNotificationsOfUser(id);
+      print(response);
+      for(int i = 0; i < response.length; i++){
+        if(response[i]['notif_type'] == type){
+          notifs.insert(0, response[i]['msg']);
+        }
+      }
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
 }

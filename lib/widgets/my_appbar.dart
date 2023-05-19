@@ -11,6 +11,7 @@ import '../controllers/student/student.dart';
 import '../models/instructor.dart';
 import '../views/instructor/instructor_home.dart';
 import '../views/instructor/instructor_signin.dart';
+import '../views/student/notifications.dart';
 import '../views/student/student_profile.dart';
  
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -100,28 +101,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             _showBottomSheet(context);
         }, icon: const Icon(Icons.menu)),
         actions: [
-             MenuAnchor(
-            child: Padding(
-                padding: const EdgeInsets.only(right:8.0),
-                child: IconButton(onPressed: (){
-                  menuController.open();
-                }, icon: Icon(Icons.notifications)),
-              ),
-            controller: menuController,
-            menuChildren:[ MenuItemButton(child: Text("Hello"))],
-            // menuChildren: [
-            //   // ListView.builder(
-            //   //   itemCount: Get.find<NotificationController>().notifs.length,
-            //   //   itemBuilder: (context,index){
-            //   //     return MenuItemButton(child: Text(Get.find<NotificationController>().notifs[index]));
-            //   // })
-
-            //   // for (int i = 0; i < Get.find<NotificationController>().notifs.length; i++) {
-            //   //   MenuItemButton(child: Text(Get.find<NotificationController>().notifs[index]));
-            //   // }
-
-            // ], 
-          ),
+             Padding(
+                 padding: const EdgeInsets.only(right:8.0),
+                 child: IconButton(onPressed: (){
+                  Get.to(StudentNotification());
+                 }, icon: Icon(Icons.notifications)),
+               ),
           
 
           GestureDetector(

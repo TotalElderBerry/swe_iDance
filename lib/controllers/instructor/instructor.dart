@@ -9,12 +9,14 @@ import 'package:i_dance/sources/localstorage/localstorage.dart';
 import '../../models/dance_class.dart';
 import '../../models/instructor.dart';
 import '../../models/recorded_dance_model.dart';
+import '../../socket/socket.dart';
 import '../../sources/api/dance-class/dance-class.dart';
 import '../../sources/api/instructor/instructor.dart';
 import '../../sources/api/like/like.dart';
 import '../../sources/firebasestorage/firebase_storage.dart';
 
 import '../../utils/getDaysBetween.dart';
+import '../auth/auth_controller.dart';
 import '../danceclass/danceclasscontroller.dart';
 class InstructorController extends GetxController{
   RxList<LiveDanceClassModel> instructorDanceClass = <LiveDanceClassModel>[].obs;
@@ -36,6 +38,13 @@ class InstructorController extends GetxController{
         return false;
       }
     }
+
+  void socketAcceptStudent(LiveDanceClassModel liveClass, String user_id){
+
+    if (IDanceSocket.socket != null) {
+      IDanceSocket.socket!.emit("accept_pending_student", {'user_id': user_id, 'dance_class_name': liveClass.danceName,'type': 2, 'msg': 'You are now enrolled in class ${liveClass.danceName}'});
+    }
+  }
 
     List<LiveDanceClassModel> getUpcomingClasses(){
         List<LiveDanceClassModel> temp = [];

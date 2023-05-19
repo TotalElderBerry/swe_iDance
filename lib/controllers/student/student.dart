@@ -183,7 +183,7 @@ class StudentController extends GetxController{
     final currentUser = Get.find<AuthController>().currentUser.value!;
 
     if (IDanceSocket.socket != null) {
-      IDanceSocket.socket!.emit("add_dance_booking", {'name': "${currentUser.firstName} ${currentUser.lastName}", 'user_id': liveClass.instructor.userId, 'dance_class_name': liveClass.danceName});
+      IDanceSocket.socket!.emit("add_dance_booking", {'name': "${currentUser.firstName} ${currentUser.lastName}", 'user_id': liveClass.instructor.userId, 'dance_class_name': liveClass.danceName, 'type': 1, 'msg': '${currentUser.firstName} ${currentUser.lastName} booked class ${liveClass.danceName}'});
     }
   }
 

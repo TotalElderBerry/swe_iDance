@@ -6,6 +6,7 @@ import '../controllers/auth/auth_controller.dart';
 import '../controllers/notification/notifcontroller.dart';
 import '../views/instructor/instructor_home.dart';
 import '../views/instructor/instructor_profile.dart';
+import '../views/instructor/notifications.dart';
 import '../views/student/home_screen.dart';
 import '../views/student/student_profile.dart';
 
@@ -84,32 +85,12 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
             showInstructorBottomSheet(ctx);
         }, icon: const Icon(Icons.menu)),
         actions: [
-          Obx((){ 
-            return MenuAnchor(
-            child: Padding(
+          Padding(
                 padding: const EdgeInsets.only(right:8.0),
                 child: IconButton(onPressed: (){
-                  menuController.open();
+                  Get.to(InstructorNotification());
                 }, icon: Icon(Icons.notifications)),
               ),
-            controller: menuController,
-            menuChildren: Get.find<NotificationController>().notifs.map(
-              (element) => MenuItemButton(onPressed: (){}, child: Text(element), leadingIcon: Icon(Icons.book_rounded),)
-            ).toList(),
-            // menuChildren: [
-            //   // ListView.builder(
-            //   //   itemCount: Get.find<NotificationController>().notifs.length,
-            //   //   itemBuilder: (context,index){
-            //   //     return MenuItemButton(child: Text(Get.find<NotificationController>().notifs[index]));
-            //   // })
-
-            //   // for (int i = 0; i < Get.find<NotificationController>().notifs.length; i++) {
-            //   //   MenuItemButton(child: Text(Get.find<NotificationController>().notifs[index]));
-            //   // }
-
-            // ], 
-          );
-          }),
 
           GestureDetector(
             onTap: () {

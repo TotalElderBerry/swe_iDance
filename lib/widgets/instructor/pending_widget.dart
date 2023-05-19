@@ -54,11 +54,12 @@ class PendingWidget extends StatelessWidget {
                                 content: Text("Do you wish to accept the payment of ${Get.find<DanceClassController>().studentPendingSearched[index].student.firstName} ${Get.find<DanceClassController>().studentPendingSearched[index].student.lastName}"),
                                 actions: [
                                   TextButton(onPressed: (){
-                                    Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentPendingSearched[index].student.studentId, liveDance.danceClassId);
+                                    // Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentPendingSearched[index].student.studentId, liveDance.danceClassId);
+                                    Get.find<InstructorController>().socketAcceptStudent(liveDance,Get.find<DanceClassController>().studentPendingSearched[index].student.userId);
                                     PaymentStudent temp = Get.find<DanceClassController>().studentPendingSearched[index];
       
-                                    Get.find<DanceClassController>().studentPendingSearched.removeAt(index);
-                                    Get.find<DanceClassController>().studentsApproved.add(temp);
+                                    // Get.find<DanceClassController>().studentPendingSearched.removeAt(index);
+                                    // Get.find<DanceClassController>().studentsApproved.add(temp);
                                     Navigator.of(context).pop();
       
                                   }, child: Text("Yes")),
