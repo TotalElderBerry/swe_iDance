@@ -55,11 +55,11 @@ class JoinDanceClassPage extends StatelessWidget {
 
             if(response.statusCode == 200){
               final res = jsonDecode(response.body);
-              // await Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
+              await Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
               Get.find<StudentController>().socketBookDanceClass(liveClass);
               Get.find<NotificationController>().listenNotifications();
 
-              // Get.to(PaymentPage(url: res['redirectUrl'],));
+              Get.to(PaymentPage(url: res['redirectUrl'],));
               // print("hello");
               // print(liveClass.liveClassId);
             }

@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:i_dance/views/student/student_home.dart';
 
 import '../controllers/auth/auth_controller.dart';
+import '../controllers/notification/notifcontroller.dart';
 import '../views/instructor/instructor_home.dart';
 import '../views/instructor/instructor_profile.dart';
+import '../views/instructor/notifications.dart';
 import '../views/student/home_screen.dart';
 import '../views/student/student_profile.dart';
 
@@ -73,6 +75,8 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Widget build(BuildContext ctx) {
+    MenuController menuController = MenuController();
+
     return AppBar(
         scrolledUnderElevation: 0,
         elevation: 0,
@@ -81,6 +85,13 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
             showInstructorBottomSheet(ctx);
         }, icon: const Icon(Icons.menu)),
         actions: [
+          Padding(
+                padding: const EdgeInsets.only(right:8.0),
+                child: IconButton(onPressed: (){
+                  Get.to(InstructorNotification());
+                }, icon: Icon(Icons.notifications)),
+              ),
+
           GestureDetector(
             onTap: () {
               Get.to(InstructorProfilePage());

@@ -57,6 +57,7 @@ dependencies:
   youtube_player_iframe: ^4.0.4
   flutter_google_places_hoc081098: ^1.2.0
   socket_io_client: ^2.0.2
+  animations: ^2.0.7
 
 dev_dependencies:
   flutter_test:

@@ -28,8 +28,9 @@ void main() async {
   await GetStorage.init();
   
   // Dart client
-  IDanceSocket.socket = IO.io('http://192.168.43.107:8002', <String, dynamic>{
-      'transports': ['websocket'],
+  IDanceSocket.socket = IO.io(ApiConstants.socketBase, <String, dynamic>{
+      'transports': ['websocket', 'polling'],
+      'autoConnect': true,
   });
 
   print("Connecting...");
@@ -41,6 +42,10 @@ void main() async {
     
   });
 
+  IDanceSocket.socket!.on('event', (data) => print(data));
+  IDanceSocket.socket!.on('disconnect', (_) => print('disconnect'));
+  IDanceSocket.socket!.on('fromServer', (_) => print(_));
+  IDanceSocket.socket!.connect();
   IDanceSocket.socket!.on("connect_error", (error) {
     print("SOCKET ERROR: $error");
   });
