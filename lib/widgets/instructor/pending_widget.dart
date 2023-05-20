@@ -4,6 +4,7 @@ import 'package:i_dance/controllers/instructor/instructor.dart';
 import 'package:intl/intl.dart';
 
 import '../../controllers/danceclass/danceclasscontroller.dart';
+import '../../controllers/notification/notifcontroller.dart';
 import '../../models/live_dance_class.dart';
 import '../../models/student.dart';
 import '../../models/studentlist_model.dart';
@@ -54,12 +55,13 @@ class PendingWidget extends StatelessWidget {
                                 content: Text("Do you wish to accept the payment of ${Get.find<DanceClassController>().studentPendingSearched[index].student.firstName} ${Get.find<DanceClassController>().studentPendingSearched[index].student.lastName}"),
                                 actions: [
                                   TextButton(onPressed: (){
-                                    // Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentPendingSearched[index].student.studentId, liveDance.danceClassId);
+                                    Get.find<InstructorController>().acceptStudentBooking(Get.find<DanceClassController>().studentPendingSearched[index].student.studentId, liveDance.danceClassId);
                                     Get.find<InstructorController>().socketAcceptStudent(liveDance,Get.find<DanceClassController>().studentPendingSearched[index].student.userId);
                                     PaymentStudent temp = Get.find<DanceClassController>().studentPendingSearched[index];
+                                    Get.find<NotificationController>().listenNotifications();
       
-                                    // Get.find<DanceClassController>().studentPendingSearched.removeAt(index);
-                                    // Get.find<DanceClassController>().studentsApproved.add(temp);
+                                    Get.find<DanceClassController>().studentPendingSearched.removeAt(index);
+                                    Get.find<DanceClassController>().studentsApproved.add(temp);
                                     Navigator.of(context).pop();
       
                                   }, child: Text("Yes")),

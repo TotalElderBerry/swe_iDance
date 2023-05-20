@@ -17,6 +17,8 @@ class InstructorNotification extends StatelessWidget {
           print(snapshot);
           if(snapshot.hasData){
           return Obx(() {
+            Get.find<NotificationController>().newNotifications.value = 0;
+
                   // Get.find<NotificationController>().listenNotifications();
             return ListView.builder(
             itemCount: Get.find<NotificationController>().notifs.length, // Replace with the actual number of notifications
@@ -24,7 +26,7 @@ class InstructorNotification extends StatelessWidget {
               return ListTile(
                 leading: CircleAvatar(
                   // Replace with the notification user's profile picture
-                  child: Icon(Icons.person),
+                  child: Icon(Icons.book_online),
                 ),
                 title: Text(
                   // Replace with the notification text

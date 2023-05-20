@@ -22,23 +22,23 @@ class StudentNotification extends StatelessWidget {
             itemCount: Get.find<NotificationController>().notifs.length, // Replace with the actual number of notifications
             itemBuilder: (context, index) {
               return ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   // Replace with the notification user's profile picture
-                  child: Icon(Icons.person),
+                  child: Icon(Icons.check_outlined),
                 ),
                 title: Text(
                   // Replace with the notification text
                   Get.find<NotificationController>().notifs[index],
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: Text(
+                subtitle: const Text(
                   // Replace with the notification timestamp
                   '2 hours ago',
                 ),
                 trailing: IconButton(
-                  icon: Icon(Icons.more_vert),
+                  icon: const Icon(Icons.more_vert),
                   onPressed: () {
                     // Add functionality for handling more options for each notification
                   },
@@ -51,7 +51,7 @@ class StudentNotification extends StatelessWidget {
           );}
           );
         }else{
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }

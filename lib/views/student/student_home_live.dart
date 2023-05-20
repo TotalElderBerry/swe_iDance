@@ -11,6 +11,17 @@ import 'package:i_dance/widgets/student/dance_class_card.dart';
 import 'package:i_dance/widgets/my_appbar.dart';
 import 'package:i_dance/widgets/student/student_class_card.dart';
 
+
+enum SortOption {
+  priceAscending,
+  priceDescending,
+  difficultyAscending,
+  difficultyDescending,
+  dateAscending,
+  dateDescending, difficultyAdvanced,
+  emptyHaha
+}
+
 class StudentHomeLivePage extends StatefulWidget {
   const StudentHomeLivePage({Key? key}) : super(key: key);
 
@@ -37,6 +48,12 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
     'Unreal Engine'
   ];
   List<String> filteredItems = [];
+  
+  // Variables for filtering
+  bool filterByPrice = false;
+  bool filterByDifficulty = false;
+  bool filterByDate = false;
+  String difficultyValue = "";
 
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -119,74 +136,234 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
       appBar: MyAppBar(context, "Live Classes"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child:  Column(
-                children: [
-                  
-                  Container(
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(),
-                          ),
-                        ],
-                      ),
+        child: Column(
+          children: [
+            Container(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    onChanged: (value){
+                      filterItems(value);
+                    },
+                    controller: searchController,
+                    decoration: const InputDecoration(
+                      isDense: true,
+                      prefixIcon: Icon(Icons.search),
+                      hintText: 'Search...',
+                      border: OutlineInputBorder(),
                     ),
                   ),
-                  Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                onChanged: (value){
-                                  filterItems(value);
-                                },
-                                controller: searchController,
-                                decoration: const InputDecoration(
-                                  isDense: true,
-                                  prefixIcon: Icon(Icons.search),
-                                  hintText: 'Search...',
-                                  border: OutlineInputBorder(),
-                                ),
-                              ),
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.filter_2_rounded))
-                          ],
-                        ),
-                  Obx((){
-                        if(Get.find<DanceClassController>().upcomingDanceClasses.isEmpty){
-                          return Text("Empty");
-                        }
-                        return Expanded(
-                          child: 
-                          Obx((){
-                            return ListView.builder(
-                              itemCount: Get.find<DanceClassController>().searchedLiveDanceClasses.length,
-                              itemBuilder: (context, idx){
-                                print(Get.find<StudentController>().isBookedClasses(Get.find<DanceClassController>().searchedLiveDanceClasses[idx].danceClassId));
-                                  return DanceClassCard(liveClass: Get.find<DanceClassController>().searchedLiveDanceClasses.elementAt(idx));
-                              }
-                            );
-
-                          })
-                        );
-                  })
-                  // FutureBuilder(
-                  //   future: Get.find<DanceClassController>().populateUpcomingClasses(),
-                  //   builder: (context, snapshot) {
-                  //     if(snapshot.hasData){
-                  //       print(Get.find<DanceClassController>().upcomingDanceClasses);
-                        
-                  //     }
-                  //   return Text("loading");
-                  //   }
-                  // ),
-                ],
-              )
+                ),
+                IconButton(
+                  onPressed: () {
+                    _showFilterOptions(context);
+                  },
+                  icon: Icon(Icons.filter_2_rounded),
+                ),
+              ],
+            ),
+            Obx(() {
+              if (Get.find<DanceClassController>().upcomingDanceClasses.isEmpty) {
+                return Text("Empty");
+              }
+              return Expanded(
+                child: Obx(() {
+                  return ListView.builder(
+                    itemCount: Get.find<DanceClassController>()
+                        .searchedLiveDanceClasses
+                        .length,
+                    itemBuilder: (context, idx) {
+                      print(Get.find<StudentController>().isBookedClasses(Get.find<DanceClassController>().searchedLiveDanceClasses[idx].danceClassId));
+                      return DanceClassCard(
+                        liveClass: Get.find<DanceClassController>()
+                            .searchedLiveDanceClasses
+                            .elementAt(idx),
+                      );
+                    },
+                  );
+                }),
+              );
+            }),
+          ],
+        ),
       ),
     );
   }
+
+
+void _showFilterOptions(BuildContext context) {
+  SortOption priceSortOption = SortOption.priceAscending;
+  SortOption difficultySortOption = SortOption.difficultyAscending;
+  SortOption dateSortOption = SortOption.dateAscending;
+
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(20.0),
+      ),
+    ),
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Filter Options',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Text(
+                  'Price',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: SortOption.priceAscending,
+                      groupValue: priceSortOption,
+                      onChanged: (value) {
+                        setState(() {
+                          priceSortOption = value as SortOption;
+                        });
+                      },
+                    ),
+                    Text('Ascending'),
+                    SizedBox(width: 10.0),
+                    Radio(
+                      value: SortOption.priceDescending,
+                      groupValue: priceSortOption,
+                      onChanged: (value) {
+                        setState(() {
+                          priceSortOption = value as SortOption;
+                        });
+                      },
+                    ),
+                    Text('Descending'),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  'Difficulty',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    ChoiceChip(
+                      label: Text('Beginner'),
+                      selected: difficultySortOption == SortOption.difficultyAscending,
+                      onSelected: (selected) {
+                        print(selected);
+                        setState(() {
+                          difficultySortOption = selected? SortOption.difficultyAscending:SortOption.emptyHaha;
+                          difficultyValue = selected? "Beginner":"";
+                        });
+                      },
+                    ),
+                    SizedBox(width: 10.0),
+                    ChoiceChip(
+                      label: Text('Intermediate'),
+                      selected: difficultySortOption == SortOption.difficultyDescending,
+                      onSelected: (selected) {
+                        setState(() {
+                          difficultySortOption = selected? SortOption.difficultyDescending:SortOption.emptyHaha;
+                          difficultyValue = selected? "Intermediate":"";
+                        });
+                      },
+                    ),
+                    SizedBox(width: 10.0),
+                    ChoiceChip(
+                      label: Text('Advanced'),
+                      selected: difficultySortOption == SortOption.difficultyAdvanced,
+                      onSelected: (selected) {
+                        setState(() {
+                          difficultySortOption = selected? SortOption.difficultyAdvanced:SortOption.emptyHaha;
+                          difficultyValue = selected? "Advanced":"";
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  'Date',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: SortOption.dateAscending,
+                      groupValue: dateSortOption,
+                      onChanged: (value) {
+                        setState(() {
+                          dateSortOption = value as SortOption;
+                        });
+                      },
+                    ),
+                    Text('Ascending'),
+                    SizedBox(width: 10.0),
+                    Radio(
+                      value: SortOption.dateDescending,
+                      groupValue: dateSortOption,
+                      onChanged: (value) {
+                        setState(() {
+                          dateSortOption = value as SortOption;
+                        });
+                      },
+                    ),
+                    Text('Descending'),
+                  ],
+                ),
+                SizedBox(height: 20.0),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Apply the filters and close the modal
+                      Get.find<DanceClassController>().searchedLiveDanceClasses.clear();
+                      Get.find<DanceClassController>().searchedLiveDanceClasses.value = Get.find<DanceClassController>().getLiveClassesByDifficulty(difficultyValue);
+                      Navigator.pop(context);
+                    },
+                    child: Text('Apply Filters'),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+
+
 }

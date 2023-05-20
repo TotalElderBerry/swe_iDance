@@ -87,9 +87,23 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
         actions: [
           Padding(
                 padding: const EdgeInsets.only(right:8.0),
-                child: IconButton(onPressed: (){
-                  Get.to(InstructorNotification());
-                }, icon: Icon(Icons.notifications)),
+                child: Stack(
+                  children: [
+                    IconButton(onPressed: (){
+                      Get.to(InstructorNotification());
+                    }, icon: Icon(Icons.notifications)),
+                    Positioned(
+                      left: 25,
+                      top: 10,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.yellow,
+                        radius: 8,
+                        child: Text(Get.find<NotificationController>().newNotifications.value.toString(), style: TextStyle(fontSize: 8),),
+                        
+                      ),
+                    )
+                  ],
+                ),
               ),
 
           GestureDetector(

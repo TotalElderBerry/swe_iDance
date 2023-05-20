@@ -44,6 +44,21 @@ class DanceClassController extends GetxController{
 
   }
 
+  List<LiveDanceClassModel> getLiveClassesByDifficulty(String difficulty){
+    if(difficulty == ""){
+      return upcomingDanceClasses;
+    }
+    List<LiveDanceClassModel> temp = [];
+    for(int i = 0; i < upcomingDanceClasses.length; i++){
+      print("level ${upcomingDanceClasses[i].danceDifficulty}");
+      if(upcomingDanceClasses[i].danceDifficulty == difficulty){
+        temp.add(upcomingDanceClasses[i]);
+      }
+    }
+
+    return temp;
+  }
+
   void addLiveDanceClass(LiveDanceClassModel liveDanceClass)async{
     print(Get.find<ImagePickerController>().imgPathDanceClass.value);
     final id = await DanceClassAPI.addDanceClass(liveDanceClass);
@@ -59,6 +74,9 @@ class DanceClassController extends GetxController{
     bool hasFetched = false;
     print("in populate classes");
     upcomingDanceClasses.clear();
+    doneDanceClasses.clear();
+    searchedLiveDanceClasses.clear();
+    searchedRecordedDanceClasses.clear();
     try {
       final classes = await DanceClassAPI.getLiveDanceClasses();
       final upcoming = classes['upcoming_classes'];
@@ -103,6 +121,8 @@ class DanceClassController extends GetxController{
   Future<bool> getLiveDanceClassStudents(int live_danceclass_id) async {
     studentsApproved.clear();
     studentsPending.clear();
+    studentPendingSearched.clear();
+    studentApprovedSearched.clear();
     try {
       final response = await DanceClassAPI.getLiveDanceClassStudents(live_danceclass_id);
       for(var booked in response){

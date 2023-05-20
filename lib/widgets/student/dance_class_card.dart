@@ -72,24 +72,31 @@ class DanceClassCard extends StatelessWidget {
                                   SizedBox(height: 10,),
 
                              Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                  Row(
-                                    children: [
-                                      Icon(size: 10, Icons.calendar_month),
-                                      const SizedBox(width: 5,),
-                                      Text(liveClass.date, style: Theme.of(context).textTheme.labelSmall,),
-                                    ],
-                                  ),
-                                  SizedBox(width: 10,),
+                                Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(size: 10, Icons.calendar_month),
+                                        const SizedBox(width: 2,),
+                                        Text(liveClass.date, style: Theme.of(context).textTheme.labelSmall,),
+                                      ],
+                                    ),
+                                    SizedBox(width: 2,),
+                             
+                                    Row(
+                                      children: [
+                                        Icon(size: 10, Icons.location_on),
+                                        const SizedBox(width: 2,),
+                                        Text(liveClass.location, style: Theme.of(context).textTheme.labelSmall,),
+                                        const SizedBox(width: 2,),
 
-                                  Row(
-                                    children: [
-                                      Icon(size: 10, Icons.location_on),
-                                      const SizedBox(width: 5,),
-                                      Text(liveClass.location, style: Theme.of(context).textTheme.labelSmall,),
-                                    ],
-                                  )
-
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                _buildDifficultyTag(liveClass.danceDifficulty)
                               ],
                              )
                           ],
@@ -176,3 +183,63 @@ class DanceClassCard extends StatelessWidget {
     );
   }
 }
+
+
+  Widget _buildDifficultyTag(String difficulty) {
+    Color tagColor;
+    String tagText;
+    IconData tagIcon;
+
+    switch (difficulty) {
+      case "Easy":
+      case "Beginner":
+        tagColor = Colors.green;
+        tagText = "Beginner";
+        tagIcon = Icons.accessible;
+        break;
+      case "Intermediate":
+      case "Medium":
+        tagColor = Colors.orange;
+        tagText = "Intermediate";
+        tagIcon = Icons.timeline;
+        break;
+      case "Advanced":
+      case "Hard":
+        tagColor = Colors.red;
+        tagText = "Advanced";
+        tagIcon = Icons.whatshot;
+        break;
+      default:
+        tagColor = Colors.grey;
+        tagText = "N/A";
+        tagIcon = Icons.help;
+        break;
+    }
+
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+        decoration: BoxDecoration(
+          color: tagColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              tagIcon,
+              size: 12,
+              color: Colors.white,
+            ),
+            SizedBox(width: 2),
+            Text(
+              tagText,
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      );
+
+  }

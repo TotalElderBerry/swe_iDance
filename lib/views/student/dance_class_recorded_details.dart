@@ -68,9 +68,14 @@ class _DanceClassRecordedDetailsState extends State<DanceClassRecordedDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          widget.recordedDanceClassModel.danceSong,
+                          widget.recordedDanceClassModel.danceName,
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        _buildDifficultyTag(widget.recordedDanceClassModel.danceDifficulty),
                       ],
                     ),
                     // Row(
@@ -111,9 +116,9 @@ class _DanceClassRecordedDetailsState extends State<DanceClassRecordedDetails> {
                                 setState(() {
                                   if(widget.recordedDanceClassModel.isLiked == 0){
                                     widget.recordedDanceClassModel.isLiked = 1;
-                                    // Get.find<StudentController>().likedClasses.add(widget.recordedDanceClassModel);
+                                    Get.find<StudentController>().likedRecordedClasses.add(widget.recordedDanceClassModel);
                                   }else{
-                                    // Get.find<StudentController>().likedClasses.remove(widget.recordedDanceClassModel);
+                                    // Get.find<StudentController>().likedRecordedClasses.remove(widget.recordedDanceClassModel);
                                     widget.recordedDanceClassModel.isLiked = 0;
                                   }
                                 //  widget.recordedDanceClassModel.isLiked = !widget.recordedDanceClassModel.isLiked; 
@@ -190,3 +195,43 @@ class _DanceClassRecordedDetailsState extends State<DanceClassRecordedDetails> {
     );
   }
 }
+
+
+  Widget _buildDifficultyTag(String difficulty) {
+    Color tagColor;
+    String tagText;
+
+    switch (difficulty) {
+      case "Easy":
+        tagColor = Colors.green;
+        tagText = "Easy";
+        break;
+      case "Medium":
+        tagColor = Colors.orange;
+        tagText = "Intermediate";
+        break;
+      case "Hard":
+        tagColor = Colors.red;
+        tagText = "Advanced";
+        break;
+      default:
+        tagColor = Colors.grey;
+        tagText = "N/A";
+        break;
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      decoration: BoxDecoration(
+        color: tagColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        tagText,
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }

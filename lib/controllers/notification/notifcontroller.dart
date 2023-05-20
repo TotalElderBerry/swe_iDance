@@ -6,12 +6,20 @@ import '../../sources/api/notification/notification.dart';
 class NotificationController extends GetxController{
   RxList<String> notifs = <String>[].obs;
   RxList<String> instructorNotifs = <String>[].obs;
+  RxInt newNotifications = 0.obs;
 
 
   void listenNotifications(){
     IDanceSocket.socket!.on("send-notification", (data) { 
       print("received a socker ${data.toString()}");
       notifs.insert(0,"${data['name']} added a new booking");
+      newNotifications.value++;
+    });
+
+    IDanceSocket.socket!.on("send-student-notification", (data) { 
+      print("received a socker ${data.toString()}");
+      notifs.insert(0,"${data['name']} added a new booking");
+      newNotifications.value++;
     });
   }
 
