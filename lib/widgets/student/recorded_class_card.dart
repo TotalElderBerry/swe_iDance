@@ -50,22 +50,27 @@ class StudentClassRecordedCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Chip(
-                          label: Row(
-                            children: [
-                              const Icon(
-                                Icons.video_camera_front_rounded,
-                                size: 17,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: Colors.purple,
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              const SizedBox(
-                                width: 5,
+                              child: Text(
+                                "Recorded Class",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              Text(
-                                'Recorded Class',
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                            ],
-                          ),
+                            ),
+                                const SizedBox(width: 10,),
+                                _buildDifficultyTag(recordedDanceClassModel.danceDifficulty)
+                          ],
                         ),
                         Text(
                           recordedDanceClassModel.danceName,
@@ -88,6 +93,7 @@ class StudentClassRecordedCard extends StatelessWidget {
                               "${recordedDanceClassModel.instructor.firstName} ${recordedDanceClassModel.instructor.lastName}",
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
+
                           ],
                         ),
                       ],
@@ -111,4 +117,62 @@ class StudentClassRecordedCard extends StatelessWidget {
       ),
     );
   }
-}
+
+  Widget _buildDifficultyTag(String difficulty) {
+    Color tagColor;
+    String tagText;
+    IconData tagIcon;
+
+    switch (difficulty) {
+      case "Easy":
+      case "Beginner":
+        tagColor = Colors.green;
+        tagText = "Beginner";
+        tagIcon = Icons.accessible;
+        break;
+      case "Intermediate":
+      case "Medium":
+        tagColor = Colors.orange;
+        tagText = "Intermediate";
+        tagIcon = Icons.timeline;
+        break;
+      case "Advanced":
+      case "Hard":
+        tagColor = Colors.red;
+        tagText = "Advanced";
+        tagIcon = Icons.whatshot;
+        break;
+      default:
+        tagColor = Colors.grey;
+        tagText = "N/A";
+        tagIcon = Icons.help;
+        break;
+    }
+
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+        decoration: BoxDecoration(
+          color: tagColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              tagIcon,
+              size: 12,
+              color: Colors.white,
+            ),
+            SizedBox(width: 2),
+            Text(
+              tagText,
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      );
+
+  }}

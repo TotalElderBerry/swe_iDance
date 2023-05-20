@@ -8,6 +8,16 @@ import '../../controllers/auth/auth_controller.dart';
 import '../../widgets/my_appbar.dart';
 import '../../widgets/student/recorded_class_card.dart';
 
+enum SortOption {
+  priceAscending,
+  priceDescending,
+  difficultyAscending,
+  difficultyDescending,
+  dateAscending,
+  dateDescending, difficultyAdvanced,
+  emptyHaha
+}
+
 class StudentHomeRecordedPage extends StatefulWidget {
   const StudentHomeRecordedPage({Key? key}) : super(key: key);
 
@@ -17,6 +27,7 @@ class StudentHomeRecordedPage extends StatefulWidget {
 
 class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
   TextEditingController searchController = TextEditingController();
+  String difficultyValue = "";
   List<String> items = [
     'Hello World',
     'Flutter',
@@ -138,7 +149,9 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
                               ),
                             ),
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  _showFilterOptions(context);
+                                },
                                 icon: Icon(Icons.filter_2_rounded))
                           ],
                         ),
@@ -177,4 +190,161 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
       ),
     );
   }
+
+void _showFilterOptions(BuildContext context) {
+  SortOption priceSortOption = SortOption.priceAscending;
+  SortOption difficultySortOption = SortOption.difficultyAscending;
+  SortOption dateSortOption = SortOption.dateAscending;
+
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(20.0),
+      ),
+    ),
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Filter Options',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Text(
+                  'Price',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: SortOption.priceAscending,
+                      groupValue: priceSortOption,
+                      onChanged: (value) {
+                        setState(() {
+                          priceSortOption = value as SortOption;
+                        });
+                      },
+                    ),
+                    Text('Ascending'),
+                    SizedBox(width: 10.0),
+                    Radio(
+                      value: SortOption.priceDescending,
+                      groupValue: priceSortOption,
+                      onChanged: (value) {
+                        setState(() {
+                          priceSortOption = value as SortOption;
+                        });
+                      },
+                    ),
+                    Text('Descending'),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  'Difficulty',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    ChoiceChip(
+                      label: Text('Beginner'),
+                      selected: difficultySortOption == SortOption.difficultyAscending,
+                      onSelected: (selected) {
+                        print(selected);
+                        setState(() {
+                          difficultySortOption = selected? SortOption.difficultyAscending:SortOption.emptyHaha;
+                          difficultyValue = selected? "Beginner":"";
+                        });
+                      },
+                    ),
+                    SizedBox(width: 10.0),
+                    ChoiceChip(
+                      label: Text('Intermediate'),
+                      selected: difficultySortOption == SortOption.difficultyDescending,
+                      onSelected: (selected) {
+                        setState(() {
+                          difficultySortOption = selected? SortOption.difficultyDescending:SortOption.emptyHaha;
+                          difficultyValue = selected? "Intermediate":"";
+                        });
+                      },
+                    ),
+                    SizedBox(width: 10.0),
+                    ChoiceChip(
+                      label: Text('Advanced'),
+                      selected: difficultySortOption == SortOption.difficultyAdvanced,
+                      onSelected: (selected) {
+                        setState(() {
+                          difficultySortOption = selected? SortOption.difficultyAdvanced:SortOption.emptyHaha;
+                          difficultyValue = selected? "Advanced":"";
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20.0),
+                Spacer(),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          // Apply the filters and close the modal
+                          // Get.find<DanceClassController>().searchedLiveDanceClasses.clear();
+                          // Get.find<DanceClassController>().searchedRecordedDanceClasses.sort((a,b){
+                          //   int aDaysBetween = a.price;
+                          //   int bDaysBetween = b.price;
+                          //   return (priceSortOption == SortOption.priceAscending)? aDaysBetween.compareTo(bDaysBetween):aDaysBetween.compareTo(bDaysBetween);
+                          // });
+                          switch(difficultyValue){
+                            case 'Beginner':
+                              difficultyValue = 'Easy';
+                              break;
+                            case 'Intermidiate':
+                              difficultyValue = 'Medium';
+                              break;
+                            case 'Advanced':
+                              difficultyValue = 'Hard';
+                            
+                          }
+
+
+                          Get.find<DanceClassController>().searchedRecordedDanceClasses.value = Get.find<DanceClassController>().getRecordedClassesByDifficulty(difficultyValue);
+                          Navigator.pop(context);
+                        },
+                        child: Text('Apply Filters'),
+                      ),
+                      const SizedBox(width: 10),
+                      ElevatedButton(onPressed: (){
+                        Get.find<DanceClassController>().searchedRecordedDanceClasses.clear();
+                        Get.find<DanceClassController>().searchedRecordedDanceClasses.addAll(Get.find<DanceClassController>().recordedClasses);
+                        Navigator.pop(context);
+
+                      }, child: Text('Clear'))
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
 }

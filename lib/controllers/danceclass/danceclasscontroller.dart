@@ -49,15 +49,31 @@ class DanceClassController extends GetxController{
       return upcomingDanceClasses;
     }
     List<LiveDanceClassModel> temp = [];
-    for(int i = 0; i < upcomingDanceClasses.length; i++){
-      print("level ${upcomingDanceClasses[i].danceDifficulty}");
-      if(upcomingDanceClasses[i].danceDifficulty == difficulty){
-        temp.add(upcomingDanceClasses[i]);
+    for(int i = 0; i < searchedLiveDanceClasses.length; i++){
+      print("level ${searchedLiveDanceClasses[i].danceDifficulty}");
+      if(searchedLiveDanceClasses[i].danceDifficulty == difficulty){
+        temp.add(searchedLiveDanceClasses[i]);
       }
     }
 
     return temp;
   }
+
+   List<RecordedDanceClassModel> getRecordedClassesByDifficulty(String difficulty){
+    if(difficulty == ""){
+      return recordedClasses;
+    }
+    List<RecordedDanceClassModel> temp = [];
+    for(int i = 0; i < recordedClasses.length; i++){
+      print("level ${recordedClasses[i].danceDifficulty} and $difficulty");
+      if(recordedClasses[i].danceDifficulty == difficulty){
+        temp.add(recordedClasses[i]);
+      }
+    }
+
+    return temp;
+  }
+
 
   void addLiveDanceClass(LiveDanceClassModel liveDanceClass)async{
     print(Get.find<ImagePickerController>().imgPathDanceClass.value);

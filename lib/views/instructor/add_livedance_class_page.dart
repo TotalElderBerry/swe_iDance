@@ -65,6 +65,11 @@ class _AddLiveDanceClassPageState extends State<AddLiveDanceClassPage> {
       ),
     );
 
+    
+  }
+
+  @override
+  Widget build(BuildContext context) {
     steps = [
       Step(
         title: const Text('Basic Details'),
@@ -425,10 +430,6 @@ class _AddLiveDanceClassPageState extends State<AddLiveDanceClassPage> {
         isActive: true,
       ),
     ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Add Live Dance Class"),),
       body: Stepper(

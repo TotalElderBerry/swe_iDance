@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:i_dance/controllers/auth/auth_controller.dart';
-import 'package:i_dance/views/instructor/add_recorded_dance_payment_page.dart';
-import '../../models/payment_details.dart';
-import 'add_dance_payment_page.dart';
-import '../../models/recorded_dance_model.dart';
+import 'package:i_dance/models/payment_details.dart';
+import 'package:i_dance/models/recorded_dance_model.dart';
+import 'package:i_dance/views/instructor/review_recorded_class.dart';
+
+import '../../controllers/auth/auth_controller.dart';
 
 class AddRecordedDancePage extends StatefulWidget {
-  AddRecordedDancePage({super.key});
+  AddRecordedDancePage({Key? key}) : super(key: key);
 
   @override
   State<AddRecordedDancePage> createState() => _AddRecordedDancePageState();
 }
 
 class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
+ 
   TextEditingController danceController = TextEditingController();
   TextEditingController songController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController linkController = TextEditingController();
   TextEditingController detailsController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController referenceNumberController = TextEditingController();
+  String danceClassDescription = '';
 
   bool isEasy = true;
 
@@ -28,94 +32,37 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
 
   String difficult = "Easy";
 
+  int currentStep = 0;
+  int? _value = 0;
+  List<Step> steps = [];
+
+  final List<String> difficultyLevels = ['Beginner', 'Intermediate', 'Advanced'];
+  String selectedDifficulty = 'Beginner';
+
+
+    @override
+  void initState() {
+    super.initState();
+    
+  }
+  
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
-        height: 50,
-        margin: const EdgeInsets.all(10),
-        child: ElevatedButton(
-          onPressed: (){
-            String difficulty;
-            int id;
-            if (isEasy == true) {
-              difficulty = "Easy";
-            } else if (isMedium == true) {
-              difficulty = "Medium";
-            } else {
-              difficulty = "Hard";
-            }
-          
-            RecordedDanceClassModel recordedDanceClass = RecordedDanceClassModel(-1, youtubeLink: linkController.text, danceClassId: -1, price: int.parse(priceController.text), danceName: danceController.text, danceSong: songController.text, danceDifficulty: difficult, description: detailsController.text, payment: PaymentDetails(-1,accountName: '', accountNumber: '', modeOfPayment: ''), instructor: Get.find<AuthController>().currentInstructor.value!
-            );
-            print(recordedDanceClass.toJson().toString());
-            Get.to(AddRecordedPaymentPage(recordedDanceClassModel: recordedDanceClass,));
-          },
-          child: const Center(
-            child: Text('Next'),
-          ),
-        ),
-      ),
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height - 100,
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
+    steps = [
+      Step(
+        title: const Text('Basic Details'),
+        content: Column(
               children: [
-                Text('Provide Basic Details',
-                    style: Theme.of(context).textTheme.headlineMedium),
-                const SizedBox(
-                  height: 5,
-                ),
+                
                 const Text(
                   'This section contains general information of your recorded dance class',
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 10,
                 ),
-                // ClipRRect(
-                //   borderRadius: BorderRadius.all(Radius.circular(10)),
-                //   child: Container(
-                //       color: Colors.grey[100],
-                //       child: Obx(() {
-                //         if (Get.find<ImagePickerController>().imgPath.value ==
-                //             '') {
-                //           return SizedBox(
-                //             child: IconButton(
-                //                 onPressed: () {
-                //                   Get.find<ImagePickerController>().pickImage();
-                //                 },
-                //                 splashColor: Colors.transparent,
-                //                 highlightColor: Colors.transparent,
-                //                 icon: Icon(Icons.camera_alt)),
-                //             width: (MediaQuery.of(context).size.width),
-                //             height: 150,
-                //           );
-                //         } else {
-                //           return GestureDetector(
-                //             onTap: () =>
-                //                 Get.find<ImagePickerController>().pickImage(),
-                //             onLongPress: () => Get.find<ImagePickerController>()
-                //                 .imgPath
-                //                 .value = '',
-                //             child: SizedBox(
-                //               child: Image.file(
-                //                 File(Get.find<ImagePickerController>()
-                //                     .imgPath
-                //                     .value),
-                //                 fit: BoxFit.cover,
-                //               ),
-                //               width: (MediaQuery.of(context).size.width),
-                //               height: 150,
-                //             ),
-                //           );
-                //         }
-                //       })),
-                // ),
+                
                 TextField(
                   textCapitalization: TextCapitalization.words,
                   controller: danceController,
@@ -177,144 +124,218 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  'Difficulty',
-                  textAlign: TextAlign.start,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isEasy = true;
-                            isMedium = false;
-                            isHard = false;
-                            difficult = "Easy";
-                          });
-                        },
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25.0),
-                            color:
-                                isEasy == true ? Colors.purple : Colors.white,
-                            border: Border.all(
-                              color: Colors.purple,
-                            ),
-                          ),
-                          child: Center(
-                              child: Text(
-                            'Easy',
-                            style: TextStyle(
-                                color: isEasy == true
-                                    ? Colors.white
-                                    : Colors.black),
-                          )),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isEasy = false;
-                            isMedium = true;
-                            isHard = false;
-                            difficult = "Medium";
-
-                          });
-                        },
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25.0),
-                            color:
-                                isMedium == true ? Colors.purple : Colors.white,
-                            border: Border.all(
-                              color: Colors.purple,
-                            ),
-                          ),
-                          child: Center(
-                              child: Text(
-                            'Medium',
-                            style: TextStyle(
-                                color: isMedium == true
-                                    ? Colors.white
-                                    : Colors.black),
-                          )),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isEasy = false;
-                            isMedium = false;
-                            isHard = true;
-                            difficult = "Difficult";
-
-                          });
-                        },
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25.0),
-                            color:
-                                isHard == true ? Colors.purple : Colors.white,
-                            border: Border.all(
-                              color: Colors.purple,
-                            ),
-                          ),
-                          child: Center(
-                              child: Text(
-                            'Hard',
-                            style: TextStyle(
-                                color: isHard == true
-                                    ? Colors.white
-                                    : Colors.black),
-                          )),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        textCapitalization: TextCapitalization.words,
-                        maxLines: null,
-                        controller: detailsController,
-                        decoration: const InputDecoration(
-                          labelText: "Details",
-                          border: OutlineInputBorder(),
-                          isDense: true,
-                          suffixIcon: Icon(Icons.info),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                
               ],
-            ),
-          ),
         ),
+        isActive: true,
+      ),
+      Step(
+        title: const Text('Difficulty Level'),
+        content: Column(
+          children: [
+            const Text(
+              'Please select the difficulty level of your dance class',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 10,
+              children: List<Widget>.generate(
+                  3,
+                  (int index) {
+                    return ChoiceChip(
+                      label: Text(difficultyLevels[index]),
+                      selected: _value == index,
+                      onSelected: (bool selected) {
+                        setState(() {
+                          _value = selected ? index : null;
+                        });
+                      },
+                    );
+                  },
+                ).toList(),
+            ),
+          ],
+        ),
+        isActive: true,
+      ),
+
+      Step(
+        title: const Text('Additional Detail'),
+        content: Column(
+          children: [
+            const Text(
+              'Please provide a description of your dance class',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: detailsController,
+              maxLines: 5,
+              decoration: const InputDecoration(
+                labelText: 'Description',
+              ),
+              onChanged: (value) {
+                setState(() {
+                  danceClassDescription = value;
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the dance class description';
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
+        isActive: true,
+      ),
+
+      Step(
+        title: const Text('Add Payment'),
+        content: Column(
+          children: [
+            const Text(
+                'Please provide your payment details',
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Card(
+                elevation: 2,
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://mb.com.ph/wp-content/uploads/2021/09/32049-1568x1460.png'),
+                  ),
+                  title: Text("PayMaya"),
+                  trailing:
+                      Radio(value: "", groupValue: "", onChanged: (val) {}),
+                ),
+              ),
+              const SizedBox(height: 10,),
+              TextField(
+                controller: fullNameController,
+                decoration: InputDecoration(
+                  labelText: "Full Name",
+                  labelStyle: TextStyle(
+                    color: Colors.grey[800],
+                    fontSize: 16,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey[400]!,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.blue,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[100],
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 12.0,
+                    horizontal: 16.0,
+                  ),
+                  hintText: "Enter your full name",
+                  hintStyle: TextStyle(
+                    color: Colors.grey[400],
+                  ),
+                ),
+              )
+              ,
+              const SizedBox(height: 10,),
+              TextField(
+                controller: referenceNumberController,
+                decoration: InputDecoration(
+                  labelText: "Reference Number",
+                  labelStyle: TextStyle(
+                    color: Colors.grey[800],
+                    fontSize: 16,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey[400]!,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.blue,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[100],
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 12.0,
+                    horizontal: 16.0,
+                  ),
+                  hintText: "Enter your full name",
+                  hintStyle: TextStyle(
+                    color: Colors.grey[400],
+                  ),
+                ),
+              )
+              ,
+          ],
+        ),
+        isActive: true
+      ),
+
+      Step(
+        title: const Text('Review and Submit'),
+        content: Column(
+          children: [
+            const Text(
+              'Please review your dance class details and submit',
+              textAlign: TextAlign.center,
+            ),
+            // Display the selected options and other details for review
+          ],
+        ),
+        isActive: true,
+      ),
+    ];
+    return Scaffold(
+      appBar: AppBar(title: Text("Add Recorded Dance Class"),),
+      body: Stepper(
+        currentStep: currentStep,
+        steps: steps,
+        onStepContinue: () {
+          if (currentStep < steps.length - 1) {
+            setState(() {
+              currentStep += 1;
+            });
+          } else {
+            // Perform the submission logic here
+            if(Get.find<AuthController>().currentInstructor.value != null){
+
+              RecordedDanceClassModel recordedDanceClass = RecordedDanceClassModel(-1, youtubeLink: linkController.text, danceClassId: -1, price: int.parse(priceController.text), danceName: danceController.text, danceSong: songController.text, danceDifficulty: difficult, description: detailsController.text, payment: PaymentDetails(-1,accountName: fullNameController.text, accountNumber: referenceNumberController.text, modeOfPayment: 'Paypal'), instructor: Get.find<AuthController>().currentInstructor.value!);
+              Get.to(ReviewRecordedClass(recordedDanceClass: recordedDanceClass,));
+            }
+          }
+        },
+        onStepCancel: () {
+          if (currentStep > 0) {
+            setState(() {
+              currentStep -= 1;
+            });
+          }
+        },
+        onStepTapped: (step) {
+          setState(() {
+            currentStep = step;
+          });
+        },
       ),
     );
   }

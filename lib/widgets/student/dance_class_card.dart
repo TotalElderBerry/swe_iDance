@@ -51,6 +51,34 @@ class DanceClassCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
 
                                children: [
+                                Column(
+                                  children: [
+                                    Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                                          padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: Text(
+                                            "Live Class",
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.purple,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                const SizedBox(width: 10,),
+
+                                            _buildDifficultyTag(liveClass.danceDifficulty)
+
+                                      ],
+                                    ),
+                                  ],
+                                ),
                                  Text(liveClass.danceName, style: Theme.of(context).textTheme.titleMedium,),
                                 const SizedBox(height: 5,),
 
@@ -96,7 +124,6 @@ class DanceClassCard extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                _buildDifficultyTag(liveClass.danceDifficulty)
                               ],
                              )
                           ],

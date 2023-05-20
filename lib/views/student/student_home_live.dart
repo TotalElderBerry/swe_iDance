@@ -11,6 +11,8 @@ import 'package:i_dance/widgets/student/dance_class_card.dart';
 import 'package:i_dance/widgets/my_appbar.dart';
 import 'package:i_dance/widgets/student/student_class_card.dart';
 
+import '../../utils/getDaysBetween.dart';
+
 
 enum SortOption {
   priceAscending,
@@ -111,6 +113,7 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
           liveClasses.add(item);
         }
       });
+
       Get.find<DanceClassController>().searchedLiveDanceClasses.clear();
       Get.find<DanceClassController>().searchedLiveDanceClasses.addAll(liveClasses);
       return;
@@ -345,14 +348,37 @@ void _showFilterOptions(BuildContext context) {
                 SizedBox(height: 20.0),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Apply the filters and close the modal
-                      Get.find<DanceClassController>().searchedLiveDanceClasses.clear();
-                      Get.find<DanceClassController>().searchedLiveDanceClasses.value = Get.find<DanceClassController>().getLiveClassesByDifficulty(difficultyValue);
-                      Navigator.pop(context);
-                    },
-                    child: Text('Apply Filters'),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          // Apply the filters and close the modal
+                          // Get.find<DanceClassController>().searchedLiveDanceClasses.clear();
+                          Get.find<DanceClassController>().searchedLiveDanceClasses.sort((a,b){
+                            int aDaysBetween = a.price;
+                            int bDaysBetween = b.price;
+                            return (priceSortOption == SortOption.priceAscending)? aDaysBetween.compareTo(bDaysBetween):aDaysBetween.compareTo(bDaysBetween);
+                          });
+
+                          Get.find<DanceClassController>().searchedLiveDanceClasses.sort((a,b){
+                            int aDaysBetween = getDaysBetweenFromToday(a.date);
+                            int bDaysBetween = getDaysBetweenFromToday(b.date);
+                            return (dateSortOption == SortOption.dateAscending)? aDaysBetween.compareTo(bDaysBetween):aDaysBetween.compareTo(bDaysBetween);
+                          });
+                          
+                          Get.find<DanceClassController>().searchedLiveDanceClasses.value = Get.find<DanceClassController>().getLiveClassesByDifficulty(difficultyValue);
+                          Navigator.pop(context);
+                        },
+                        child: Text('Apply Filters'),
+                      ),
+                      const SizedBox(width: 10),
+                      ElevatedButton(onPressed: (){
+                        Get.find<DanceClassController>().searchedLiveDanceClasses.clear();
+                        Get.find<DanceClassController>().searchedLiveDanceClasses.addAll(Get.find<DanceClassController>().upcomingDanceClasses);
+                        Navigator.pop(context);
+
+                      }, child: Text('Clear'))
+                    ],
                   ),
                 ),
               ],
