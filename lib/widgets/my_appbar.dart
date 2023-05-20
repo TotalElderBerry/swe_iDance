@@ -7,7 +7,9 @@ import 'package:i_dance/views/instructor/instructor_profile.dart';
 import '../controllers/auth/auth_controller.dart';
 import '../controllers/student/student.dart';
 import '../models/instructor.dart';
+import '../views/instructor/edit_instructor_profile.dart';
 import '../views/instructor/instructor_home.dart';
+import '../views/student/edit_student_profile.dart';
 import '../views/student/student_profile.dart';
  
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -24,7 +26,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: 250,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16.0),
               topRight: Radius.circular(16.0),
             ),
@@ -41,16 +43,20 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () {
                   Get.to(InstructorHome());
                 },
-                icon: Icon(Icons.home),
-                label: Text('Home'),
+                icon: const Icon(Icons.home),
+                label: const Text('Home'),
               ),
-              Divider(),
+              const Divider(),
               TextButton.icon(
-                onPressed: () {},
-                icon: Icon(Icons.edit),
-                label: Text('Edit Profile'),
+                onPressed: () {
+                  Get.to(isStudent == true
+                      ? EditStudentProfile()
+                      : EditInstructorProfile());
+                },
+                icon: const Icon(Icons.edit),
+                label: const Text('Edit Profile'),
               ),
-              Divider(),
+              const Divider(),
               TextButton.icon(
                 onPressed: () async {
                   //  try {
@@ -68,16 +74,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   // }
                   Get.to(InstructorHome());
                 },
-                icon: Icon(Icons.school),
-                label: Text('Switch to Student'),
+                icon: const Icon(Icons.school),
+                label: const Text('Switch to Instructor'),
               ),
-              Divider(),
+              const Divider(),
               TextButton.icon(
                 onPressed: () {
                   Get.find<AuthController>().logout();
                 },
-                icon: Icon(Icons.logout),
-                label: Text('Logout'),
+                icon: const Icon(Icons.logout),
+                label: const Text('Logout'),
               ),
             ],
           ),
@@ -101,7 +107,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         GestureDetector(
           onTap: () {
             Get.to(isStudent == true
-                ? StudentProfilePage()
+                ? const StudentProfilePage()
                 : InstructorProfilePage());
           },
           child: CircleAvatar(

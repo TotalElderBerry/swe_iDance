@@ -11,6 +11,9 @@ import '../../widgets/my_appbar.dart';
 
 class AddLiveDanceClassPage extends StatelessWidget {
   TextEditingController dateController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController maxController = TextEditingController();
    AddLiveDanceClassPage({super.key});
 
   @override
@@ -26,12 +29,12 @@ class AddLiveDanceClassPage extends StatelessWidget {
                const SizedBox(height: 5,),
               const Text('This section contains general information of your dance class',textAlign: TextAlign.center,),
               const SizedBox(height: 10,),
-      
+
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: Container(
                   color: Colors.grey[100],
-                  child: 
+                  child:
                   Obx((){
                     if(Get.find<ImagePickerController>().imgPath.value == ''){
                       return SizedBox(
@@ -58,7 +61,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
                     }
                   }
                 )
-                  
+
                 ),
               ),
               const TextField(
@@ -94,13 +97,13 @@ class AddLiveDanceClassPage extends StatelessWidget {
                             }
                             return null;
                           },
-                          
+
                         ),
                       ),
                       const SizedBox(width: 10,),
                       Expanded(
                         child: TextFormField(
-                          controller: dateController,
+                          controller: timeController,
                           decoration: InputDecoration(
                             labelText: "Time",
                             border: OutlineInputBorder(),
@@ -121,7 +124,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
                             }
                             return null;
                           },
-                          
+
                         ),
                       ),
                 ],
@@ -131,7 +134,7 @@ class AddLiveDanceClassPage extends StatelessWidget {
                 children: [
                   Expanded(
                         child: TextFormField(
-                        
+                          controller: priceController,
                           decoration: InputDecoration(
                             labelText: "Price",
                             border: OutlineInputBorder(),
@@ -143,13 +146,13 @@ class AddLiveDanceClassPage extends StatelessWidget {
                       const SizedBox(width: 10,),
                       Expanded(
                         child: TextFormField(
-                          controller: dateController,
+                          controller: maxController,
                           decoration: InputDecoration(
                             labelText: "Max Students",
                             border: OutlineInputBorder(),
                             isDense: true,
                             suffixIcon: Icon(Icons.people_alt),
-                            
+
                           ),
                         ),
                       ),
