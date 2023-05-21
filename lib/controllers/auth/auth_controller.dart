@@ -102,4 +102,13 @@ class AuthController extends GetxController{
     authService.logout();
   }
 
+  Future<void> updateStudent(StudentModel student) async {
+    User? user = authService.getUser();
+    if(Get.find<ImagePickerController>().imgPath.value != ''){
+      String? path = await ImageCloudStorage().uploadProfilePicture(currentUser.value!.userId,File(Get.find<ImagePickerController>().imgPath.value));
+      await user!.updatePhotoURL(path);
+    }
+    await StudentAPI.updateStudent(student);
+  }
+
 }

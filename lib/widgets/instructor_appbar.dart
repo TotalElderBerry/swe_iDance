@@ -4,6 +4,7 @@ import 'package:i_dance/views/student/student_home.dart';
 
 import '../controllers/auth/auth_controller.dart';
 import '../controllers/notification/notifcontroller.dart';
+import '../views/instructor/edit_instructor_profile.dart';
 import '../views/instructor/instructor_home.dart';
 import '../views/instructor/instructor_profile.dart';
 import '../views/instructor/notifications.dart';
@@ -45,7 +46,9 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
               ),
               Divider(),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(EditInstructorProfile());
+                },
                 icon: Icon(Icons.edit),
                 label: Text('Edit Profile'),
               ),

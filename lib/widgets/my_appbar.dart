@@ -11,6 +11,7 @@ import '../controllers/student/student.dart';
 import '../models/instructor.dart';
 import '../views/instructor/instructor_home.dart';
 import '../views/instructor/instructor_signin.dart';
+import '../views/student/edit_student_profile.dart';
 import '../views/student/notifications.dart';
 import '../views/student/student_profile.dart';
  
@@ -50,7 +51,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               Divider(),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(EditStudentProfile());
+                },
                 icon: Icon(Icons.edit),
                 label: Text('Edit Profile'),
               ),

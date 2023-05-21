@@ -14,7 +14,7 @@ class DanceClassAPI{
   static Future<void> updateLiveDanceClass(LiveDanceClassModel liveDanceClassModel) async {
     
     final route = '/live/${liveDanceClassModel.liveClassId}';
-    final respone = await http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+    final respone = await http.put(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
     body: liveDanceClassModel.toJson(),
     headers: {
         "Content-Type": "application/json"
@@ -25,7 +25,7 @@ class DanceClassAPI{
   static Future<void> updateRecordedDanceClass(RecordedDanceClassModel recordedDanceClassModel) async {
     
     final route = '/live/${recordedDanceClassModel.recordedClassId}';
-    final respone = await http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+    final respone = await http.put(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
     body: recordedDanceClassModel.toJson(),
     headers: {
         "Content-Type": "application/json"

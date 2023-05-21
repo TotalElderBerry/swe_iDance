@@ -14,7 +14,7 @@ class StudentAPI {
   static Future<void> updateStudent(StudentModel student) async {
     
     final route = '/student/${student.studentId}';
-    final respone = await http.post(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+    final respone = await http.put(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
     body: jsonEncode(
       <String,String> {
         "user_id": student.userId,

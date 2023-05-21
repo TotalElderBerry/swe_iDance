@@ -53,23 +53,22 @@ class StudentBookedRecordedClassCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Chip(
-                          label: Row(
-                            children: [
-                              const Icon(
-                                Icons.video_camera_front_rounded,
-                                size: 17,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'Recorded Class',
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                            ],
-                          ),
-                        ),
+                        //
+                        Container(
+                                          padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: Text(
+                                            "Live Class",
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.purple,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
                         Text(
                           recordedDanceClassModel.danceName,
                           style: Theme.of(context).textTheme.titleMedium,

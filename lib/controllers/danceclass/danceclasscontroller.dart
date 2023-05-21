@@ -85,6 +85,11 @@ class DanceClassController extends GetxController{
     final id = await DanceClassAPI.addRecordedDanceClass(recordedDanceClass);
   }
 
+  void updateLiveDanceClass(LiveDanceClassModel liveDanceClass)async{
+    await ImageCloudStorage.uploadDanceClassPicture(liveDanceClass.instructor.instructorId, liveDanceClass.danceClassId, File(Get.find<ImagePickerController>().imgPathDanceClass.value));
+
+  }
+
   Future<bool> populateUpcomingClasses() async {
 
     bool hasFetched = false;
