@@ -12,7 +12,7 @@ class StudentNotification extends StatelessWidget {
         title: Text('Notifications'),
       ),
       body: FutureBuilder(
-        future: Get.find<NotificationController>().getNotificationsOfUser(Get.find<AuthController>().currentInstructor.value!.userId,2),
+        future: Get.find<NotificationController>().getNotificationsOfUser(Get.find<AuthController>().currentUser.value!.userId,2),
         builder: (context, snapshot) {
           print(snapshot);
           if(snapshot.hasData){
