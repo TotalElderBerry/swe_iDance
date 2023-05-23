@@ -462,6 +462,7 @@ class _AddLiveDanceClassPageState extends State<AddLiveDanceClassPage> {
                     accountNumber: referenceNumberController.text)
                   );
                   print(danceClass);
+                  
                 Get.to(ReviewDanceClassPage(danceClass: danceClass));
             }
           }
