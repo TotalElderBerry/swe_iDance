@@ -125,6 +125,24 @@ class InstructorController extends GetxController{
       }
     }  
 
+    Future<bool> rejectCancellationRequest(int studentId, int danceClassId)async{
+      try {
+         final response = await InstructorAPI.rejectCancellationRequest(studentId, danceClassId);
+         return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    Future<bool> acceptCancellationRequest(int studentId, int danceClassId)async{
+      try {
+         final response = await InstructorAPI.acceptCancellationRequest(studentId, danceClassId);
+         return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
     Future<bool> getInstructors()async{
       instructors.clear();
       try {

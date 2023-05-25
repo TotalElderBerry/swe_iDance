@@ -179,6 +179,16 @@ class StudentController extends GetxController{
     return result;
   }
 
+  Future<bool> cancelDanceClass(int dance_class_id, String referenceNumber, int price) async {
+    final currentUser = Get.find<AuthController>().currentUser.value!;
+
+    // bool result = await StudentAPI.bookDanceClass(currentUser.studentId, dance_class_id, referenceNumber, price,"${currentUser.firstName} ${currentUser.lastName}");
+    bool result = await StudentAPI.cancelDanceClass(currentUser.studentId, dance_class_id);
+    return result;
+  }
+
+
+
   void socketBookDanceClass(LiveDanceClassModel liveClass){
     final currentUser = Get.find<AuthController>().currentUser.value!;
 
