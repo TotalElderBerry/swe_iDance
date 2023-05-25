@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/models/student.dart';
 import 'package:i_dance/views/auth/register_page2.dart';
-import 'package:flutter/services.dart';
 
 import '../../theme/theme.dart';
 
@@ -94,19 +92,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     Expanded(
                       child: TextFormField(
                         controller: contactNumberController,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
                           hintText: "Contact number",
                           labelText: "Contact Number",
                           border: OutlineInputBorder(),
                           isDense: true
                         ),
-
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Please enter your contact number";
                           }
-                          
                           return null;
                         },
                       ),
@@ -115,6 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Expanded(
                       child: TextFormField(
                         controller: birthDateController,
+                        keyboardType: TextInputType.datetime,
                         decoration: InputDecoration(
                           hintText: "Birthdate",
                           labelText: "Birthdate",

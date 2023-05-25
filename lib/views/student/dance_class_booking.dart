@@ -84,6 +84,20 @@ class JoinDanceClassPage extends StatelessWidget {
               title: Text("PayMaya"),
               trailing: Radio(value: "", groupValue: "", onChanged: (val){}),
             ),
+            Card(
+                elevation: 2,
+                child: ListTile(
+                  leading: const CircleAvatar(
+                    child: Icon(
+                      Icons.business_outlined,
+                      color: Colors.black,
+                    ),
+                  ),
+                  title: const Text("Pay On Site"),
+                  trailing:
+                  Radio(value: "", groupValue: "", onChanged: (val) {}),
+                ),
+              ),
             Divider(),
 
             Card(

@@ -147,7 +147,12 @@ class _EditRecordedClassPageState extends State<EditRecordedClassPage> {
                 //         }
                 //       })),
                 // ),
-                TextField(
+                TextFormField(
+                  validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter dance class name";
+                      }
+                    },
                   textCapitalization: TextCapitalization.words,
                   controller: danceController,
                   decoration:
@@ -160,6 +165,11 @@ class _EditRecordedClassPageState extends State<EditRecordedClassPage> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please enter song name";
+                            }
+                          },
                         textCapitalization: TextCapitalization.words,
                         controller: songController,
                         decoration: const InputDecoration(
@@ -175,6 +185,11 @@ class _EditRecordedClassPageState extends State<EditRecordedClassPage> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please enter price";
+                            }
+                          },
                         controller: priceController,
                         decoration: const InputDecoration(
                           labelText: "Price",
@@ -193,6 +208,11 @@ class _EditRecordedClassPageState extends State<EditRecordedClassPage> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please enter link";
+                            }
+                          },
                         textCapitalization: TextCapitalization.words,
                         controller: linkController,
                         decoration: const InputDecoration(
@@ -322,6 +342,11 @@ class _EditRecordedClassPageState extends State<EditRecordedClassPage> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please enter details";
+                            }
+                          },
                         textCapitalization: TextCapitalization.words,
                         maxLines: null,
                         controller: detailsController,

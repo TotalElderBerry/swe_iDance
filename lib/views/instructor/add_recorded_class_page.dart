@@ -30,6 +30,9 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
 
   bool isHard = false;
 
+  bool isPaymaya = true;
+  bool isOnSite = false;
+
   String difficult = "Easy";
 
   int currentStep = 0;
@@ -205,14 +208,63 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
               Card(
                 elevation: 2,
                 child: ListTile(
-                  leading: CircleAvatar(
+                  leading: const CircleAvatar(
                     backgroundImage: NetworkImage(
                         'https://mb.com.ph/wp-content/uploads/2021/09/32049-1568x1460.png'),
                   ),
-                  title: Text("PayMaya"),
-                  trailing:
-                      Radio(value: "", groupValue: "", onChanged: (val) {}),
+                  title: const Text("PayMaya"),
+                  trailing: Radio(
+                    value: true,
+                    groupValue: isPaymaya,
+                    onChanged: (bool? value) {
+                      print(value);
+                      if (value != null) {
+                        setState(() {
+                          isPaymaya = value;
+                        });
+                        print(isPaymaya);
+                      }
+                    },
+                  ),
                 ),
+              ),
+              Card(
+                elevation: 2,
+                child: ListTile(
+                  leading: const CircleAvatar(
+                    child: Icon(
+                      Icons.business_outlined,
+                      color: Colors.black,
+                    ),
+                  ),
+                  title: const Text("Pay On Site"),
+                  trailing:
+                  Radio(
+                    value: true,
+                    groupValue: !isPaymaya,
+                    onChanged: (bool? value) {
+                      if (value != null) {
+                        setState(() {
+                          isPaymaya = !value;
+                        });
+                      }
+                    },
+                  ),
+
+                ),
+              ),
+              Visibility(
+                visible: isPaymaya,
+                child: TextFormField(
+                ),  
+              ),
+              Visibility(
+                visible: isPaymaya,
+                child: TextFormField(
+                ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               const SizedBox(height: 10,),
               TextField(
@@ -284,8 +336,7 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
                     color: Colors.grey[400],
                   ),
                 ),
-              )
-              ,
+              ),
           ],
         ),
         isActive: true

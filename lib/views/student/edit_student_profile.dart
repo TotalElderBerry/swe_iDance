@@ -151,6 +151,12 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
                 height: 12,
               ),
               TextFormField(
+                validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your first name';
+                    }
+                    return null;
+                  },
                 controller: firstNameController,
                 decoration: const InputDecoration(
                   hintText: "Enter your first name",
@@ -162,6 +168,12 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
                 height: 12,
               ),
               TextFormField(
+                validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your last name';
+                    }
+                    return null;
+                  },
                 controller: lastNameController,
                 decoration: const InputDecoration(
                   hintText: "Enter your last name",
@@ -173,7 +185,14 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
                 height: 12,
               ),
               TextFormField(
+                validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your contact number';
+                    }
+                    return null;
+                  },
                 controller: contactNumberController,
+                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   hintText: "Enter your contact number",
                   labelText: "Contact Number",
@@ -184,7 +203,14 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
                 height: 12,
               ),
               TextFormField(
+                validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your birthdate';
+                    }
+                    return null;
+                  },
                 controller: birthDateController,
+                keyboardType: TextInputType.datetime,
                 decoration: const InputDecoration(
                   hintText: "Enter your birthdate",
                   labelText: "Birthdate",
@@ -195,6 +221,12 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
                 height: 12,
               ),
               TextFormField(
+                validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email address';
+                    }
+                    return null;
+                  },
                 controller: _emailController,
                 decoration: const InputDecoration(
                   hintText: "Enter your email address",

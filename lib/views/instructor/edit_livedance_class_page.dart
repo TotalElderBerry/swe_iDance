@@ -170,7 +170,13 @@ class _EditLiveDancePageState extends State<EditLiveDancePage> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const TextField(
+                    TextFormField(
+                       validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter dance class name";
+                      }
+                      return null;
+                    },
                       decoration: InputDecoration(
                         labelText: "Dance Class Name",
                       ),
@@ -181,6 +187,7 @@ class _EditLiveDancePageState extends State<EditLiveDancePage> {
                         Expanded(
                           child: TextFormField(
                             controller: dateController,
+                            keyboardType: TextInputType.datetime,
                             decoration: InputDecoration(
                               labelText: "Date",
                               border: const OutlineInputBorder(),
@@ -209,6 +216,7 @@ class _EditLiveDancePageState extends State<EditLiveDancePage> {
                         Expanded(
                           child: TextFormField(
                             controller: timeController,
+                            keyboardType: TextInputType.datetime,
                             decoration: InputDecoration(
                               labelText: "Time",
                               border: const OutlineInputBorder(),
@@ -238,6 +246,13 @@ class _EditLiveDancePageState extends State<EditLiveDancePage> {
                       children: [
                         Expanded(
                           child: TextFormField(
+                            validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter price";
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.datetime,
                             controller: priceController,
                             decoration: const InputDecoration(
                               labelText: "Price",
@@ -349,7 +364,13 @@ class _EditLiveDancePageState extends State<EditLiveDancePage> {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    TextField(
+                    TextFormField(
+                      validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter dance class details";
+                            }
+                            return null;
+                          },
                       controller: detailsController,
                       decoration: const InputDecoration(
                         labelText: "Dance Class Details",
