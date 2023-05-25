@@ -17,6 +17,8 @@ class InstructorNotification extends StatelessWidget {
           print(snapshot);
           if(snapshot.hasData){
           return Obx(() {
+              Get.find<NotificationController>().listenNotifications();
+
             Get.find<NotificationController>().newNotifications.value = 0;
 
                   // Get.find<NotificationController>().listenNotifications();

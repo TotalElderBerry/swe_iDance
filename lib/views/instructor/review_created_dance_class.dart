@@ -7,6 +7,7 @@ import 'package:i_dance/views/instructor/instructor_home.dart';
 
 import '../../controllers/danceclass/danceclasscontroller.dart';
 import '../../controllers/image/imagecontroller.dart';
+import '../../controllers/instructor/instructor.dart';
 import '../../models/live_dance_class.dart';
 
 class ReviewDanceClassPage extends StatefulWidget {
@@ -143,9 +144,11 @@ class _ReviewDanceClassPageState extends State<ReviewDanceClassPage> {
           height: 50,
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               try {
-                Get.find<DanceClassController>().addLiveDanceClass(widget.danceClass);
+                await Get.find<DanceClassController>().addLiveDanceClass(widget.danceClass);
+                //
+                Get.find<InstructorController>().instructorDanceClass.add(widget.danceClass);
                 ImageCloudStorage.uploadDanceClassPicture(
                   widget.danceClass.instructor.instructorId,
                   widget.danceClass.danceClassId,

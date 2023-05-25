@@ -30,6 +30,9 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
 
   bool isHard = false;
 
+  bool isPaymaya = true;
+  bool isOnSite = false;
+
   String difficult = "Easy";
 
   int currentStep = 0;
@@ -290,7 +293,6 @@ class _AddRecordedDancePageState extends State<AddRecordedDancePage> {
         ),
         isActive: true
       ),
-
       Step(
         title: const Text('Review and Submit'),
         content: Column(

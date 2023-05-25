@@ -18,6 +18,9 @@ class AddRecordedPaymentPage extends StatelessWidget {
   RecordedDanceClassModel recordedDanceClassModel;
   AddRecordedPaymentPage({super.key, required this.recordedDanceClassModel });
 
+  bool isPaymaya = true;
+  bool isOnSite = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,8 +87,7 @@ class AddRecordedPaymentPage extends StatelessWidget {
                   labelText: "Reference Number"
                 ),
               ),
-              const Spacer(),
-              
+              const Spacer(),     
             ],
           ),
         ),
