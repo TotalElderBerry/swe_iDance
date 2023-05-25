@@ -5,10 +5,12 @@ import 'package:skeletons/skeletons.dart';
 import '../../controllers/danceclass/danceclasscontroller.dart';
 import '../../widgets/instructor/approved_widget.dart';
 import '../../widgets/instructor/pending_widget.dart';
+import '../../widgets/instructor/studentscancel_widget.dart';
 
 class StudentListScreen extends StatelessWidget {
   LiveDanceClassModel liveDance;
-  StudentListScreen({super.key, required this.initIndex, required this.liveDance});
+  StudentListScreen(
+      {super.key, required this.initIndex, required this.liveDance});
   final int initIndex;
 
   void filterItems(String query) {
@@ -18,7 +20,9 @@ class StudentListScreen extends StatelessWidget {
       final arr = Get.find<DanceClassController>().studentsPending;
       final arr2 = Get.find<DanceClassController>().studentsApproved;
       arr.forEach((item) {
-        if (item.student.firstName.toLowerCase().contains(query.toLowerCase())) {
+        if (item.student.firstName
+            .toLowerCase()
+            .contains(query.toLowerCase())) {
           // tempList.add(item);
           students.add(item);
         }
@@ -27,20 +31,28 @@ class StudentListScreen extends StatelessWidget {
       Get.find<DanceClassController>().studentPendingSearched.addAll(students);
 
       arr2.forEach((item) {
-        if (item.student.firstName.toLowerCase().contains(query.toLowerCase())) {
+        if (item.student.firstName
+            .toLowerCase()
+            .contains(query.toLowerCase())) {
           // tempList.add(item);
           students2.add(item);
         }
       });
       Get.find<DanceClassController>().studentApprovedSearched.clear();
-      Get.find<DanceClassController>().studentApprovedSearched.addAll(students2);
+      Get.find<DanceClassController>()
+          .studentApprovedSearched
+          .addAll(students2);
 
       return;
-    }else{
-       Get.find<DanceClassController>().studentPendingSearched.clear();
-       Get.find<DanceClassController>().studentPendingSearched.addAll(Get.find<DanceClassController>().studentsPending);
-       Get.find<DanceClassController>().studentApprovedSearched.clear();
-       Get.find<DanceClassController>().studentApprovedSearched.addAll(Get.find<DanceClassController>().studentsApproved);
+    } else {
+      Get.find<DanceClassController>().studentPendingSearched.clear();
+      Get.find<DanceClassController>()
+          .studentPendingSearched
+          .addAll(Get.find<DanceClassController>().studentsPending);
+      Get.find<DanceClassController>().studentApprovedSearched.clear();
+      Get.find<DanceClassController>()
+          .studentApprovedSearched
+          .addAll(Get.find<DanceClassController>().studentsApproved);
     }
   }
 
@@ -48,10 +60,11 @@ class StudentListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: initIndex,
-      length: 2,
+      length: 3,
       child: RefreshIndicator(
-        onRefresh: ()async{
-              Get.find<DanceClassController>().getLiveDanceClassStudents(liveDance.danceClassId);
+        onRefresh: () async {
+          Get.find<DanceClassController>()
+              .getLiveDanceClassStudents(liveDance.danceClassId);
         },
         child: Scaffold(
           appBar: AppBar(
@@ -65,7 +78,7 @@ class StudentListScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextField(
-                        onChanged: (val){
+                        onChanged: (val) {
                           // TOFIXXXXX!!!
                           filterItems(val);
                         },
@@ -86,6 +99,7 @@ class StudentListScreen extends StatelessWidget {
                   height: 50,
                   child: AppBar(
                     bottom: TabBar(
+                      isScrollable: true,
                       tabs: [
                         Tab(
                           icon: Row(
@@ -93,7 +107,8 @@ class StudentListScreen extends StatelessWidget {
                             children: [
                               const Icon(Icons.pending_outlined),
                               Text("Pending",
-                                  style: Theme.of(context).textTheme.bodyMedium),
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
                             ],
                           ),
                         ),
@@ -103,7 +118,19 @@ class StudentListScreen extends StatelessWidget {
                             children: [
                               const Icon(Icons.approval),
                               Text("Approved",
-                                  style: Theme.of(context).textTheme.bodyMedium),
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
+                            ],
+                          ),
+                        ),
+                        Tab(
+                          icon: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.cancel),
+                              Text("Cancel",
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
                             ],
                           ),
                         ),
@@ -111,25 +138,26 @@ class StudentListScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20,),
-      
+                const SizedBox(
+                  height: 20,
+                ),
                 FutureBuilder(
-                  future: Get.find<DanceClassController>().getLiveDanceClassStudents(liveDance.danceClassId),
-                  builder: ((context, snapshot) {
-                    if(snapshot.hasData){
-      
-                      return Expanded(
-                        child: TabBarView(
-                          children: [
-                            PendingWidget(liveDance: liveDance),
-                            ApprovedWidget(),
-                          ],
-                        ),
-                      );
-                    }
-                    return Expanded(child: SkeletonListView());
-                    
-                })),
+                    future: Get.find<DanceClassController>()
+                        .getLiveDanceClassStudents(liveDance.danceClassId),
+                    builder: ((context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Expanded(
+                          child: TabBarView(
+                            children: [
+                              PendingWidget(liveDance: liveDance),
+                              ApprovedWidget(),
+                              CancelWidget(liveDance: liveDance),
+                            ],
+                          ),
+                        );
+                      }
+                      return Expanded(child: SkeletonListView());
+                    })),
               ],
             ),
           ),

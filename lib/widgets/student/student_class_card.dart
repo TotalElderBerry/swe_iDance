@@ -6,8 +6,12 @@ import '../../views/student/students_class_details.dart';
 
 class StudentClassCard extends StatelessWidget {
   LiveDanceClassModel liveDance;
-  bool isPending;
-  StudentClassCard({super.key, required this.isPending, required this.liveDance});
+  bool isPending, isCancelled;
+  StudentClassCard(
+      {super.key,
+      required this.isPending,
+      required this.liveDance,
+      required this.isCancelled});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +19,7 @@ class StudentClassCard extends StatelessWidget {
       onTap: () {
         Get.to(
           StudentDanceClassDetails(
+            isCancelled: isCancelled,
             liveDance: liveDance,
             isPending: isPending,
           ),
@@ -30,21 +35,21 @@ class StudentClassCard extends StatelessWidget {
             child: Row(
               children: [
                 ClipRRect(
-                          borderRadius:const  BorderRadius.all(Radius.circular(8)),
-                            child:
-                            (liveDance.img == "")?
-                            const SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: DecoratedBox(decoration: BoxDecoration(color: Colors.grey)),
-                                ): 
-                            Image.network(
-                                liveDance.img!,
-                                fit: BoxFit.cover,
-                                width: 80,
-                                height: 80,
-                            ),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  child: (liveDance.img == "")
+                      ? const SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: DecoratedBox(
+                              decoration: BoxDecoration(color: Colors.grey)),
+                        )
+                      : Image.network(
+                          liveDance.img!,
+                          fit: BoxFit.cover,
+                          width: 80,
+                          height: 80,
                         ),
+                ),
                 const SizedBox(
                   width: 10,
                 ),
@@ -55,20 +60,21 @@ class StudentClassCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                                          padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(12),
-                                          ),
-                                          child: Text(
-                                            "Live Class",
-                                            style: TextStyle(
-                                              fontSize: 10,
-                                              color: Colors.purple,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            "Live Class",
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.purple,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                         Text(
                           liveDance.danceName,
                           style: Theme.of(context).textTheme.titleMedium,
@@ -78,7 +84,7 @@ class StudentClassCard extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                             CircleAvatar(
+                            CircleAvatar(
                               radius: 10,
                               backgroundImage: NetworkImage(
                                   liveDance.instructor.profilePicture!),
