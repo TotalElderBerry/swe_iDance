@@ -57,15 +57,12 @@ class InstructorHome extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Your Next Event", style: Theme.of(context).textTheme.bodyMedium,),
-                    TextButton(onPressed: (){
-                    
-                    }, child: 
-                      Text("View All", style: Theme.of(context).textTheme.bodySmall),
-                    )
+                    Text(
+                      "Your Next Event",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ],
                 ),
-            
                 FutureBuilder(
                   future: Get.find<InstructorController>().getLiveClassesOfInstructorbyId(Get.find<AuthController>().currentInstructor.value!),
                   builder: (context,snapshot){

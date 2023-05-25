@@ -3,5 +3,5 @@ class ApiConstants {
   // static String baseEmuUrl = "http://10.0.2.2:8000/api";
   static String socketBase = "http://192.168.254.102:8002";
 
-  static String baseEmuUrl = "http://192.168.160.240:8000/api";
+  static String baseEmuUrl = "http://10.10.1.87:8000/api";
 }

@@ -144,9 +144,9 @@ class _ReviewDanceClassPageState extends State<ReviewDanceClassPage> {
           height: 50,
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               try {
-                Get.find<DanceClassController>().addLiveDanceClass(widget.danceClass);
+                await Get.find<DanceClassController>().addLiveDanceClass(widget.danceClass);
                 //
                 Get.find<InstructorController>().instructorDanceClass.add(widget.danceClass);
                 ImageCloudStorage.uploadDanceClassPicture(

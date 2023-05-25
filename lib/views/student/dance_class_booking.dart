@@ -10,22 +10,30 @@ import 'package:i_dance/views/student/pay_page.dart';
 import '../../controllers/notification/notifcontroller.dart';
 import '../../models/live_dance_class.dart';
 import '../../utils/generateRefNumber.dart';
-class JoinDanceClassPage extends StatelessWidget {
-  LiveDanceClassModel liveClass;
-  
-  JoinDanceClassPage({super.key, required this.liveClass});
 
+class JoinDanceClassPage extends StatefulWidget {
+  JoinDanceClassPage({required this.liveClass, Key? key}) : super(key: key);
+  LiveDanceClassModel liveClass;
+
+  @override
+  State<JoinDanceClassPage> createState() => _JoinDanceClassPageState();
+}
+
+class _JoinDanceClassPageState extends State<JoinDanceClassPage> {
+
+  bool isPaymaya = true;
+  bool isOnSite = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat,
+      FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
         height: 50,
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: () async {
-            
+
             String refNumber = generateReferenceNumber(7);
             refNumber += "-";
             refNumber += generateReferenceNumber(4);
@@ -37,15 +45,15 @@ class JoinDanceClassPage extends StatelessWidget {
             refNumber += generateReferenceNumber(7);
             final response = await http.post(Uri.parse('https://pg-sandbox.paymaya.com/checkout/v1/checkouts'),
               body: jsonEncode(
-                <String,dynamic> {
-                  "totalAmount": {"value": liveClass.price, "currency": 'PHP'},
-                  "requestReferenceNumber": refNumber,
-                  "redirectUrl": {
-                    "success": 'https://www.merchantsite.com/success?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
-                    "failure": 'https://www.mechantsite.com/failure?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
-                    "cancel": 'https://www.merchantsite.com/cancel?id=5fc10b93-bdbd-4f31-b31d-4575a3785009'
+                  <String,dynamic> {
+                    "totalAmount": {"value": widget.liveClass.price, "currency": 'PHP'},
+                    "requestReferenceNumber": refNumber,
+                    "redirectUrl": {
+                      "success": 'https://www.merchantsite.com/success?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
+                      "failure": 'https://www.mechantsite.com/failure?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
+                      "cancel": 'https://www.merchantsite.com/cancel?id=5fc10b93-bdbd-4f31-b31d-4575a3785009'
+                    }
                   }
-                }
               ),
               headers: {
                 'content-type': 'application/json',
@@ -56,7 +64,7 @@ class JoinDanceClassPage extends StatelessWidget {
             if(response.statusCode == 200){
               final res = jsonDecode(response.body);
               // await Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
-              Get.find<StudentController>().socketBookDanceClass(liveClass);
+              Get.find<StudentController>().socketBookDanceClass(widget.liveClass);
               Get.find<NotificationController>().listenNotifications();
 
               // Get.to(PaymentPage(url: res['redirectUrl'],));
@@ -77,47 +85,77 @@ class JoinDanceClassPage extends StatelessWidget {
           children: [
             Text("Payment Details", style: Theme.of(context).textTheme.headlineLarge,),
             SizedBox(height: 10,),
-            ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage('https://mb.com.ph/wp-content/uploads/2021/09/32049-1568x1460.png'),
-              ),
-              title: Text("PayMaya"),
-              trailing: Radio(value: "", groupValue: "", onChanged: (val){}),
-            ),
             Card(
-                elevation: 2,
-                child: ListTile(
-                  leading: const CircleAvatar(
-                    child: Icon(
-                      Icons.business_outlined,
-                      color: Colors.black,
-                    ),
-                  ),
-                  title: const Text("Pay On Site"),
-                  trailing:
-                  Radio(value: "", groupValue: "", onChanged: (val) {}),
+              elevation: 2,
+              child: ListTile(
+                leading: const CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      'https://mb.com.ph/wp-content/uploads/2021/09/32049-1568x1460.png'),
+                ),
+                title: const Text("PayMaya"),
+                trailing: Radio(
+                  value: true,
+                  groupValue: isPaymaya,
+                  onChanged: (bool? value) {
+                    print(value);
+                    if (value != null) {
+                      setState(() {
+                        isPaymaya = value;
+                      });
+                      print(isPaymaya);
+                    }
+                  },
                 ),
               ),
+            ),
+            Card(
+              elevation: 2,
+              child: ListTile(
+                leading: const CircleAvatar(
+                  child: Icon(
+                    Icons.business_outlined,
+                    color: Colors.black,
+                  ),
+                ),
+                title: const Text("Pay On Site"),
+                trailing:
+                Radio(
+                  value: true,
+                  groupValue: !isPaymaya,
+                  onChanged: (bool? value) {
+                    if (value != null) {
+                      setState(() {
+                        isPaymaya = !value;
+                      });
+                    }
+                  },
+                ),
+
+              ),
+            ),
             Divider(),
 
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text("Name"),
-                      trailing: Text(liveClass.payment.accountName),
-                    ),
-                    Divider(
-                      indent: 5,
-                      endIndent: 5,
-                    ),
-                    ListTile(
-                      title: Text("Reference Number"),
-                      trailing: Text(liveClass.payment.accountNumber),
-                    )
-                  ],
+            Visibility(
+              visible: isPaymaya,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text("Name"),
+                        trailing: Text(widget.liveClass.payment.accountName),
+                      ),
+                      Divider(
+                        indent: 5,
+                        endIndent: 5,
+                      ),
+                      ListTile(
+                        title: Text("Reference Number"),
+                        trailing: Text(widget.liveClass.payment.accountNumber),
+                      )
+                    ],
+                  ),
                 ),
               ),
             )
@@ -127,3 +165,4 @@ class JoinDanceClassPage extends StatelessWidget {
     );
   }
 }
+

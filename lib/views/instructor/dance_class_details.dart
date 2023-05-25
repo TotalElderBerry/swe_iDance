@@ -43,7 +43,7 @@ class DanceClassDetails extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
         color: tagColor,
         borderRadius: BorderRadius.circular(20),
@@ -55,10 +55,10 @@ class DanceClassDetails extends StatelessWidget {
             size: 16,
             color: Colors.white,
           ),
-          SizedBox(width: 4),
+          const SizedBox(width: 4),
           Text(
             tagText,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -72,10 +72,10 @@ class DanceClassDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dance Class Details'),
+        title: const Text('Dance Class Details'),
         actions: [
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: () {
               // Add your edit dance class logic here
               Get.to(EditLiveDancePage(liveDance: liveDance,));
@@ -85,7 +85,7 @@ class DanceClassDetails extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -102,7 +102,7 @@ class DanceClassDetails extends StatelessWidget {
                   color: liveDance.img!.isNotEmpty ? null : Colors.grey,
                 ),
                 child: liveDance.img!.isEmpty
-                    ? Center(
+                    ? const Center(
                         child: Text(
                           'No Image Uploaded',
                           style: TextStyle(color: Colors.white, fontSize: 18),
@@ -111,90 +111,118 @@ class DanceClassDetails extends StatelessWidget {
                     : null,
               ),
               SizedBox(height: 16),
-              Text(
-                liveDance.danceName,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              SizedBox(height: 16),
+                Text(
+                  liveDance.danceName,
+                  style: TextStyle(fontSize: 26,
+                  fontWeight: FontWeight.bold),
+                  
+                ),
+              const SizedBox(height: 16),
               Column(
                 children: [
-                  Row(
-                    children: [
-                      Icon(Icons.calendar_today, size: 16, color: Colors.grey),
-                      SizedBox(width: 8),
-                      Text(
-                        liveDance.date,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
+                  Container(
+                    width: 120,
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.calendar_today, size: 16, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(
+                          liveDance.date,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Icon(Icons.attach_money, size: 16, color: Colors.grey),
-                      SizedBox(width: 8),
-                      Text(
-                        '\$${liveDance.price}',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
+                  const SizedBox(height: 8),
+                  Container(
+                    width: 120,
+
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.attach_money, size: 16, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(
+                          '\$${liveDance.price}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Icon(Icons.location_on, size: 16, color: Colors.grey),
-                      SizedBox(width: 8),
-                      Text(
-                        liveDance.location,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
+                  const SizedBox(height: 8),
+                  Container(
+                    width: 120,
+                    
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.location_on, size: 16, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(
+                          liveDance.location,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton.icon(
                     onPressed: () => Get.to(StudentListScreen(initIndex: 0, liveDance: liveDance)),
-                    icon: Icon(Icons.pending_actions, color: Colors.white),
-                    label: Text('Pending'),
+                    icon: const Icon(Icons.pending_actions, color: Colors.white),
+                    label: const Text('Pending'),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue,
                       onPrimary: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                      textStyle: TextStyle(fontSize: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                      textStyle: const TextStyle(fontSize: 14),
                     ),
                   ),
                   ElevatedButton.icon(
                     onPressed: () => Get.to(StudentListScreen(initIndex: 1, liveDance: liveDance)),
-                    icon: Icon(Icons.check, color: Colors.white),
-                    label: Text('Approved'),
+                    icon: const Icon(Icons.check, color: Colors.white),
+                    label: const Text('Approved'),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
                       onPrimary: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                      textStyle: TextStyle(fontSize: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                      textStyle: const TextStyle(fontSize: 14),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 'Description',
                 style: Theme.of(context).textTheme.headline6,
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 liveDance.description,
                 style: TextStyle(color: Colors.grey[600]),
@@ -205,7 +233,7 @@ class DanceClassDetails extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.to(AttendanceScreen(liveDance: liveDance)),
-        child: Icon(Icons.assignment),
+        child: const Icon(Icons.assignment),
       ),
     );
   }

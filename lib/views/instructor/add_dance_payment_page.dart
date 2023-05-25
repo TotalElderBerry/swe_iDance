@@ -74,31 +74,6 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                   ),
                 ),
               ),
-              Card(
-                elevation: 2,
-                child: ListTile(
-                  leading: const CircleAvatar(
-                    child: Icon(
-                      Icons.business_outlined,
-                      color: Colors.black,
-                    ),
-                  ),
-                  title: const Text("Pay On Site"),
-                  trailing:
-                  Radio(
-                    value: true,
-                    groupValue: !isPaymaya,
-                    onChanged: (bool? value) {
-                      if (value != null) {
-                        setState(() {
-                          isPaymaya = !value;
-                        });
-                      }
-                    },
-                  ),
-
-                ),
-              ),
               const SizedBox(
                 height: 20,
               ),
