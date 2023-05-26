@@ -402,7 +402,12 @@ class _EditRecordedClassPageState extends State<EditRecordedClassPage> {
                         _showDialog(context);
                       },
                      
-                  child: const Text("Update")),
+                  child: const Text("Update"),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 244, 209, 235),
+                  ),
+                  ),
+                  ),
                 ),
               ],
                 )
