@@ -20,7 +20,6 @@ class ReviewDanceClassPage extends StatefulWidget {
 }
 
 class _ReviewDanceClassPageState extends State<ReviewDanceClassPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +62,8 @@ class _ReviewDanceClassPageState extends State<ReviewDanceClassPage> {
             const SizedBox(height: 10),
             Row(
               children: [
-                Icon(Icons.calendar_today, color: Theme.of(context).primaryColor),
+                Icon(Icons.calendar_today,
+                    color: Theme.of(context).primaryColor),
                 const SizedBox(width: 5),
                 Text(
                   widget.danceClass.date,
@@ -98,7 +98,8 @@ class _ReviewDanceClassPageState extends State<ReviewDanceClassPage> {
                 const SizedBox(height: 10),
                 ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage('https://mb.com.ph/wp-content/uploads/2021/09/32049-1568x1460.png'),
+                    backgroundImage: NetworkImage(
+                        'https://mb.com.ph/wp-content/uploads/2021/09/32049-1568x1460.png'),
                   ),
                   title: Text("PayMaya"),
                   subtitle: Column(
@@ -146,13 +147,21 @@ class _ReviewDanceClassPageState extends State<ReviewDanceClassPage> {
           child: ElevatedButton(
             onPressed: () async {
               try {
-                await Get.find<DanceClassController>().addLiveDanceClass(widget.danceClass);
+                await Get.find<DanceClassController>()
+                    .addLiveDanceClass(widget.danceClass);
                 //
-                Get.find<InstructorController>().instructorDanceClass.add(widget.danceClass);
+                Get.find<InstructorController>()
+                    .instructorDanceClass
+                    .add(widget.danceClass);
+                Get.find<InstructorController>()
+                    .toShowList
+                    .add(widget.danceClass);
                 ImageCloudStorage.uploadDanceClassPicture(
                   widget.danceClass.instructor.instructorId,
                   widget.danceClass.danceClassId,
-                  File(Get.find<ImagePickerController>().imgPathDanceClass.value),
+                  File(Get.find<ImagePickerController>()
+                      .imgPathDanceClass
+                      .value),
                 );
                 Get.offAll(InstructorHome());
               } catch (e) {
@@ -166,7 +175,7 @@ class _ReviewDanceClassPageState extends State<ReviewDanceClassPage> {
     );
   }
 
-  Widget _buildDifficultyTag(String selectedDifficulty){
+  Widget _buildDifficultyTag(String selectedDifficulty) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(

@@ -10,6 +10,7 @@ import 'package:i_dance/views/student/pay_page.dart';
 import '../../controllers/notification/notifcontroller.dart';
 import '../../models/live_dance_class.dart';
 import '../../utils/generateRefNumber.dart';
+import 'home_screen.dart';
 
 class JoinDanceClassPage extends StatefulWidget {
   JoinDanceClassPage({required this.liveClass, Key? key}) : super(key: key);
@@ -20,58 +21,101 @@ class JoinDanceClassPage extends StatefulWidget {
 }
 
 class _JoinDanceClassPageState extends State<JoinDanceClassPage> {
-
   bool isPaymaya = true;
   bool isOnSite = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
         height: 50,
         margin: const EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: () async {
-
-            String refNumber = generateReferenceNumber(7);
-            refNumber += "-";
-            refNumber += generateReferenceNumber(4);
-            refNumber += "-";
-            refNumber += generateReferenceNumber(4);
-            refNumber += "-";
-            refNumber += generateReferenceNumber(4);
-            refNumber += "-";
-            refNumber += generateReferenceNumber(7);
-            final response = await http.post(Uri.parse('https://pg-sandbox.paymaya.com/checkout/v1/checkouts'),
-              body: jsonEncode(
-                  <String,dynamic> {
-                    "totalAmount": {"value": widget.liveClass.price, "currency": 'PHP'},
-                    "requestReferenceNumber": refNumber,
-                    "redirectUrl": {
-                      "success": 'https://www.merchantsite.com/success?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
-                      "failure": 'https://www.mechantsite.com/failure?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
-                      "cancel": 'https://www.merchantsite.com/cancel?id=5fc10b93-bdbd-4f31-b31d-4575a3785009'
-                    }
+            if (isPaymaya) {
+              String refNumber = generateReferenceNumber(7);
+              refNumber += "-";
+              refNumber += generateReferenceNumber(4);
+              refNumber += "-";
+              refNumber += generateReferenceNumber(4);
+              refNumber += "-";
+              refNumber += generateReferenceNumber(4);
+              refNumber += "-";
+              refNumber += generateReferenceNumber(7);
+              final response = await http.post(
+                Uri.parse(
+                    'https://pg-sandbox.paymaya.com/checkout/v1/checkouts'),
+                body: jsonEncode(<String, dynamic>{
+                  "totalAmount": {
+                    "value": widget.liveClass.price,
+                    "currency": 'PHP'
+                  },
+                  "requestReferenceNumber": refNumber,
+                  "redirectUrl": {
+                    "success":
+                        'https://www.merchantsite.com/success?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
+                    "failure":
+                        'https://www.mechantsite.com/failure?id=5fc10b93-bdbd-4f31-b31d-4575a3785009',
+                    "cancel":
+                        'https://www.merchantsite.com/cancel?id=5fc10b93-bdbd-4f31-b31d-4575a3785009'
                   }
-              ),
-              headers: {
-                'content-type': 'application/json',
-                "authorization": 'Basic cGstWjBPU3pMdkljT0kyVUl2RGhkVEdWVmZSU1NlaUdTdG5jZXF3VUU3bjBBaDo='
-              },
-            );
+                }),
+                headers: {
+                  'content-type': 'application/json',
+                  "authorization":
+                      'Basic cGstWjBPU3pMdkljT0kyVUl2RGhkVEdWVmZSU1NlaUdTdG5jZXF3VUU3bjBBaDo='
+                },
+              );
 
-            if(response.statusCode == 200){
-              final res = jsonDecode(response.body);
-              // await Get.find<StudentController>().bookDanceClass(liveClass.danceClassId,refNumber, liveClass.price);
-              Get.find<StudentController>().socketBookDanceClass(widget.liveClass);
-              Get.find<NotificationController>().listenNotifications();
+              if (response.statusCode == 200) {
+                final res = jsonDecode(response.body);
+                await Get.find<StudentController>().bookDanceClass(
+                    widget.liveClass.danceClassId,
+                    refNumber,
+                    widget.liveClass.price);
+                Get.find<StudentController>()
+                    .socketBookDanceClass(widget.liveClass);
+                Get.find<NotificationController>().listenNotifications();
 
-              // Get.to(PaymentPage(url: res['redirectUrl'],));
-              // print("hello");
-              // print(liveClass.liveClassId);
+                Get.to(PaymentPage(
+                  url: res['redirectUrl'],
+                ));
+                // print("hello");
+                // print(liveClass.liveClassId);
+              }
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Pay on site?"),
+                      content:
+                          Text("Payment will be at the cashier in the studio"),
+                      actions: [
+                        TextButton(
+                            onPressed: () async {
+                              Get.offAll(HomeScreen());
+                              await Get.find<StudentController>()
+                                  .bookDanceClass(
+                                      widget.liveClass.danceClassId,
+                                      "On Site Payment",
+                                      widget.liveClass.price);
+                              Get.find<StudentController>()
+                                  .socketBookDanceClass(widget.liveClass);
+                              Get.find<NotificationController>()
+                                  .listenNotifications();
+                              // Navigator.of(context).pop();
+                            },
+                            child: Text("Yes")),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("No")),
+                      ],
+                    );
+                  });
             }
-
           },
           child: const Center(
             child: Text('Pay'),
@@ -83,8 +127,13 @@ class _JoinDanceClassPageState extends State<JoinDanceClassPage> {
         padding: const EdgeInsets.all(32.0),
         child: Column(
           children: [
-            Text("Payment Details", style: Theme.of(context).textTheme.headlineLarge,),
-            SizedBox(height: 10,),
+            Text(
+              "Payment Details",
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
+            SizedBox(
+              height: 10,
+            ),
             Card(
               elevation: 2,
               child: ListTile(
@@ -118,8 +167,7 @@ class _JoinDanceClassPageState extends State<JoinDanceClassPage> {
                   ),
                 ),
                 title: const Text("Pay On Site"),
-                trailing:
-                Radio(
+                trailing: Radio(
                   value: true,
                   groupValue: !isPaymaya,
                   onChanged: (bool? value) {
@@ -130,11 +178,9 @@ class _JoinDanceClassPageState extends State<JoinDanceClassPage> {
                     }
                   },
                 ),
-
               ),
             ),
             Divider(),
-
             Visibility(
               visible: isPaymaya,
               child: Card(
@@ -165,4 +211,3 @@ class _JoinDanceClassPageState extends State<JoinDanceClassPage> {
     );
   }
 }
-

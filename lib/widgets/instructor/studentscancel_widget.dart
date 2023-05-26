@@ -75,6 +75,15 @@ class CancelWidget extends StatelessWidget {
                                                 .studentsCancel
                                                 .removeAt(index);
 
+                                            Get.find<InstructorController>()
+                                                .socketAcceptCancelRequest(
+                                                    liveDance,
+                                                    Get.find<
+                                                            DanceClassController>()
+                                                        .studentsCancel[index]
+                                                        .student
+                                                        .userId);
+
                                             Navigator.of(context).pop();
                                           },
                                           child: Text("Yes")),
@@ -104,6 +113,21 @@ class CancelWidget extends StatelessWidget {
                                     actions: [
                                       TextButton(
                                           onPressed: () async {
+                                            print(
+                                                Get.find<DanceClassController>()
+                                                    .studentsCancel
+                                                    .length);
+                                            print(
+                                                "class id is ${Get.find<DanceClassController>().studentsCancel[index].student.studentId} and student id is ${liveDance.danceClassId}");
+                                            await Get.find<
+                                                    InstructorController>()
+                                                .rejectCancellationRequest(
+                                                    Get.find<
+                                                            DanceClassController>()
+                                                        .studentsCancel[index]
+                                                        .student
+                                                        .studentId,
+                                                    liveDance.danceClassId);
                                             PaymentStudent temp =
                                                 Get.find<DanceClassController>()
                                                     .studentsCancel[index];
@@ -116,15 +140,15 @@ class CancelWidget extends StatelessWidget {
                                             Get.find<DanceClassController>()
                                                 .studentPendingSearched
                                                 .add(temp);
-                                            await Get.find<
-                                                    InstructorController>()
-                                                .rejectCancellationRequest(
-                                                    Get.find<
-                                                            DanceClassController>()
-                                                        .studentsCancel[index]
-                                                        .student
-                                                        .studentId,
-                                                    liveDance.liveClassId);
+
+                                            // Get.find<InstructorController>()
+                                            //     .socketRejectCancelRequest(
+                                            //         liveDance,
+                                            //         Get.find<
+                                            //                 DanceClassController>()
+                                            //             .studentsCancel[index]
+                                            //             .student
+                                            //             .userId);
                                             Navigator.of(context).pop();
                                           },
                                           child: Text("Yes")),

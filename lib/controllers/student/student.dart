@@ -250,6 +250,21 @@ class StudentController extends GetxController {
     }
   }
 
+  void requestCancelBooking(LiveDanceClassModel liveClass) {
+    final currentUser = Get.find<AuthController>().currentUser.value!;
+
+    if (IDanceSocket.socket != null) {
+      IDanceSocket.socket!.emit("request_cancel_booking", {
+        'name': "${currentUser.firstName} ${currentUser.lastName}",
+        'user_id': liveClass.instructor.userId,
+        'dance_class_name': liveClass.danceName,
+        'type': 1,
+        'msg':
+            '${currentUser.firstName} ${currentUser.lastName} wants to cancel class ${liveClass.danceName}'
+      });
+    }
+  }
+
   Future<bool> giveRatingToInstructor(int instructorId, int rating) async {
     try {
       await StudentAPI.rateInstructor(instructorId, rating);

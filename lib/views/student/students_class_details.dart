@@ -139,6 +139,9 @@ class _StudentDanceClassDetailsState extends State<StudentDanceClassDetails> {
                                                     .cancelDanceClass(widget
                                                         .liveDance
                                                         .danceClassId);
+                                                Get.find<StudentController>()
+                                                    .requestCancelBooking(
+                                                        widget.liveDance);
                                                 setState(() {
                                                   widget.isCancelled = true;
                                                 });

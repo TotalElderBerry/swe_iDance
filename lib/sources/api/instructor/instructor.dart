@@ -137,13 +137,14 @@ class InstructorAPI {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception("API for acceptStudentBooking failed");
+      throw Exception("API for reject cancel request failed");
     }
   }
 
   static Future<dynamic> acceptCancellationRequest(
       int studentId, int danceClassId) async {
     final route = "/instructor/live/$danceClassId/accept-cancel-request";
+
     final response = await http.delete(
       Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl + route)),
       body: jsonEncode(<String, dynamic>{
@@ -155,7 +156,7 @@ class InstructorAPI {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception("API for acceptStudentBooking failed");
+      throw Exception("API for accept cancel request failed");
     }
   }
 }

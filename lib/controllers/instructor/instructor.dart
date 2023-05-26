@@ -54,6 +54,32 @@ class InstructorController extends GetxController {
     }
   }
 
+  void socketAcceptCancelRequest(
+      LiveDanceClassModel liveClass, String user_id) {
+    if (IDanceSocket.socket != null) {
+      IDanceSocket.socket!.emit("accept_cancellation_request", {
+        'user_id': user_id,
+        'dance_class_name': liveClass.danceName,
+        'type': 2,
+        'msg':
+            'Your cancellation request of dance class ${liveClass.danceName} has been accepted.'
+      });
+    }
+  }
+
+  void socketRejectCancelRequest(
+      LiveDanceClassModel liveClass, String user_id) {
+    if (IDanceSocket.socket != null) {
+      IDanceSocket.socket!.emit("reject_cancellation_request", {
+        'user_id': user_id,
+        'dance_class_name': liveClass.danceName,
+        'type': 2,
+        'msg':
+            'Your cancellation request of dance class ${liveClass.danceName} has been rejected.'
+      });
+    }
+  }
+
   List<LiveDanceClassModel> getUpcomingClasses() {
     List<LiveDanceClassModel> temp = [];
     for (int i = 0; i < instructorDanceClass.length; i++) {
