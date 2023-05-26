@@ -110,11 +110,28 @@ class RecordedClassDetails extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildDifficultyTag(recordedClass.danceDifficulty),
-                      Text(
-                        "Price: \$${recordedClass.price}",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
+                     Container(
+                    width: 120,
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 237, 166, 219),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.attach_money, size: 16, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(
+                          '\$${recordedClass.price}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                      ]
                   ),
                   SizedBox(height: 16),
                   Row(
@@ -125,16 +142,28 @@ class RecordedClassDetails extends StatelessWidget {
                           initIndex: 0,
                           recordedDanceClassModel: recordedClass,
                         )),
-                        icon: Icon(Icons.pending_outlined),
+                        icon: Icon(Icons.pending_actions),
                         label: Text("Pending"),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue,
+                          onPrimary: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                          textStyle: const TextStyle(fontSize: 14),
+                        ),
                       ),
                       ElevatedButton.icon(
                         onPressed: () => Get.to(RecordedStudentList(
                           initIndex: 1,
                           recordedDanceClassModel: recordedClass,
                         )),
-                        icon: Icon(Icons.approval),
+                        icon: Icon(Icons.check),
                         label: Text("Approved"),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                          onPrimary: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                          textStyle: const TextStyle(fontSize: 14),
+                        ),
                       ),
                     ],
                   ),
@@ -149,11 +178,11 @@ class RecordedClassDetails extends StatelessWidget {
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
+            ),
+            ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

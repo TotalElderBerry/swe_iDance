@@ -37,9 +37,17 @@ class _DanceClassRecordedDetailsState extends State<DanceClassRecordedDetails> {
           onPressed: (){
             Get.to(RecordedClassPaymentPage(recordedDanceClassModel: widget.recordedDanceClassModel));
           },
+          style: ButtonStyle(
+               backgroundColor: MaterialStateProperty.all<Color>( Color.fromARGB(255, 244, 209, 235),),
+        ),
           child: Center(
-            child: Text('Buy Dance Class'),
-          ),
+                child: Text(
+                  'Buy Dance Class',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              )
         ),
       ),
       appBar: AppBar(),

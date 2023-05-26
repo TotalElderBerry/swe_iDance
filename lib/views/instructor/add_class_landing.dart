@@ -33,7 +33,7 @@ class _AddClassLandingPageState extends State<AddClassLandingPage> {
           children: [
             const Spacer(),
             Text('Choose an item', style: Theme.of(context).textTheme.headlineMedium),
-              const Divider(color: Colors.transparent,),
+              const Divider(color: Color.fromARGB(0, 0, 0, 0),),
               Column(
                 children: List<Widget>.generate(
                   2,
@@ -56,7 +56,20 @@ class _AddClassLandingPageState extends State<AddClassLandingPage> {
                 width: (MediaQuery.of(context).size.width),
                 child: ElevatedButton(onPressed: (_value == null)?null:(){
                 Get.to((_value == 0)?AddRecordedDancePage():AddLiveDanceClassPage());
-                },child: Text("Next")),
+                },
+                style: ButtonStyle(
+               backgroundColor: MaterialStateProperty.all<Color>( Color.fromARGB(255, 244, 209, 235),),
+        ),
+               child: Center(
+                child: Text(
+                  'Next',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+
+              )
               )
           ],
         ),

@@ -51,19 +51,23 @@ class InstructorRecordedClassCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Chip(
-                          label: Row(
-                            children: [
-                              const Icon(
-                                Icons.video_camera_front_rounded,
-                                size: 17,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'Recorded Class',
-                                style: Theme.of(context).textTheme.labelSmall,
+                       Container(
+                    width: 150,
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.video_camera_front_outlined, size: 16, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Recorded Class',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),

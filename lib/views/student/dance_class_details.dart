@@ -34,11 +34,16 @@ class _DanceClassDetailsState extends State<DanceClassDetails> {
                   Get.to(JoinDanceClassPage(liveClass: widget.liveClass));
                 },
                 style: ButtonStyle(
-               backgroundColor: MaterialStateProperty.all<Color>( Color.fromARGB(255, 245, 183, 218),),
+               backgroundColor: MaterialStateProperty.all<Color>( Color.fromARGB(255, 244, 209, 235),),
         ),
-                child: const Center(
-                  child: Text('Book this Class'),
+                child: Center(
+                child: Text(
+                  'Book this Class',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
+              )
               ),
             )
           : Container(
