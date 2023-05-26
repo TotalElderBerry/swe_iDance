@@ -110,6 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(width: 16),
                     Expanded(
                       child: TextFormField(
+                        readOnly: true,
                         controller: birthDateController,
                         keyboardType: TextInputType.datetime,
                         decoration: InputDecoration(
@@ -125,6 +126,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 firstDate: DateTime(2000),
                                 lastDate: DateTime(2025),
                               );
+                              if (picked != null) {
+                            birthDateController.text = picked.toString().split(' ')[0];
+                          }
                             },
                             icon: const Icon(Icons.calendar_month),
                           )

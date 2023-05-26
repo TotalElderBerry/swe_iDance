@@ -43,7 +43,9 @@ class HomeScreen extends StatelessWidget {
                               ),
                               Text(
                                 'Featured',
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: TextStyle(fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                                
                               ),
                               const SizedBox(
                                 height: 12,
@@ -65,7 +67,8 @@ class HomeScreen extends StatelessWidget {
                               ),
                               Text(
                                 'Popular Instructors',
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: TextStyle(fontSize: 18,
+                                fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 12,
@@ -103,28 +106,36 @@ class HomeScreen extends StatelessWidget {
                                       Get.to(InstructorDetailsPage(instructor: Get.find<InstructorController>().instructors[index],));
                                     },
                                     child: Stack(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(right:8.0),
-                                          child: CircleAvatar(
-                                                  backgroundImage: NetworkImage(
-                                                    Get.find<InstructorController>().instructors[index].profilePicture!,
-                                                  ),
-                                                  radius: 25,
-                                                ),
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 8.0),
+                                        child: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                            Get.find<InstructorController>().instructors[index].profilePicture!,
+                                          ),
+                                          radius: 25,
                                         ),
-                                        Positioned(
-                                          left: 30,
-                                          top: 30,
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.yellow,
-                                            radius: 12,
-                                            child: Text(Get.find<InstructorController>().instructors[index].rating.toString()),
-                                           
+                                      ),
+                                      Positioned(
+                                        left: 30,
+                                        top: 30,
+                                        child: Container(
+                                          width: 30,
+                                          height: 35,
+                                          decoration: ShapeDecoration(
+                                            shape: StarBorder(), 
+                                            color: Color.fromARGB(255, 247, 164, 211),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              Get.find<InstructorController>().instructors[index].rating.toString(),
+                                              style: TextStyle(color: Colors.black),
+                                            ),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
+                                  ),
                                   ),
                                 );
                                 }),
@@ -147,7 +158,8 @@ class HomeScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Live Dance Class',
-                                      style: Theme.of(context).textTheme.titleMedium,
+                                      style: TextStyle(fontSize: 18,
+                                       fontWeight: FontWeight.bold),
                                     ),
                                     TextButton(
                                       onPressed: () => Get.to(const StudentHomeLivePage()),
@@ -190,7 +202,8 @@ class HomeScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Recorded Dance Class',
-                                      style: Theme.of(context).textTheme.titleMedium,
+                                      style: TextStyle(fontSize: 18,
+                                       fontWeight: FontWeight.bold),
                                     ),
                                     TextButton(
                                       onPressed: () => Get.to(const StudentHomeRecordedPage()),

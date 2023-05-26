@@ -14,6 +14,7 @@ class HomeRecordedDanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Color.fromARGB(255, 255, 252, 254),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: SizedBox(
@@ -82,7 +83,7 @@ class HomeRecordedDanceCard extends StatelessWidget {
                   Text(
                     recordedClass.danceName,
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Color.fromARGB(255, 233, 116, 202),
                     ),
                   ),
                 ],

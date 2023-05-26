@@ -108,30 +108,30 @@ class ReviewRecordedClass extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    Chip(
-      backgroundColor: Colors.purple,
-      label: Text(
-        recordedDanceClass.danceSong,
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-    Chip(
-      backgroundColor: Colors.purple,
-      label: Text(
-        '\$${recordedDanceClass.price}',
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  ],
-),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Chip(
+                    backgroundColor: Colors.purple,
+                    label: Text(
+                      recordedDanceClass.danceSong,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Chip(
+                    backgroundColor: Colors.purple,
+                    label: Text(
+                      '\$${recordedDanceClass.price}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
 
               const SizedBox(height: 12),
               Row(

@@ -33,6 +33,9 @@ class _DanceClassDetailsState extends State<DanceClassDetails> {
                 onPressed: () {
                   Get.to(JoinDanceClassPage(liveClass: widget.liveClass));
                 },
+                style: ButtonStyle(
+               backgroundColor: MaterialStateProperty.all<Color>( Color.fromARGB(255, 245, 183, 218),),
+        ),
                 child: const Center(
                   child: Text('Book this Class'),
                 ),
@@ -101,7 +104,7 @@ class _DanceClassDetailsState extends State<DanceClassDetails> {
                             Icon(
                               size: 24,
                               Icons.location_on,
-                              color: Theme.of(context).primaryColor,
+                               color: Color.fromARGB(255, 193, 72, 160),
                             ),
                           Text(" ${widget.liveClass.location}", style: Theme.of(context).textTheme.labelSmall),
                           ],
@@ -119,21 +122,21 @@ class _DanceClassDetailsState extends State<DanceClassDetails> {
                           children: [
                             Row(
                               children: [
-                                Icon(size: 24, Icons.calendar_month, color: Theme.of(context).primaryColor),
+                                Icon(size: 24, Icons.calendar_month,  color: Color.fromARGB(255, 193, 72, 160)),
                                 Text(widget.liveClass.date, style: Theme.of(context).textTheme.labelSmall),
                               ],
                             ),
                             const SizedBox(width: 15),
                             Row(
                               children: [
-                                Icon(size: 24, Icons.access_time, color: Theme.of(context).primaryColor),
+                                Icon(size: 24, Icons.access_time,  color: Color.fromARGB(255, 193, 72, 160),),
                                 Text("12:00 PM", style: Theme.of(context).textTheme.labelSmall),
                               ],
                             ),
                             const SizedBox(width: 15),
                             Row(
                               children: [
-                                Icon(size: 24, Icons.money, color: Theme.of(context).primaryColor),
+                                Icon(size: 24, Icons.money,  color: Color.fromARGB(255, 193, 72, 160),),
                                 Text(widget.liveClass.price.toString(), style: Theme.of(context).textTheme.labelSmall),
                               ],
                             ),

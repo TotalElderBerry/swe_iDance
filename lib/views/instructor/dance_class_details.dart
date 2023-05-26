@@ -144,7 +144,6 @@ class DanceClassDetails extends StatelessWidget {
                   const SizedBox(height: 8),
                   Container(
                     width: 120,
-
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
                       color: Colors.purple,

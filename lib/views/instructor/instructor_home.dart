@@ -59,7 +59,8 @@ class InstructorHome extends StatelessWidget {
                   children: [
                     Text(
                       "Your Next Event",
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: TextStyle(fontSize: 18,
+                      fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

@@ -12,6 +12,7 @@ class HomeDanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Color.fromARGB(255, 255, 252, 254),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: SizedBox(
@@ -84,7 +85,7 @@ class HomeDanceCard extends StatelessWidget {
                   Text(
                     liveDance.danceName,
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Color.fromARGB(255, 233, 116, 202),
                     ),
                   ),
                 ],
@@ -98,7 +99,7 @@ class HomeDanceCard extends StatelessWidget {
                     children: [
                       const Icon(
                         Icons.date_range_rounded,
-                        color: Colors.orange,
+                        color: Color.fromARGB(255, 193, 72, 160),
                       ),
                       const SizedBox(
                         width: 6,
@@ -117,7 +118,7 @@ class HomeDanceCard extends StatelessWidget {
                     children: [
                       const Icon(
                         Icons.location_on_rounded,
-                        color: Colors.orange,
+                        color: Color.fromARGB(255, 193, 72, 160),
                       ),
                       const SizedBox(
                         width: 6,
