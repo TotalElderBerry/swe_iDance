@@ -20,8 +20,10 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   final BuildContext parentContext;
   final String? title;
   final GlobalKey<ScaffoldState> scaffoldKey;
-  @override
+
+   @override
   State<MyAppBar> createState() => _MyAppBarState();
+
 
   @override
   Size get preferredSize => new Size.fromHeight(kToolbarHeight);

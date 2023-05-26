@@ -53,6 +53,8 @@ class LiveDanceClassModel extends DanceClassModel{
     // modeOfPayment = json['mode_of_payment'];
     // accountName = json['account_name'];
     // accountNumber = json['account_number'];
+
+    print(json['description']);
  
     PaymentDetails temp = PaymentDetails.fromJson(json['payment']);
     InstructorModel instructorTemp = InstructorModel.fromJson(json['instructor']);

@@ -17,13 +17,13 @@ class StudentProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          await Get.find<DanceClassController>().populateUpcomingClasses();
-        },
-        child: Column(
+    return RefreshIndicator(
+      onRefresh: () async {
+            await Get.find<DanceClassController>().populateUpcomingClasses();
+          },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(32.0),

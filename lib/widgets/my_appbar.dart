@@ -17,10 +17,6 @@ import '../views/student/student_profile.dart';
 
 
 
-
-
-
-
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   MyAppBar({required this.parentContext,required this.title,required this.scaffoldKey, Key? key}) : super(key: key);
 
@@ -102,6 +98,7 @@ class _MyAppBarState extends State<MyAppBar> {
 
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  
   BuildContext parentContext;
   String? title;
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -179,7 +176,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
  
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> b1859e08d14fd7fb4153f9ab0adf28ba6e375912
     MenuController menuController = MenuController();
 
     return AppBar(
@@ -197,16 +198,32 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             padding: const EdgeInsets.only(right:8.0),
             child: Stack(
               children: [
+<<<<<<< HEAD
                 IconButton(onPressed: (){
                   Get.to(StudentNotification());
                 }, icon: Icon(Icons.notifications)),
+=======
+                IconButton(
+                    onPressed: () {
+                      Get.find<NotificationController>().newNotifications.value = 0;
+                      Get.to(StudentNotification());
+  
+                    },
+                    icon: Icon(Icons.notifications)),
+>>>>>>> b1859e08d14fd7fb4153f9ab0adf28ba6e375912
                 Positioned(
                   left: 25,
                   top: 10,
                   child: CircleAvatar(
                     backgroundColor: Colors.yellow,
                     radius: 8,
+<<<<<<< HEAD
                     child: Obx(() =>  Text(Get.find<NotificationController>().newNotifications.value.toString(), style: TextStyle(fontSize: 8),)),
+=======
+                    child: Obx(() {
+                      
+                      Get.find<NotificationController>().listenNotifications();
+>>>>>>> b1859e08d14fd7fb4153f9ab0adf28ba6e375912
 
                   ),
                 )

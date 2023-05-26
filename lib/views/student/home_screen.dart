@@ -38,7 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(32.0),
         child: RefreshIndicator(
           onRefresh: ()async{
-            Get.find<DanceClassController>().populateUpcomingClasses();
+            Get.find<AuthController>().getLoggedStudent();
+            // Get.find<DanceClassController>().populateUpcomingClasses();
+            Get.offAll(HomeScreen());
           },
           child: FutureBuilder<Object>(
               future: Get.find<AuthController>().getLoggedStudent(),
@@ -74,171 +76,182 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'assets/images/1.png',
                                   fit: BoxFit.cover,
                                 ),
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                Text(
-                                  'Popular Instructors',
-                                  style: Theme.of(context).textTheme.titleMedium,
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-
-                                // Expanded(
-                                //   child: ListView.builder(
-                                //     shrinkWrap: true,
-                                //     scrollDirection: Axis.horizontal,
-                                //     itemCount: Get.find<InstructorController>().instructors.length,
-                                //     itemBuilder: (context,index){
-                                //       return CircleAvatar(
-                                //         backgroundImage: NetworkImage(
-                                //           'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
-                                //         ),
-                                //         radius: 25,
-                                //       );
-                                //     }),
-                                // ),
-
-
-                                SizedBox(
-                                  height: 60,
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      shrinkWrap: true,
-                                      itemCount: Get.find<InstructorController>().instructors.length,
-                                      itemBuilder: (context,index){
-                                        return Padding(
-                                          padding: const EdgeInsets.only(right: 8.0, left: 8),
-                                          child: GestureDetector(
-                                            onTap: (){
-                                              print(Get.find<InstructorController>().instructors[index].profilePicture);
-
-                                              Get.to(InstructorDetailsPage(instructor: Get.find<InstructorController>().instructors[index],));
-                                            },
-                                            child: Stack(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.only(right:8.0),
-                                                  child: CircleAvatar(
-                                                    backgroundImage: NetworkImage(
-                                                      Get.find<InstructorController>().instructors[index].profilePicture!,
-                                                    ),
-                                                    radius: 25,
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  left: 30,
-                                                  top: 30,
-                                                  child: CircleAvatar(
-                                                    backgroundColor: Colors.yellow,
-                                                    radius: 12,
-                                                    child: Text(Get.find<InstructorController>().instructors[index].rating.toString()),
-
-                                                  ),
-                                                ),
-                                              ],
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Text(
+                                'Popular Instructors',
+                                style: TextStyle(fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+        
+                              // Expanded(
+                              //   child: ListView.builder(
+                              //     shrinkWrap: true,
+                              //     scrollDirection: Axis.horizontal,
+                              //     itemCount: Get.find<InstructorController>().instructors.length,
+                              //     itemBuilder: (context,index){
+                              //       return CircleAvatar(
+                              //         backgroundImage: NetworkImage(
+                              //           'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+                              //         ),
+                              //         radius: 25,
+                              //       );
+                              //     }),
+                              // ),
+        
+        
+                              SizedBox(
+                                height: 60,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: Get.find<InstructorController>().instructors.length,
+                                  itemBuilder: (context,index){
+                                    return Padding(
+                                  padding: const EdgeInsets.only(right: 8.0, left: 8),
+                                  child: GestureDetector(
+                                    onTap: (){
+                                      print(Get.find<InstructorController>().instructors[index].profilePicture);
+        
+                                      Get.to(InstructorDetailsPage(instructor: Get.find<InstructorController>().instructors[index],));
+                                    },
+                                    child: Stack(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 8.0),
+                                        child: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                            Get.find<InstructorController>().instructors[index].profilePicture!,
+                                          ),
+                                          radius: 25,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        left: 30,
+                                        top: 30,
+                                        child: Container(
+                                          width: 30,
+                                          height: 35,
+                                          decoration: ShapeDecoration(
+                                            shape: StarBorder(), 
+                                            color: Color.fromARGB(255, 247, 164, 211),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              Get.find<InstructorController>().instructors[index].rating.toString(),
+                                              style: TextStyle(color: Colors.black),
                                             ),
                                           ),
-                                        );
-                                      }),
-                                ),
-
-                                // CircleAvatar(
-                                //           backgroundImage: NetworkImage(
-                                //             'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
-                                //           ),
-                                //           radius: 25,
-                                //         ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-
-                                Column(
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  ),
+                                );
+                                }),
+                              ),
+        
+                            // CircleAvatar(
+                            //           backgroundImage: NetworkImage(
+                            //             'https://i.pinimg.com/originals/ae/24/87/ae24874dd301843548c034a3d2973658.png',
+                            //           ),
+                            //           radius: 25,
+                            //         ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+        
+                              Column(
+                                children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Live Dance Class',
-                                          style: Theme.of(context).textTheme.titleMedium,
+                                    Text(
+                                      'Live Dance Class',
+                                      style: TextStyle(fontSize: 18,
+                                       fontWeight: FontWeight.bold),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Get.to(const StudentHomeLivePage()),
+                                      child: const Text(
+                                        'View All',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
                                         ),
-                                        TextButton(
-                                          onPressed: () => Get.to(const StudentHomeLivePage()),
-                                          child: const Text(
-                                            'View All',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    SizedBox(
-                                      height: 280,
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          shrinkWrap: true,
-                                          itemCount: Get.find<DanceClassController>().upcomingDanceClasses.length,
-                                          itemBuilder: (context,index){
-                                            return HomeDanceCard(liveDance: Get.find<DanceClassController>().upcomingDanceClasses[index],);
-                                          }),
-                                    ),
-
-
-                                    // SingleChildScrollView(
-                                    //   scrollDirection: Axis.horizontal,
-                                    //   child: Row(
-                                    //     children: const [
-                                    //       HomeDanceCard(),
-                                    //       HomeDanceCard(),
-                                    //     ],
-                                    //   ),
-                                    // ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Recorded Dance Class',
-                                          style: Theme.of(context).textTheme.titleMedium,
-                                        ),
-                                        TextButton(
-                                          onPressed: () => Get.to(const StudentHomeRecordedPage()),
-                                          child: const Text(
-                                            'View All',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-
-                                    SizedBox(
-                                      height: 270,
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          shrinkWrap: true,
-                                          itemCount: Get.find<DanceClassController>().recordedClasses.length,
-                                          itemBuilder: (context,index){
-                                            return HomeRecordedDanceCard(recordedClass: Get.find<DanceClassController>().recordedClasses[index],);
-                                          }),
-                                    ),
-
+                                      ),
+                                    )
                                   ],
                                 ),
-
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                SizedBox(
+                                  height: 280,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemCount: Get.find<DanceClassController>().upcomingDanceClasses.length,
+                                    itemBuilder: (context,index){
+                                      return HomeDanceCard(liveDance: Get.find<DanceClassController>().upcomingDanceClasses[index],);
+                                  }),
+                                ),
+        
+                              
+                                // SingleChildScrollView(
+                                //   scrollDirection: Axis.horizontal,
+                                //   child: Row(
+                                //     children: const [
+                                //       HomeDanceCard(),
+                                //       HomeDanceCard(),
+                                //     ],
+                                //   ),
+                                // ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Recorded Dance Class',
+                                      style: TextStyle(fontSize: 18,
+                                       fontWeight: FontWeight.bold),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Get.to(const StudentHomeRecordedPage()),
+                                      child: const Text(
+                                        'View All',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+        
+                                  SizedBox(
+                                  height: 270,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemCount: Get.find<DanceClassController>().recordedClasses.length,
+                                    itemBuilder: (context,index){
+                                      return HomeRecordedDanceCard(recordedClass: Get.find<DanceClassController>().recordedClasses[index],);
+                                  }),
+                                ),
+                                
                               ],
                             ),
+                                  
+                                ],
+                              ),
                           );
 
                         }

@@ -34,7 +34,7 @@ class DanceClassController extends GetxController{
   RxList<StudentModel> studentsAttendance = <StudentModel>[].obs;
   RxList<LiveDanceClassModel> searchedLiveDanceClasses = <LiveDanceClassModel>[].obs;
   RxList<RecordedDanceClassModel> searchedRecordedDanceClasses = <RecordedDanceClassModel>[].obs;
-
+  RxBool isLoading = true.obs;
   
   RxList<RecordedDanceClassModel> recordedClasses = <RecordedDanceClassModel>[].obs;
 
@@ -92,7 +92,6 @@ class DanceClassController extends GetxController{
   }
 
   Future<bool> populateUpcomingClasses() async {
-
     bool hasFetched = false;
     print("in populate classes");
     upcomingDanceClasses.clear();
