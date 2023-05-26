@@ -12,6 +12,7 @@ import 'package:i_dance/widgets/my_appbar.dart';
 import 'package:i_dance/widgets/student/student_class_card.dart';
 
 import '../../utils/getDaysBetween.dart';
+import '../../widgets/drawer.dart';
 
 
 enum SortOption {
@@ -133,10 +134,19 @@ class _StudentHomeLivePageState extends State<StudentHomeLivePage> {
     filteredItems.addAll(items);
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context, "Live Classes"),
+      key: _scaffoldKey,
+      drawer: DrawerWidget(),
+      appBar: MyAppBar(
+        parentContext: context,
+        title: "",
+        scaffoldKey: _scaffoldKey,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

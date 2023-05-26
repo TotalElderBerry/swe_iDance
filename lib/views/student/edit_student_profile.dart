@@ -352,7 +352,8 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
                   onPressed: () {
                     _showDialog(context);
                   },
-                  child: const Text('Update'),
+                  child: const Text('Update')
+                  
                 ),
               ),
             ],

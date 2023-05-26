@@ -64,6 +64,7 @@ class _EditInstructorProfileState extends State<EditInstructorProfile> {
                 'Update',
                 style: TextStyle(
                   color: Color(0xFF5f527e),
+                  backgroundColor: Color.fromARGB(255, 244, 209, 235),
                   fontWeight: FontWeight.bold,
                 ),
               ),

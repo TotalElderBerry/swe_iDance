@@ -114,7 +114,7 @@ class RecordedClassDetails extends StatelessWidget {
                     width: 120,
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 237, 166, 219),
+                      color: Color.fromARGB(255, 209, 99, 182),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(

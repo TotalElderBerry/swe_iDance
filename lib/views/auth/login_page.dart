@@ -69,15 +69,15 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: const BoxDecoration(
                             gradient: LinearGradient(
                                 colors: [Colors.purple, Colors.purple])),
-                        child: Column(
-                          children: const [
+                         child: Column(
+                          children: [
                             SizedBox(
                               height: 40,
                             ),
-                            Icon(
-                              Icons.music_note_rounded,
-                              color: Colors.white,
-                              size: 60,
+                            Image.asset(
+                              'assets/images/logo.png',
+                              width: 120,
+                              height: 120,
                             ),
                             SizedBox(
                               height: 20,
@@ -85,9 +85,10 @@ class _LoginPageState extends State<LoginPage> {
                             Text(
                               "iDance",
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 30),
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 30,
+                              ),
                             ),
                           ],
                         ),

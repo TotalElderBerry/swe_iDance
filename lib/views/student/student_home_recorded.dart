@@ -5,6 +5,7 @@ import 'package:i_dance/controllers/danceclass/danceclasscontroller.dart';
 import 'package:i_dance/models/recorded_dance_model.dart';
 
 import '../../controllers/auth/auth_controller.dart';
+import '../../widgets/drawer.dart';
 import '../../widgets/my_appbar.dart';
 import '../../widgets/student/recorded_class_card.dart';
 
@@ -121,10 +122,15 @@ class _StudentHomeRecordedPageState extends State<StudentHomeRecordedPage> {
     filteredItems.addAll(items);
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(context, "Recorded Classes"),
+      key: _scaffoldKey,
+      drawer: DrawerWidget(),
+      appBar: MyAppBar(parentContext: context, title: "", scaffoldKey: _scaffoldKey),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

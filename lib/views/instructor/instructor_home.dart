@@ -7,6 +7,7 @@ import 'package:skeletons/skeletons.dart';
 import '../../controllers/auth/auth_controller.dart';
 import '../../controllers/instructor/instructor.dart';
 import '../../models/live_dance_class.dart';
+import '../../widgets/drawer_instructor.dart';
 import '../../widgets/instructor/dance_class_card.dart';
 import '../../widgets/instructor/recordedclass_card.dart';
 import '../../widgets/instructor_appbar.dart';
@@ -19,15 +20,28 @@ class LiveDanceClassDaysBetween {
   LiveDanceClassDaysBetween({required this.danceClass, required this.daysBetween});
 }
 
-class InstructorHome extends StatelessWidget {
-  final isEmpty = false;
+class InstructorHome extends StatefulWidget {
+  const InstructorHome({Key? key}) : super(key: key);
 
-  InstructorHome({super.key});
+  @override
+  State<InstructorHome> createState() => _InstructorHomeState();
+}
+
+class _InstructorHomeState extends State<InstructorHome> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final isEmpty = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: InstructorAppBar(context),
+      key: _scaffoldKey,
+      drawer: Drawer_Instructor(),
+      appBar: MyAppBar(
+        parentContext: context,
+        title: "",
+        scaffoldKey: _scaffoldKey,
+       ),
       body: Container(
         child: (isEmpty)? 
         Center(
