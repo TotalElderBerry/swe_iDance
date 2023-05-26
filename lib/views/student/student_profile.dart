@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:i_dance/controllers/student/student.dart';
 
 import '../../controllers/auth/auth_controller.dart';
+import '../../controllers/danceclass/danceclasscontroller.dart';
 import '../../widgets/student/dance_class_card.dart';
 import '../../widgets/student/student_bookedrecordedclass_card.dart';
 import '../../widgets/student/student_class_card.dart';
@@ -18,95 +19,102 @@ class StudentProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage((Get.find<AuthController>()
-                              .authService
-                              .getUser()!
-                              .photoURL ==
-                          null)
-                      ? 'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'
-                      : Get.find<AuthController>()
-                          .authService
-                          .getUser()!
-                          .photoURL!),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                        "${Get.find<AuthController>().currentUser.value!.firstName} ${Get.find<AuthController>().currentUser.value!.lastName}",
-                        style: Theme.of(context).textTheme.labelLarge),
-                    Chip(
-                        label: Text("Beginner"),
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        visualDensity:
-                            VisualDensity(horizontal: 0.0, vertical: -4)),
-                  ],
-                ),
-              ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Get.find<DanceClassController>().populateUpcomingClasses();
+        },
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage((Get.find<AuthController>()
+                                .authService
+                                .getUser()!
+                                .photoURL ==
+                            null)
+                        ? 'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'
+                        : Get.find<AuthController>()
+                            .authService
+                            .getUser()!
+                            .photoURL!),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                          "${Get.find<AuthController>().currentUser.value!.firstName} ${Get.find<AuthController>().currentUser.value!.lastName}",
+                          style: Theme.of(context).textTheme.labelLarge),
+                      Chip(
+                          label: Text("Beginner"),
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          visualDensity:
+                              VisualDensity(horizontal: 0.0, vertical: -4)),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Transform.translate(
-                offset: const Offset(-40, 0),
-                child: Obx(
-                  () {
-                    return DropdownButton(
-                      value: (Get.find<StudentController>().isLivePanel.value ==
-                              true)
-                          ? 1
-                          : 2,
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text("Live Classes"),
-                        ),
-                        DropdownMenuItem(
-                          child: Text("Recorded Classes"),
-                          value: 2,
-                        ),
-                      ],
-                      onChanged: (value) {
-                        if (value == 1) {
-                          Get.find<StudentController>().isLivePanel.value =
-                              true;
-                          // Get.find<StudentController>().isPending.value = false;
-                          // Get.find<StudentController>().isDone.value = false;
-                          // Get.find<StudentController>().isLiked.value = false;
-                        }
-                        if (value == 2) {
-                          Get.find<StudentController>().isLivePanel.value =
-                              false;
-                          // Get.find<StudentController>().isPending.value = false;
-                        }
-                      },
-                    );
-                  },
-                )),
-          ),
-          Expanded(
-            child: Obx(() {
-              return (Get.find<StudentController>().isLivePanel.value == true)
-                  ? liveClassTab(context)
-                  : recordedClassTab(context);
-            }),
-          )
-        ],
+            Align(
+              alignment: Alignment.centerRight,
+              child: Transform.translate(
+                  offset: const Offset(-40, 0),
+                  child: Obx(
+                    () {
+                      return DropdownButton(
+                        value:
+                            (Get.find<StudentController>().isLivePanel.value ==
+                                    true)
+                                ? 1
+                                : 2,
+                        items: const [
+                          DropdownMenuItem(
+                            value: 1,
+                            child: Text("Live Classes"),
+                          ),
+                          DropdownMenuItem(
+                            child: Text("Recorded Classes"),
+                            value: 2,
+                          ),
+                        ],
+                        onChanged: (value) {
+                          if (value == 1) {
+                            Get.find<StudentController>().isLivePanel.value =
+                                true;
+                            // Get.find<StudentController>().isPending.value = false;
+                            // Get.find<StudentController>().isDone.value = false;
+                            // Get.find<StudentController>().isLiked.value = false;
+                          }
+                          if (value == 2) {
+                            Get.find<StudentController>().isLivePanel.value =
+                                false;
+                            // Get.find<StudentController>().isPending.value = false;
+                          }
+                        },
+                      );
+                    },
+                  )),
+            ),
+            Expanded(
+              child: Obx(() {
+                return (Get.find<StudentController>().isLivePanel.value == true)
+                    ? liveClassTab(context)
+                    : recordedClassTab(context);
+              }),
+            )
+          ],
+        ),
       ),
     );
   }

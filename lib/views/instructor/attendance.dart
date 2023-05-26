@@ -24,22 +24,22 @@ class AttendanceScreen extends StatelessWidget {
             IconButton(
               onPressed: () async {
                 try {
-                  final qrLink = await Get.find<DanceClassController>().generateQrAttendance(liveDance.danceClassId);
+                  final qrLink = await Get.find<DanceClassController>()
+                      .generateQrAttendance(liveDance.danceClassId);
                   // print(qrLink);
                   QuickAlert.show(
                     context: context,
                     type: QuickAlertType.custom,
-                    widget: 
-                    Image.memory(Base64Decoder().convert(qrLink.split(',').last)),
+                    widget: Image.memory(
+                        Base64Decoder().convert(qrLink.split(',').last)),
                     customAsset: null,
                   );
-                  
                 } catch (e) {
                   print(e);
                   // QuickAlert.show(
                   //   context: context,
                   //   type: QuickAlertType.custom,
-                  //   widget: 
+                  //   widget:
                   //   Image.memory(Base64Decoder().convert(qrLink)),
                   //   customAsset: null,
                   // );
@@ -88,21 +88,19 @@ class AttendanceScreen extends StatelessWidget {
                 ),
               ),
               FutureBuilder(
-                future: Get.find<DanceClassController>().getStudentsAttended(liveDance.danceClassId,liveDance.liveClassId),
-                builder: ((context, snapshot) {
-                  if(snapshot.hasData){
-
-                    return Expanded(
+                  future: Get.find<DanceClassController>().getStudentsAttended(
+                      liveDance.danceClassId, liveDance.liveClassId),
+                  builder: ((context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Expanded(
                         child: TabBarView(children: [
-                          AttendedWidget(),
+                          AttendedWidget(liveDance: liveDance),
                           FullListWidget(liveClassId: liveDance.danceClassId),
                         ]),
                       );
-                  }
-                  return Expanded(child: SkeletonListView());
-
-                  
-              })),
+                    }
+                    return Expanded(child: SkeletonListView());
+                  })),
               // const Expanded(
               //   child: TabBarView(children: [
               //     AttendedWidget(),
@@ -116,4 +114,3 @@ class AttendanceScreen extends StatelessWidget {
     );
   }
 }
- 
