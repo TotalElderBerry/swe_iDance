@@ -8,7 +8,7 @@ import '../../controllers/auth/auth_controller.dart';
 import '../../views/instructor/instructor_home.dart';
 import '../../views/instructor/instructor_signin.dart';
 import '../../views/student/edit_student_profile.dart';
-
+import '../views/auth/login_page.dart';
 
 class Drawer_Instructor extends StatefulWidget {
   const Drawer_Instructor({Key? key}) : super(key: key);
@@ -21,11 +21,10 @@ class _Drawer_InstructorState extends State<Drawer_Instructor> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          const DrawerHeader(
+          DrawerHeader(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -39,12 +38,24 @@ class _Drawer_InstructorState extends State<Drawer_Instructor> {
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage('assets/images/placeholder.png'),
+                  radius: 20,
+                  backgroundImage: NetworkImage((Get.find<AuthController>()
+                              .authService
+                              .getUser()!
+                              .photoURL ==
+                          null)
+                      ? 'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'
+                      : Get.find<AuthController>()
+                          .authService
+                          .getUser()!
+                          .photoURL!),
+                  // backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
                 ),
-                SizedBox(width: 20,),
+                SizedBox(
+                  width: 20,
+                ),
                 Text(
-                  'Hello, User',
+                  'Hello, ${Get.find<AuthController>().currentUser.value!.firstName}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -79,6 +90,7 @@ class _Drawer_InstructorState extends State<Drawer_Instructor> {
             title: const Text('Logout'),
             onTap: () {
               Get.find<AuthController>().logout();
+              Get.offAll(LoginPage());
             },
           ),
         ],

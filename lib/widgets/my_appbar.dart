@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:i_dance/controllers/notification/notifcontroller.dart';
 import 'package:i_dance/socket/socket.dart';
 import 'package:i_dance/views/instructor/instructor_profile.dart';
- 
+
 import '../controllers/auth/auth_controller.dart';
 import '../controllers/student/student.dart';
 import '../models/instructor.dart';
@@ -15,11 +15,13 @@ import '../views/student/edit_student_profile.dart';
 import '../views/student/notifications.dart';
 import '../views/student/student_profile.dart';
 
-
-
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
-  MyAppBar({required this.parentContext,required this.title,required this.scaffoldKey, Key? key}) : super(key: key);
-
+  MyAppBar(
+      {required this.parentContext,
+      required this.title,
+      required this.scaffoldKey,
+      Key? key})
+      : super(key: key);
 
   final BuildContext parentContext;
   final String? title;
@@ -29,13 +31,11 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => new Size.fromHeight(kToolbarHeight);
-
 }
 
 class _MyAppBarState extends State<MyAppBar> {
   @override
   Widget build(BuildContext context) {
-
     MenuController menuController = MenuController();
 
     return AppBar(
@@ -47,30 +47,42 @@ class _MyAppBarState extends State<MyAppBar> {
             onPressed: () {
               print("Drawer Opened");
               widget.scaffoldKey.currentState?.openDrawer();
-            }, icon: const Icon(Icons.menu)),
+            },
+            icon: const Icon(Icons.menu)),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right:8.0),
+            padding: const EdgeInsets.only(right: 8.0),
             child: Stack(
               children: [
-                IconButton(onPressed: (){
-                  Get.to(StudentNotification());
-                }, icon: Icon(Icons.notifications)),
+                IconButton(
+                    onPressed: () {
+                      Get.find<NotificationController>()
+                          .newNotifications
+                          .value = 0;
+                      Get.to(StudentNotification());
+                    },
+                    icon: Icon(Icons.notifications)),
                 Positioned(
                   left: 25,
                   top: 10,
                   child: CircleAvatar(
                     backgroundColor: Colors.yellow,
                     radius: 8,
-                    child: Obx(() =>  Text(Get.find<NotificationController>().newNotifications.value.toString(), style: TextStyle(fontSize: 8),)),
-
+                    child: Obx(() {
+                      Get.find<NotificationController>().listenNotifications();
+                      return Text(
+                        Get.find<NotificationController>()
+                            .newNotifications
+                            .value
+                            .toString(),
+                        style: TextStyle(fontSize: 8),
+                      );
+                    }),
                   ),
                 )
               ],
             ),
           ),
-
-
           GestureDetector(
             onTap: () {
               Get.to(StudentProfilePage());
@@ -79,16 +91,22 @@ class _MyAppBarState extends State<MyAppBar> {
               padding: const EdgeInsets.only(right: 10.0),
               child: CircleAvatar(
                 radius: 20,
-                backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL == null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),
+                backgroundImage: NetworkImage((Get.find<AuthController>()
+                            .authService
+                            .getUser()!
+                            .photoURL ==
+                        null)
+                    ? 'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'
+                    : Get.find<AuthController>()
+                        .authService
+                        .getUser()!
+                        .photoURL!),
                 // backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
               ),
             ),
           ),
-        ]
-    );
-
+        ]);
   }
-
 }
 
 
@@ -176,11 +194,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
  
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-
-=======
     
->>>>>>> b1859e08d14fd7fb4153f9ab0adf28ba6e375912
     MenuController menuController = MenuController();
 
     return AppBar(
@@ -198,11 +212,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             padding: const EdgeInsets.only(right:8.0),
             child: Stack(
               children: [
-<<<<<<< HEAD
-                IconButton(onPressed: (){
-                  Get.to(StudentNotification());
-                }, icon: Icon(Icons.notifications)),
-=======
                 IconButton(
                     onPressed: () {
                       Get.find<NotificationController>().newNotifications.value = 0;
@@ -210,20 +219,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   
                     },
                     icon: Icon(Icons.notifications)),
->>>>>>> b1859e08d14fd7fb4153f9ab0adf28ba6e375912
                 Positioned(
                   left: 25,
                   top: 10,
                   child: CircleAvatar(
                     backgroundColor: Colors.yellow,
                     radius: 8,
-<<<<<<< HEAD
-                    child: Obx(() =>  Text(Get.find<NotificationController>().newNotifications.value.toString(), style: TextStyle(fontSize: 8),)),
-=======
                     child: Obx(() {
                       
                       Get.find<NotificationController>().listenNotifications();
->>>>>>> b1859e08d14fd7fb4153f9ab0adf28ba6e375912
 
                   ),
                 )

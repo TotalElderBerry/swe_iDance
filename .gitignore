@@ -45,3 +45,4 @@ app.*.map.json
 lib/main.dart
 
 lib/constants/api.dart
+lib/constants/api.dart
