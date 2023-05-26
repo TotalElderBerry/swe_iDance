@@ -4,6 +4,7 @@ import 'package:i_dance/views/student/student_home.dart';
 
 import '../controllers/auth/auth_controller.dart';
 import '../controllers/notification/notifcontroller.dart';
+import '../views/auth/login_page.dart';
 import '../views/instructor/edit_instructor_profile.dart';
 import '../views/instructor/instructor_home.dart';
 import '../views/instructor/instructor_profile.dart';
@@ -11,12 +12,12 @@ import '../views/instructor/notifications.dart';
 import '../views/student/home_screen.dart';
 import '../views/student/student_profile.dart';
 
-class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
+class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget {
   BuildContext parentContext;
 
-  InstructorAppBar(this.parentContext,{super.key});
+  InstructorAppBar(this.parentContext, {super.key});
 
-   void showInstructorBottomSheet(BuildContext ctx) {
+  void showInstructorBottomSheet(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (BuildContext ctx) {
@@ -53,18 +54,18 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
                 label: Text('Edit Profile'),
               ),
               Divider(),
-             TextButton.icon(
+              TextButton.icon(
                 onPressed: () {
                   Get.offAll(HomeScreen());
                 },
                 icon: Icon(Icons.school),
                 label: Text('Switch to Student'),
               ),
-              
               Divider(),
               TextButton.icon(
-                onPressed: () {
-                  Get.find<AuthController>().logout();
+                onPressed: () async {
+                  await Get.find<AuthController>().logout();
+                  Get.offAll(LoginPage());
                 },
                 icon: Icon(Icons.logout),
                 label: Text('Logout'),
@@ -81,51 +82,71 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget{
     MenuController menuController = MenuController();
 
     return AppBar(
-        scrolledUnderElevation: 0,
-        elevation: 0,
-        leadingWidth: 76.0,
-        leading: IconButton(onPressed: () {
+      scrolledUnderElevation: 0,
+      elevation: 0,
+      leadingWidth: 76.0,
+      leading: IconButton(
+          onPressed: () {
             showInstructorBottomSheet(ctx);
-        }, icon: const Icon(Icons.menu)),
-        actions: [
-          Padding(
-                padding: const EdgeInsets.only(right:8.0),
-                child: Stack(
-                  children: [
-                    IconButton(onPressed: (){
-                      Get.to(InstructorNotification());
-                    }, icon: Icon(Icons.notifications)),
-                    Positioned(
-                      left: 25,
-                      top: 10,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.yellow,
-                        radius: 8,
-                        child: Text(Get.find<NotificationController>().newNotifications.value.toString(), style: TextStyle(fontSize: 8),),
-                        
-                      ),
-                    )
-                  ],
-                ),
-              ),
+          },
+          icon: const Icon(Icons.menu)),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: Stack(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Get.to(InstructorNotification());
+                  },
+                  icon: Icon(Icons.notifications)),
+              Positioned(
+                left: 25,
+                top: 10,
+                child: CircleAvatar(
+                    backgroundColor: Colors.yellow,
+                    radius: 8,
+                    child: Obx(() {
+                      Get.find<NotificationController>().listenNotifications();
 
-          GestureDetector(
-            onTap: () {
-              Get.to(InstructorProfilePage());
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: CircleAvatar(
-                radius: 20,
-                backgroundImage: NetworkImage((Get.find<AuthController>().authService.getUser()!.photoURL == null)?'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg':Get.find<AuthController>().authService.getUser()!.photoURL!),
-                // backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
-              ),
+                      return Text(
+                        Get.find<NotificationController>()
+                            .newNotifications
+                            .value
+                            .toString(),
+                        style: TextStyle(fontSize: 8),
+                      );
+                    })),
+              )
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(InstructorProfilePage());
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage: NetworkImage((Get.find<AuthController>()
+                          .authService
+                          .getUser()!
+                          .photoURL ==
+                      null)
+                  ? 'https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'
+                  : Get.find<AuthController>()
+                      .authService
+                      .getUser()!
+                      .photoURL!),
+              // backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg'),
             ),
           ),
-        ],
-      );
-
+        ),
+      ],
+    );
   }
-      @override
-      Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+
+  @override
+  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
 }

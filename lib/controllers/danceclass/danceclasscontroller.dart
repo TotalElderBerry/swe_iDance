@@ -28,6 +28,7 @@ class DanceClassController extends GetxController{
   RxList<LiveDanceClassModel> doneDanceClasses = <LiveDanceClassModel>[].obs;
   RxList<PaymentStudent> studentsApproved = <PaymentStudent>[].obs;
   RxList<PaymentStudent> studentsPending = <PaymentStudent>[].obs;
+  RxList<PaymentStudent> studentsCancel = <PaymentStudent>[].obs;
   RxList<PaymentStudent> studentPendingSearched = <PaymentStudent>[].obs;
   RxList<PaymentStudent> studentApprovedSearched = <PaymentStudent>[].obs;
   RxList<StudentModel> studentsAttendance = <StudentModel>[].obs;
@@ -151,12 +152,14 @@ class DanceClassController extends GetxController{
         print(booked);
           StudentModel studentModel = StudentModel.fromJson(booked['student']);
           studentModel.profilePicture =  await ImageCloudStorage.getProfilePicture(studentModel.userId);
-        if(booked['date_approved'] == 'PENDING'){
           PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
+        if(booked['date_approved'] == 'PENDING'){
           studentsPending.add(paymentStudent);
           studentPendingSearched.add(paymentStudent);
-        }else{
-          PaymentStudent paymentStudent = PaymentStudent(student: studentModel, referenceModel: booked['reference_number']);
+        }else if(booked['date_approved'] == 'CANCELLED'){
+          studentsCancel.add(paymentStudent);
+        }
+        else{
           studentsApproved.add(paymentStudent);
           studentApprovedSearched.add(paymentStudent);
         }

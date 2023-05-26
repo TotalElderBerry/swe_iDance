@@ -159,5 +159,17 @@ class StudentAPI {
     }
   }
 
-  
+  static Future<bool> cancelDanceClass(int studentId, int danceClassId) async {
+    final route = '/student/$studentId/live/$danceClassId';
+    String token = LocalStorageSource.readFromStorage('instructor_token');
+    final response = await http.put(Uri.parse(Uri.encodeFull(ApiConstants.baseEmuUrl+route)),
+    headers: {
+      "Content-Type": "application/json"
+    });
+    if(response.statusCode == 200){
+      return true;
+    }else{
+      throw Exception('Unauthorised ');
+    }
+  }
 }
