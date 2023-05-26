@@ -60,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   'Featured',
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style: TextStyle(fontSize: 18,
+                                 fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
                                   height: 12,
