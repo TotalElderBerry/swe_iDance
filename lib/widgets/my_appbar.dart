@@ -13,6 +13,7 @@ import '../views/auth/login_page.dart';
 import '../views/instructor/instructor_home.dart';
 import '../views/instructor/instructor_signin.dart';
 import '../views/student/edit_student_profile.dart';
+import '../views/student/home_screen.dart';
 import '../views/student/notifications.dart';
 import '../views/student/student_profile.dart';
 
@@ -45,7 +46,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               TextButton.icon(
                 onPressed: () {
-                  Get.to(InstructorHome());
+                  Get.offAll(HomeScreen());
                 },
                 icon: Icon(Icons.home),
                 label: Text('Home'),
