@@ -5,6 +5,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:i_dance/controllers/auth/auth_controller.dart';
+import 'package:i_dance/controllers/instructor/instructor.dart';
 import 'package:i_dance/controllers/student/student.dart';
 import 'package:i_dance/models/attendance_model.dart';
 import 'package:i_dance/models/live_dance_class.dart';
@@ -106,6 +107,13 @@ class _StudentDanceClassDetailsState extends State<StudentDanceClassDetails> {
                                 onRatingUpdate: (a) => {rate = a.toInt()}),
                             onConfirmBtnTap: () async {
                               print(rate);
+                              for(int i = 0;i < Get.find<InstructorController>().instructors.length;i++){
+                                if(widget.liveDance.instructor.instructorId == Get.find<InstructorController>().instructors[i].instructorId){
+                                  Get.find<InstructorController>().instructors[i].rating = (rate/2).round(); 
+                                  print("new reting ${Get.find<InstructorController>().instructors[i].rating}");
+                                  break;
+                                }
+                              }
                               await Get.find<StudentController>()
                                   .giveRatingToInstructor(
                                       widget.liveDance.instructor.instructorId,

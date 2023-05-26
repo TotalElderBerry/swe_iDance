@@ -18,6 +18,7 @@ import '../views/student/notifications.dart';
 import '../views/student/student_profile.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  
   BuildContext parentContext;
   String? title;
 
@@ -96,6 +97,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     MenuController menuController = MenuController();
 
     return AppBar(
@@ -115,7 +117,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 IconButton(
                     onPressed: () {
+                      Get.find<NotificationController>().newNotifications.value = 0;
                       Get.to(StudentNotification());
+  
                     },
                     icon: Icon(Icons.notifications)),
                 Positioned(
@@ -125,6 +129,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     backgroundColor: Colors.yellow,
                     radius: 8,
                     child: Obx(() {
+                      
                       Get.find<NotificationController>().listenNotifications();
 
                       return Text(

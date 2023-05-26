@@ -34,6 +34,8 @@ class _ReviewDanceClassPageState extends State<ReviewDanceClassPage> {
               child: Image.file(
                 File(Get.find<ImagePickerController>().imgPathDanceClass.value),
                 fit: BoxFit.cover,
+                width: MediaQuery.of(context).size.width,
+
                 height: 200,
               ),
             ),

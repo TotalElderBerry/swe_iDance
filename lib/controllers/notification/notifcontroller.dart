@@ -12,31 +12,31 @@ class NotificationController extends GetxController {
     IDanceSocket.socket!.on("send-notification", (data) {
       print("received a socker ${data.toString()}");
       notifs.insert(0, data['msg']);
-      newNotifications.value++;
+      newNotifications.value = 1;
     });
 
     IDanceSocket.socket!.on("send-student-notification", (data) {
       print("received a socker ${data.toString()}");
       notifs.insert(0, data['msg']);
-      newNotifications.value++;
+      newNotifications.value =1;
     });
 
     IDanceSocket.socket!.on("send-rejectcancel-notification", (data) {
       print("received a socker ${data.toString()}");
       notifs.insert(0, data['msg']);
-      newNotifications.value++;
+      newNotifications.value = 1;
     });
 
     IDanceSocket.socket!.on("send-acceptcancel-notification", (data) {
       print("received a socker ${data.toString()}");
       notifs.insert(0, data['msg']);
-      newNotifications.value++;
+      newNotifications.value = 1;
     });
 
     IDanceSocket.socket!.on("send-cancelbooking-notification", (data) {
       print("received a socker ${data.toString()}");
       notifs.insert(0, data['msg']);
-      newNotifications.value++;
+      newNotifications.value = 1;
     });
   }
 

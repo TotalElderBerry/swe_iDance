@@ -23,7 +23,9 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(32.0),
         child: RefreshIndicator(
           onRefresh: ()async{
-            Get.find<DanceClassController>().populateUpcomingClasses();
+            Get.find<AuthController>().getLoggedStudent();
+            // Get.find<DanceClassController>().populateUpcomingClasses();
+            Get.offAll(HomeScreen());
           },
           child: FutureBuilder<Object>(
             future: Get.find<AuthController>().getLoggedStudent(),
@@ -127,10 +129,10 @@ class HomeScreen extends StatelessWidget {
                                             color: Color.fromARGB(255, 247, 164, 211),
                                           ),
                                           child: Center(
-                                            child: Text(
+                                            child: Obx(() =>  Text(
                                               Get.find<InstructorController>().instructors[index].rating.toString(),
                                               style: TextStyle(color: Colors.black),
-                                            ),
+                                            )),
                                           ),
                                         ),
                                       ),

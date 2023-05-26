@@ -98,6 +98,8 @@ class InstructorAppBar extends StatelessWidget implements PreferredSizeWidget {
               IconButton(
                   onPressed: () {
                     Get.to(InstructorNotification());
+                    Get.find<NotificationController>().newNotifications.value = 0;
+
                   },
                   icon: Icon(Icons.notifications)),
               Positioned(

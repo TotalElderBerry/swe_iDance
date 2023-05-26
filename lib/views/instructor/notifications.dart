@@ -17,7 +17,7 @@ class InstructorNotification extends StatelessWidget {
           print(snapshot);
           if(snapshot.hasData){
           return Obx(() {
-              Get.find<NotificationController>().listenNotifications();
+              // Get.find<NotificationController>().listenNotifications();
 
             Get.find<NotificationController>().newNotifications.value = 0;
 
@@ -28,7 +28,7 @@ class InstructorNotification extends StatelessWidget {
               return ListTile(
                 leading: CircleAvatar(
                   // Replace with the notification user's profile picture
-                  child: Icon(Icons.book_online),
+                  child: notifIcon(Get.find<NotificationController>().notifs[index]),
                 ),
                 title: Text(
                   // Replace with the notification text
@@ -63,4 +63,11 @@ class InstructorNotification extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget notifIcon(String notif){
+  if(notif.contains("cancel")){
+    return Icon(Icons.cancel_rounded);
+  }
+  return Icon(Icons.book_online);
 }
