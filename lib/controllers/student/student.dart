@@ -145,6 +145,29 @@ class StudentController extends GetxController {
         }
       }
 
+      for(int i = 0; i < Get.find<DanceClassController>().doneDanceClasses.length;i++){
+        for(int j = 0; i < response.length; j++){
+          if (response[j]['dance_class_id'] ==
+              Get.find<DanceClassController>()
+                  .doneDanceClasses[i]
+                  .danceClassId) {
+            DanceBooking danceBooking = DanceBooking();
+            danceBooking.liveDanceClass =
+                Get.find<DanceClassController>().doneDanceClasses[i];
+            danceBooking.dateApproved = response[j]['date_approved'];
+            danceBooking.danceClassId = response[j]['dance_class_id'];
+            Payment p = Payment.fromJson(response[j]['payment']);
+            danceBooking.payment = p;
+            studentBookingClasses.add(danceBooking);
+            Get.find<DanceClassController>().doneDanceClasses.remove(
+                Get.find<DanceClassController>().doneDanceClasses[i]);
+            Get.find<DanceClassController>().searchedLiveDanceClasses.remove(
+                Get.find<DanceClassController>().searchedLiveDanceClasses[i]);
+            // listtemp.removeAt(i);
+          }
+        }
+      }
+
       for (int i = 0;
           i < Get.find<DanceClassController>().upcomingDanceClasses.length;
           i++) {
