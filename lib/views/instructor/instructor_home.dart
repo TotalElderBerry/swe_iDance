@@ -68,16 +68,16 @@ class _InstructorHomeState extends State<InstructorHome> {
               children: [
                 Text("Welcome, Teacher ${Get.find<AuthController>().currentInstructor.value!.firstName}!", style: Theme.of(context).textTheme.titleLarge),
                 const Divider(color: Colors.transparent,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Your Next Event",
-                      style: TextStyle(fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text(
+                //       "Your Next Event",
+                //       style: TextStyle(fontSize: 18,
+                //       fontWeight: FontWeight.bold),
+                //     ),
+                //   ],
+                // ),
                 FutureBuilder(
                   future: Get.find<InstructorController>().getLiveClassesOfInstructorbyId(Get.find<AuthController>().currentInstructor.value!),
                   builder: (context,snapshot){
@@ -101,10 +101,37 @@ class _InstructorHomeState extends State<InstructorHome> {
                       });
             
                       if(Get.find<InstructorController>().instructorDanceClass.isEmpty){
-                          return Text("Empty Data");
+                          return Column(
+                             crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(child: Column(
+                                 crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Start your dance class now!"),
+                                  ElevatedButton(onPressed: () => Get.to(AddClassLandingPage()), 
+                                  child: Text(
+                                    "Create Now!"
+                                  )),
+                                ],
+                              )),
+                            ],
+                          );
                       }
+
                       return Column(
                         children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Your Next Event",
+                                style: TextStyle(fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                           Card(
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
@@ -369,9 +396,6 @@ class _InstructorHomeState extends State<InstructorHome> {
                     );
                   }
                 ),
-            
-                
-                 
               ],
             ),
           ),
