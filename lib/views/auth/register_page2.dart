@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 import '../../controllers/auth/auth_controller.dart';
+import '../student/home_screen.dart';
 
 
 
@@ -136,7 +137,7 @@ class _RegisterPage2 extends State<RegisterPage2> {
               bool isSuccess= await Get.find<AuthController>().register(student, widget.password);
               if(isSuccess){
                 Get.find<AuthController>().isLoggedIn.value = true;
-                Get.offAll(StudentHomePage());
+                Get.offAll(HomeScreen());
               }
             },
             child: const  Text('Register'),

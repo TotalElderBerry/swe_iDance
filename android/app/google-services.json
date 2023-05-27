@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "1021427033191",
-    "project_id": "swe-idance",
-    "storage_bucket": "swe-idance.appspot.com"
+    "project_number": "667405776653",
+    "project_id": "finalnajud-77bc7",
+    "storage_bucket": "finalnajud-77bc7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1021427033191:android:d7305b76ae551139e0e0c2",
+        "mobilesdk_app_id": "1:667405776653:android:90e5e83db6a5eccb8be244",
         "android_client_info": {
           "package_name": "com.example.i_dance"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1021427033191-jg1n8o4cm860jghkg0t8gj0455sqhgvm.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDYxEQl-4H6J8tNFfryyXQYXPme4dxbNSs"
+          "current_key": "AIzaSyBC-42Y3UOUuDzw33X8TVGsEH4U62hiLZU"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1021427033191-jg1n8o4cm860jghkg0t8gj0455sqhgvm.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
